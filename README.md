@@ -22,6 +22,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [EC2 User Data](#ec2-user-data)
 
 - AWS Fundamentals: ELB + ASG + EBS
+    - [Load Balancing 101](#load-balancing-101)
 
 ---
 
@@ -144,7 +145,7 @@ Each availability zone is a physical data center in the region, but separated fr
     6. Launch the instance and visit EC2's public ip in browser. We shall see the test page.
     7. **NOTE:** With above script, we have automated entire flow from above - [SSH Into EC2 Instance And Install Apache](#ssh-into-ec2-instance-and-install-apache)
 
-### Load Balancing
+### Load Balancing 101
 - Types of load balancer:
     1. Classic Load Balancer (v1 - Old Generation) - 2009
     2. Application Load Balancer (v2 - New Generation) - 2016
