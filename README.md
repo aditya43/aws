@@ -15,9 +15,10 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 ## Table of Contents
 - AWS Basics (IAM & EC2)
     - [AWS Regions](#aws-regions)
-    - [IAM - Identity And Access Management](#iam-basics)
+    - [IAM - Identity And Access Management](#iam-identity-and-access-management)
     - [Security Groups](#security-groups)
     - [Elastic IPs](#elastic-ips)
+    - [SSH Into EC2 Instance And Install Apache](#ssh-into-ec2-instance-and-install-apache)
 
 ---
 
@@ -63,3 +64,43 @@ Each availability zone is a physical data center in the region, but separated fr
 - Elastic IP is a public IPv4 we own as long as we don't delete it.
 - One elastic IP can be attached to one EC2 instance at a time.
 - With elastic IP, we can mask the failure of an EC2 instance or software by rapidly remapping the address to another instance in our account.
+
+### SSH Into EC2 Instance And Install Apache
+- `ec2-user` is the default user in our EC2 instance machine.
+- SSH command syntax: `ssh -i [PATH_TO_KEYFILE] [USER]@[PUBLIC_IP]`
+- Copy public IP (In below example, we will use `192.168.0.1`).
+- In terminal, type:
+    ```
+        # SSH into EC2 using public ip.
+        ssh -i my-key-file.pem ec2-user@192.168.0.1
+
+        # Get sudo access for our user.
+        sudo su
+
+        # Update packages.
+        yum update -y
+
+        # Install httpd.
+        yum install -y httpd.x86_64
+
+        # Start httpd.
+        # NOTE: If we get error "bash:systemctl command not found", make sure to use "Amazon Linux 2" and not just "Amazon Linux".
+        systemctl start httpd.service
+
+        # Make sure system remains enabled across reboots. Below command will create a symlink.
+        systemctl enable httpd.service
+
+        # Lets do a quick CURL on localhost:80. It will give us default test HTML page code.
+        curl localhost:80
+    ```
+- At this point if we visit public ip in our browser, we will get timeout. So clearly it's an issue with security groups configurations.
+- Go to `Inbound Rules` security group settings and configure HTTP rule on port 80. Refer to following settings:
+    ```
+        Type: HTTP
+        Protocol: TCP
+        Port Range: 80
+        Source: Custom 0.0.0.0/0
+    ```
+- Now, if we visit public ip in browser, we shall see test page.
+- Default test page is located at:
+    `/var/www/html/index.html`
