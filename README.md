@@ -19,6 +19,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [Security Groups](#security-groups)
     - [Elastic IPs](#elastic-ips)
     - [SSH Into EC2 Instance And Install Apache](#ssh-into-ec2-instance-and-install-apache)
+    - [EC2 User Data](#ec2-user-data)
 
 ---
 
@@ -104,3 +105,39 @@ Each availability zone is a physical data center in the region, but separated fr
 - Now, if we visit public ip in browser, we shall see test page.
 - Default test page is located at:
     `/var/www/html/index.html`
+
+### EC2 User Data
+- It is possible to bootstrap our EC2 instances using an **EC2 User Data script**.
+    * `Bootstrapping` simply means running commands when a machine starts.
+    * Bootstrapping script is run only once on EC2 instance's **first start**.
+- EC2 user data is used to automate boot tasks such as:
+    * Installing updates.
+    * Installing softwares.
+    * Downloading common files from the internet.
+    * Almost anything you can think of.
+- **EC2 User Data Script is run with a ROOT user**. i.e. every command will be ran with `sudo` rights.
+- Example:
+    1. Launch new EC2 instance: `Amazon Linux 2 AMI (HVM), SSD Volume Type`.
+    2. Select `t2-micro` and click on **Configure Instance Details**.
+    3. Scroll down to **Advanced Details** -->  **User Data**
+    4. Select **As Text** radio button and paste the entire example script from below:
+        ```
+            #!/bin/bash
+
+            #####################################################
+            # USE THIS FILE IF YOU HAVE LAUNCHED AMAZON LINUX 2 #
+            #####################################################
+
+            # Get admin priviledges. Although it is not required to do so since the script will be run with ROOT user.
+            sudo su
+
+            # Install httpd (Linux 2 version)
+            yum update -y
+            yum install -y httpd.x86_64
+            systemctl start httpd.service
+            systemctl enable httpd.service
+            echo "Hello world from Aditya at $(hostname -f)" > /var/www/html/index.html
+        ```
+    5. Make sure EC2 instance is having a security group with `HTTP PORT 80` and `SSH` policy enabled.
+    6. Launch the instance and visit EC2's public ip in browser. We shall see the test page.
+    7. **NOTE:** With above script, we have automated entire flow from above - [SSH Into EC2 Instance And Install Apache](#ssh-into-ec2-instance-and-install-apache)
