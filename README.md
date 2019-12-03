@@ -21,10 +21,10 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 ---
 
-#### AWS Regions
+### AWS Regions
 Each availability zone is a physical data center in the region, but separated from the other ones (so that they're isolated from disasters).
 
-#### IAM - Identity And Access Management
+### IAM - Identity And Access Management
 - IAM has a global view.
 - Whole AWS security is there:
     * Users
@@ -34,7 +34,7 @@ Each availability zone is a physical data center in the region, but separated fr
 - One IAM **User** per physical person.
 - One IAM **Role** per application.
 
-#### Security Groups
+### Security Groups
 - Security groups are like firewall on EC2 instances.
 - They regulate:
     * Access to ports.
@@ -51,7 +51,7 @@ Each availability zone is a physical data center in the region, but separated fr
     * If your application is not accessible (time out), then it's a security group issue.
     * If your application is giving "connection refused", then it's an application error. Or may be your application is not launched.
 
-#### Elastic IPs
+### Elastic IPs
 - It is quite an uncommon pattern to use Elastic IPs. That is because:
     * We can have only 5 Elastic IPs in our account (although we can ask AWS to increate this limit.).
 - Always **try to avoid using Elastic IP**.
