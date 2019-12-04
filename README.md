@@ -26,6 +26,9 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [ASG - Auto Scaling Group](#asg-auto-scaling-group)
     - [EBS - Elastic Block Store](#ebs-elastic-block-store)
 
+- AWS Fundamentals: Route 53 + RDS + Elasticache + VPC
+    - [Route 53](#route-53)
+
 ---
 
 ### AWS Regions
@@ -298,3 +301,27 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Migrating an EBS volume across AZ means first backing it up (snapshot), then recreating it in the other AZ.
     * EBS backups (snapshot) use IO and you shouldn't perform a `snapshot` operation while your application is handling a lot of traffic.
     * Root EBS volumes of EC2 instances get terminated by default if the EC2 instance gets termiated. **This can be disabled**.
+
+### Route 53
+- Route 53 is a DNS (Domain Name System) management facility.
+- DNS is a collection of rules and records which helps clients understand how to reach a server through URLs.
+- In AWS, the most common records are:
+    * `A Record`: URL to IPv4.
+    * `AAAA Record`: URL to IPv6.
+    * `CNAME Record`: URL to URL.
+    * `Alias Record`: URL to AWS Resource.
+- Route 53 can use:
+    * Public domain names you own (or buy). For e.g. adiinviter.com
+    * Private domain names that can be resolved by your EC2 instances in your VPCs. For e.g. `adiinviter.internal`
+- Route 53 has some advanced features such as:
+    * Load balancing through DNS. Also called `Client Load Balancing`.
+    * Health checks (Although limited).
+    * Routing policies:
+        * Simple
+        * Failover
+        * Geolocation
+        * Geoproximity
+        * Latency
+        * Weighted
+- Prefer **Alias** over **CNAME** for AWS resources (For good performance).
+
