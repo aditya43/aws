@@ -28,6 +28,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS Fundamentals: Route 53 + RDS + Elasticache + VPC
     - [Route 53](#route-53)
+    - [RDS - Relational Database Service](#rds-relational-database-service)
 
 ---
 
@@ -325,3 +326,94 @@ Each availability `z`one is a physical data center in the region, but separated 
         * Weighted
 - Prefer **Alias** over **CNAME** for AWS resources (For good performance).
 
+### RDS - Relational Database Service
+- RDS uses SQL query language.
+- RDS allows us to create following types of databases in cloud:
+    * Postgres
+    * Oracle
+    * MySQL
+    * MariaDB
+    * MSSQL (Microsoft SQL Server)
+    * Aurora (AWS Proprietary Database)
+- **Why use RDS** instead of installing DB software directly on EC2 instance:
+    * RDS is a managed service. It is manged by AWS. AWS RDS offers following features:
+        * OS patching level.
+        * Continuous backup and restore to specific timestamp (`Point In Time Restore`).
+        * Monitoring Dashboard.
+        * `Read Replicas` for improved read performance.
+        * Multi `AZ` (Availability Zones) setup for `DR` (Disaster Recovery).
+        * Maintenance windows for upgrades.
+        * Scaling capability (vertical & horizontal).
+        * **Only Con:** You can't SSH into your RDS instances.
+- **Read Scalability** setup - RDS Read Replicas:
+    * Up to 5 `Read Replicas`.
+    * They can be created:
+        * Within AZ `(Availability Zone)`.
+        * Cross AZ `(Availability Zone)`.
+        * Cross Region.
+    * Replication is `ASYNC`, so reads are eventually consistent.
+    * Replicas can be promoted to their own DB.
+    * Applications must use appropriate connection strings to use read replicas.
+        * For e.g. In PHP Laravel, we can setup connection strings for:
+            * Master
+            * Slave 1
+            * Slave 2
+    * In this setup, only `Master` takes read and write operations and `Read Replicas` are used only for read operations.
+    * `Master` performs replication of data in `ASYNC` manner.
+- **Disaster Recovery** setup - Multi AZ (`Availability Zone`):
+    * **NOT USED FOR SCALING!**
+    * `Master` performs replication in `SYNC` manner into `Standby Replica`.
+    * `One DNS Name` - Automatic App Failover To `Standby Replica`. i.e. If a `Master Replica` fails, `Standby Replica` will be converted to `Master Replica`.
+    * **Not used for READ SCALIBILITY!**
+    * **Multi AZ setup is used to increase AVAILABILITY**.
+    * Complete failover in case of:
+        * Loss of AZ.
+        * Loss of network.
+        * Instance failure.
+        * Storage failure.
+* We can use combination of Read Scalability and Disaster Recovery setup.
+- **RDS Backups:**
+    * Backups are automatically enabled in RDS.
+    * Automated backups offer:
+        * Daily full snapshot of the database.
+        * Capture transaction logs in real time.
+        * Ability to restore to any point in time.
+        * Backups are retained for 7 days by default (Can be increased to 35 days).
+- **DB Snapshots:**
+    * These are not automatic. These are manually triggered by user.
+    * Snapshots are retained as long as you want.
+- **RDS Encryption:**
+    * Encryption is at rest (everywhere).
+    * Uses `AWS KMS - AES-256` encryption.
+    * SSL certificates can be used to encrypt data on the fly.
+    * To **Enforce SSL:**
+        * PostgreSQL: In AWS RDS console (`Parameters Group`) run following:
+            ```
+                rds.force_ssl = 1
+            ```
+        * MySQL: Execute following query within the DB:
+            ```
+                GRANT USAGE ON *.* TO 'mysqluser'@'%' REQUIRE SSL;
+            ```
+    * To **Connect Using SSL** to DB:
+        * Provide the SSL Trust Certificate (Can be downloaded from AWS).
+        * Provide SSL options while connecting to database.
+- **RDS Security:**
+    * RDS databases are usually deployed within a private subnet, not in a public one.
+    * RDS security works by leveraing the `Security Groups` (Same concept as for EC2 instances).
+        * It controls who can communicate with RDS.
+    * `IAM (Identity And Access Management) Policies` help control who can manage AWS RDS.
+    * Traditional username and password can be used to login to the database.
+    * **New:** IAM users can now be used too for MySQL and Aurora.
+- **RDS vs. Aurora:**
+    * Aurora is a proprietary technology from AWS.
+    * `Postgres` and `MySQL` are both supported as `Aurora DB`. i.e. Our Postgres and MySQL drivers will work as if they are `Aurora DB`.
+    * Aurora is `AWS Cloud Optimized` and claims:
+        * 5x performance improvement over `MySQL on RDS`.
+        * 3x performance improvement over `Postgres on RDS`.
+    * Aurora storage automatically grows in increments of 10GB. Up to 64TB.
+    * Aurora can have 15 replicas while MySQL can have 5.
+    * Replication is very fast on Aurora Replicas.
+    * Failover in Aurora is instantanious. Its **HA Native** (`Highly Available`).
+    * Aurora costs more than RDS (Almost 20% more).
+    * Overall, Aurora is more efficient.
