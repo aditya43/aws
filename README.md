@@ -24,11 +24,12 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS Fundamentals: ELB + ASG + EBS
     - [ELB - Elastic Load Balancers](#elb-elastic-load-balancers)
     - [ASG - Auto Scaling Group](#asg-auto-scaling-group)
+    - [EBS - Elastic Block Store](#ebs-elastic-block-store)
 
 ---
 
 ### AWS Regions
-Each availability zone is a physical data center in the region, but separated from the other ones (so that they're isolated from disasters).
+Each availability `z`one is a physical data center in the region, but separated from the other ones (so that they're isolated from disasters).
 
 ### IAM - Identity And Access Management
 - IAM has a global view.
@@ -237,3 +238,63 @@ Each availability zone is a physical data center in the region, but separated fr
         * i.e. Number of EC2 instances spun in.
     * ASG will automatically restart instances running under them if they (instances) get terminated for whatever reason. **Extra Safety!**
     * If a LB (Load Balancer) marks an instace as unhealthy, then ASG can terminate that instance and will replace it further.
+
+### EBS - Elastic Block Store
+- EC2 instance loses its root volume (main drive) when it is manually terminated.
+- Enexpected terminations might happen from time to time (AWS would email you whenever this happens).
+- Sometimes, you need a way to store your EC2 instance data somewhere even though it is terminated. This is where EBS volume comes into picture.
+- **EBS (Elastic Block Store) Volume** is a network drive you can attach to your EC2 instance while they are running.
+- It allows EC2 instances to persist data.
+- **What are EBS volumes:**
+    * It's a network drive (not a physical drive).
+        * EC2 instance communicate to EBS volume over a network (since it is not physically attached to EC2 instance). So there may be bit of latency (very little though).
+        * EBS volume can be detached from one EC2 instance and attached to another EC2 instance very quickly.
+    * EBS volume is locked to an `Availability Zone (AZ)`.
+        * For e.g. EBS Volume attached to EC2 instance running in `us-east-1a` cannot be attached to EC2 instance running in `us-east-1b`.
+        * To move a volume across different `Availability Zone (AZ)`, we first need to **`snapshot`** it.
+    * EBS volume has a provisioned capacity (size in GBs, and IOPS). i.e. We need to first specify the volume size and `IOPS (Number of I/O operations per second)`.
+        * You get billed for all the provisioned capacity.
+        * You can increase the size and IOPS over time.
+    * Types of EBS volumes:
+        1. GP2 (SSD): General Purpose SSD volume. Balances price and performance for a wide variety of workloads.
+        2. IO1 (SSD): **Highest Performance SSD volume**. Good for mission-critical low-latency or high throughput workloads.
+        3. ST1 (HDD): Low Cost HDD volume designed for frequent access and throughput-intensive workloads. Good for Big Data operations.
+        4. SC1 (HDD): **Lowest Cost HDD volume**. Good for less frequently accessed workloads.
+    * EBS volumes are characterized in **Size, Throughput and IOPS (Number of I/O operations per second)**.
+    * Always consult AWS documetations about EBS volumes before choosing one.
+    * EBS Snapshots:
+        * EBS volumes can be backed up using `snapshots`.
+        * Snapshots only take the actual space of the blocks on the volume.
+        * Snapshots are used for:
+            * Backups: ensuring you can save your data in case of catastrophe.
+            * Volume migration:
+                * Resizing a volume down.
+                * Changing the volume type.
+                * Encrypt a volume.
+- **EBS Encryption:**
+    * When we create an encrypted EBS volume, we get following:
+        * Data at rest is encrypted inside the volume.
+        * All the data moving between EC2 instance and volume is encrypted.
+        * All `snapshots` are encrypted.
+        * All volumes created from `snapshots` are also encrypted.
+    * Encryption and decryption is handled transparently (we have nothing to do there).
+    * Encryption has a minimal impact on latency.
+    * EBS encryption leverages keys from **KMS (AES-256)**.
+    * Copying and unencrypted snapshot allows encryption.
+- **EBS vs Instance Store:**
+    * Some EC2 instance do not come with Root EBS volumes, instead they come with `Instance Store`.
+    * `Instance Store` is physically attached to the EC2 machine.
+    * **Instance Store:**
+        * Pros:
+            * Since the `Instance Store` is physically attached to EC2 instance, it provides better I/O performance.
+        * Cons:
+            * On EC2 instance termination, `Instance Store` is lost.
+            * You can't resize the `Instance Store`.
+            * Backups must be operated by user.
+    * Overall, EBS-backed EC2 instances are good and should fir most applications workloads.
+- **EBS - Important Points:**
+    * EBS can be attached to only one EC2 instance at a time.
+    * EBS are locked at the AZ (Availability Zone) level.
+    * Migrating an EBS volume across AZ means first backing it up (snapshot), then recreating it in the other AZ.
+    * EBS backups (snapshot) use IO and you shouldn't perform a `snapshot` operation while your application is handling a lot of traffic.
+    * Root EBS volumes of EC2 instances get terminated by default if the EC2 instance gets termiated. **This can be disabled**.
