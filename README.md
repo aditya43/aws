@@ -40,6 +40,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
         - [SSE-KMS](#sse-kms)
         - [SSE-C](#sse-c)
         - [Client Side Encryption](#client-side-encryption)
+    - [S3 - Security And Bucket Policies](#s3---security-and-bucket-policies)
 
 ---
 
@@ -576,10 +577,38 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Clients must `encrypt` data themselves before sending to S3.
     * Clients must `decrypt` data themselves when retrieving from S3.
     * The entire Encryption-Decryption cycle and data keys are managed by customers (Not AWS).
-- Encryption in transit/fligh (SSL/TLS):
+- #### Encryption in transit/fligh (SSL/TLS):
     * Encryption in flight/transit is also called `SSL/TLS`.
     * AWS S3 exposes:
         * `HTTP` endpoint: Non Encrypted.
         * `HTTPS` endpoint: Encryption In Flight.
     * You are free to use the endpoint you want (HTTP or HTTPS) , but **HTTPS is recommended**.
     * **HTTPS is mandatory for SSE-C.**
+
+### S3 - Security And Bucket Policies
+- Types of S3 Security:
+    * User Based:
+        * `IAM Policies`: These policies define which API calls should be allowed for a specific user from IAM console.
+    * Resource Based: These are popular
+        * Bucket Policies: These are bucket wide rules set from the S3 console. Allows cross account.
+        * `Object ACL (Access Control List)`: These are finer grain.
+        * `Bucket ACL (Access Control List)`: These are less common.
+- **S3 Bucket Policies:**
+    * `JSON` based policies. Bucket Policy has 4 major elements:
+        * `Resources`: Buckets and objects.
+        * `Actions`: Set of APIs to `Allow` or `Deny`.
+        * `Effect`: Allow/Deny.
+        * `Principal`: The account or user to apply the policy to.
+    * **Why Use S3 Bucket Policies:**
+        * To grant public access to the bucket.
+        * To force objects to be encrypted at upload.
+        * To grant access to another account (`Cross Account`).
+- **S3 Security: Important Points**
+    * Networking:
+        * S3 supports `VPC Endpoints` (For EC2 instances running in VPC without internet access).
+    * Logging And Audit:
+        * S3 access logs can be stored in other S3 bucket. Never store access logs in same bucket where we are storing our application objects.
+        * API calls can be logged in `AWS CloudTrail`.
+    * User Security:
+        * `MFA (Multi Factor Authentication)` can be required in versioned buckets to delete objects.
+        * `Signed URLs` are URLs that are valid only for a limited time (for e.g. Premium video service for logged in users).
