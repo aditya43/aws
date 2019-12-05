@@ -44,6 +44,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [S3 - Websites](#s3---websites)
     - [S3 - CORS](#s3---cors)
     - [S3 - Consistency Model](#s3---consistency-model)
+    - [S3 - Performance](#s3---performance)
 
 ---
 
@@ -642,7 +643,29 @@ Each availability `z`one is a physical data center in the region, but separated 
     * If we read an object after updating, we might get the older version. (For e.g. `PUT 200 --> PUT 200 --> GET 200`) - Might be older version.
     * If we delete an object, we might still be able to retrieve it for a short time. (For e.g. `DELETE 200 --> GET 200`) - We might still retrieve an object.
 - **In short:**
-    * `Read After Write Consistency` for **PUTS**: Write (no prior read operation) and then read operation will always give us new object copy.
+    * `Read After Write Consistency` for **PUTS**:
+        * Write (no prior read operation) and then read operation will always give us new object copy.
+        * If object doesn't exists already, `Read Operation` then `Write Operation` and then `Read Operation`might give us `404` because it takes time for S3 to update it's cache and first `Read Operation` response might be received from cache in this situation.
     * `Eventual Consistency` for **DELETES** and **PUTS**:
         * `PUTS`: Even though object has been overwritten, we might still retrieve an old copy of object.
         * `DELETES`: Even though object has been deleted, we might retrieve a copy of object for short time.
+
+### S3 - Performance
+- **Old Times:**
+    - When you had > 100 TPS (Transaction per second), S3 performance could degrade.
+    - Behind the scene, each object goes to an S3 partition and for the best performace, we want the highest partition distribution.
+    - It was recommended to have random characters in front of your key name to optimize performance. For e.g.
+        * >\<my_bucket>/**7i4p**_my_folder/my_file1.txt
+        * >\<my_bucket>/**2k5t**_my_folder/my_file2.txt
+        * **Never use dates** to prefix keys. For e.g.:
+            * >\<my_bucket>/**2019_12_05**_my_folder/my_file1.txt
+- **Current Times:**
+    - As of July 17th, 2018, we can scale up to 3500 RPS (Requests Per Second) for **PUT** and 5500 RPS for **GET** for `EACH PREFIX`.
+    - This request rate performace increase removes any guidance to put randomized characters in keys etc. from old times (Refer above).
+- Use `Multipart Upload` for faster upload of large objects (>5GB). `Multipart Upload` provides:
+    * Parallel `PUTs` for greater throughput.
+    * Maximize network bandwidth.
+    * Decrease time to retry in case a part fails.
+- Use `CloudFront` to cache S3 objects around the world (improves reads).
+- `S3 Transfer Acceleration`: If you are geo located far away from where your bucket is geo located, you might experice slow uploads. This is where `S3 Transfer Acceleration` service comes into picture. It used `edge locations`. To use this service, no code changes are required. Only need to change the S3 bucket endpoint where you write to.
+- If using `SSE-KMS` encryption you may see a **performance decrease**. With `SSE-KMS` encryption, you may be limited to your AWS limits for KMS usage (~100 - 1000 downloads/uploads per second.
