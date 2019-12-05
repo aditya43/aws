@@ -46,10 +46,12 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [S3 - Consistency Model](#s3---consistency-model)
     - [S3 - Performance](#s3---performance)
 
-- AWS CLI And IAM Roles
+- AWS CLI, IAM Roles, EC2 Instance Metadata, AWS SDK
     - [IAM Roles](#iam-roles)
     - [AWS CLI Dry Runs](#aws-cli-dry-runs)
     - [AWS CLI STS Decode Errors](#aws-cli-sts-decode-errors)
+    - [EC2 Instance Metadata](#ec2-instance-metadata)
+    - [AWS SDK](#aws-sdk)
 
 ---
 
@@ -681,6 +683,7 @@ Each availability `z`one is a physical data center in the region, but separated 
 - An EC2 instance can have one IAM Role at a time.
 - `IAM Policies` can be attached to `IAM Roles`.
 - With the set of strong and specific `IAM Policies` attached to `IAM Roles`, we can achieve a much secured setup.
+- The only way to test the `IAM Policy` is to use the `Policy Simulator` or `--dry-run` option.
 
 ### AWS CLI Dry Runs
 - Some AWS CLI Commands (**Not All**) contain a `--dry-run` option to simulate API calls.
@@ -692,3 +695,48 @@ Each availability `z`one is a physical data center in the region, but separated 
     aws sts decode-authorization-message --encoded-message <MESSAGE_STRING>
     ```
 - `STS Command Line` is used to decode `Encoded authorization failure message`.
+
+### EC2 Instance Metadata
+- It allows EC2 instances to `learn about themselves` **without using an IAM Role for that purpose**.
+- The URL is `http://169.254.169.254/latest/meta-data`
+    * `169.254.169.254` is an internal ip to AWS.
+    * This URL will not work from our computer directly.
+    * This URL **Only Works** from our EC2 instances.
+    * Using this URL, you can retrieve the `IAM Role Name` from metadata but you cannot retrieve the `IAM Policy`.
+    * You cannot retrieve the contents of `IAM Policy` using this URL.
+    * **Metadata:** Info about the EC2 instance.
+    * **Userdata:** Launch script of the EC2 instance.
+- Visting `http://169.254.169.254/latest/` yields following:
+    ```
+    dynamic
+    meta-data
+    user-data
+    ```
+- We can visit trailing APIs in above structure to retrieve various information about the EC2 instance.
+- To visit above URL from our EC2 instance using CURL, run following command:
+    ```
+    curl http://169.254.169.254/latest/meta-data
+    ```
+
+### AWS SDK
+- AWS SDK is used to perform actions on AWS directly from your applications code (without using the CLI).
+- For e.g. when coding against `DynamoDB`, we have to use AWS SDK.
+- The AWS CLI uses `Python SDK (boto3)`.
+- By default `us-east-1` will be used as a `Default Region` if we do not specify or configure one.
+- **SDK Credentials Security:**
+    * It is recommended to use `default credential provider chain`.
+    * The `default credential provider chain` works seamlessly with:
+        * AWS credentials stored in file at `~/.aws/credentials` (Only on your computer or premise).
+        * `Instance Profile Credentials` using `IAM Roles` (for EC2 machines etc..)
+        * `Environment Variables` such as: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY**.
+            * In Laravel application, we set these 2 in `/config/app.php`.
+            * This method is not recommended but still widely used.
+- **Never EVER EVER** store `AWS Credentials` in your code.
+- **Best Practices:**
+    * `AWS Credentials` should be inherited from mechanisms above (Except setting them in `Environment Variables`).
+    * **100% IAM Roles** if working from within AWS Services.
+- **Exponential Backoff:**
+    * Any API call that fails because of too many calls needs to be retried with `Exponential Backoff`.
+    * These apply to `Rate Limited APIs`.
+    * It simply means - If our API call fails, it will wait twice as long as previous API call to try again (Exponential Time Complexity).
+    * Retry mechanisms are included in SDK API Calls.
