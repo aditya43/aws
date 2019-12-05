@@ -32,6 +32,9 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [ElastiCache](#elasticache)
     - [VPC - Virtual Private Cloud And 3 Tier Architecture](#vpc---virtual-private-cloud-and-3-tier-architecture)
 
+- Amazon S3
+    - [S3 - Buckets And Objects](#s3---buckets-and-objects)
+
 ---
 
 ### AWS Regions
@@ -498,3 +501,28 @@ Each availability `z`one is a physical data center in the region, but separated 
     3. Then suppose in `Private Subnet` we have `ASG (Auto Scaling Group)` setup in 2 different `AZ (Availability Zone)` and there are EC2 instances running in our ASG. The ELB will point this request furhter to EC2 instance.
     4. EC2 instance will communicate with `ElastiCache` (Setup in `Private Subnet`) and try to read data from there.
     5. If the data is not found on `ElastiCache`, EC2 instance will try to query data from `RDS` (Setup in `Private Subnet`). Once the data is retrieved from RDS, EC2 instance will store it in `ElastiCache` and use it further.
+
+### S3 - Buckets And Objects
+- Amazon S3 allows people to store `Objects` (files) in `Buckets` (directories).
+- **There is no concept of directories in S3 buckets.** It's just buckets separated by slash (/) in any object key.
+- **Buckets:**
+    * `Buckets` must have globally unique names.
+    * `Buckets` are defined at the `Region Level`.
+    * Bucket Naming Convention:
+        * No Uppercase.
+        * No Underscore.
+        * 3-63 Characters long.
+        * Not and IP.
+        * Must start with lowercase letter or number.
+- **Objects (Files):**
+    * `Objects` have a `Key` and the `Key` is the `Full Path`. For e.g.
+        ```
+        <my_bucket>/my_file.txt
+        <my_bucket>/folder1/folder2/my_file.txt
+        ```
+    * `Object Values` are the content of the body:
+        * Max `Object` (file) size `5TB`.
+        * `Objects` (files) greater than `5GB` in size cannot be uploaded to S3 Bucket unless we use `multi-part upload`.
+    * Objects can have `Metadata`. Metadata is nothing but a list of `Text Key/Value Pairs` (System or User metadata).
+    * Objects can have `Tags`. Tags are nothing but `Unicode Key/Value Pairs (Up to 10)`. They are useful for `Security and Lifecycle`.
+    * Objects can have `Version ID` (If versioning is `enabled`).
