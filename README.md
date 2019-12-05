@@ -15,20 +15,20 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 ## Table of Contents
 - AWS Basics (IAM & EC2)
     - [AWS Regions](#aws-regions)
-    - [IAM - Identity And Access Management](#iam-identity-and-access-management)
+    - [IAM - Identity And Access Management](##iam---identity-and-access-management)
     - [Security Groups](#security-groups)
     - [Elastic IPs](#elastic-ips)
     - [SSH Into EC2 Instance And Install Apache](#ssh-into-ec2-instance-and-install-apache)
     - [EC2 User Data](#ec2-user-data)
 
 - AWS Fundamentals: ELB + ASG + EBS
-    - [ELB - Elastic Load Balancers](#elb-elastic-load-balancers)
-    - [ASG - Auto Scaling Group](#asg-auto-scaling-group)
-    - [EBS - Elastic Block Store](#ebs-elastic-block-store)
+    - [ELB - Elastic Load Balancers](#elb---elastic-load-balancers)
+    - [ASG - Auto Scaling Group](#asg---auto-scaling-group)
+    - [EBS - Elastic Block Store](#ebs---elastic-block-store)
 
 - AWS Fundamentals: Route 53 + RDS + Elasticache + VPC
     - [Route 53](#route-53)
-    - [RDS - Relational Database Service](#rds-relational-database-service)
+    - [RDS - Relational Database Service](#rds---relational-database-service)
 
 ---
 
