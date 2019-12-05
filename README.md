@@ -590,7 +590,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     * User Based:
         * `IAM Policies`: These policies define which API calls should be allowed for a specific user from IAM console.
     * Resource Based: These are popular
-        * Bucket Policies: These are bucket wide rules set from the S3 console. Allows cross account.
+        * `Bucket Policies`: These are very popular. `Bucket Policies` are bucket wide rules set from the S3 console. Allows cross account.
         * `Object ACL (Access Control List)`: These are finer grain.
         * `Bucket ACL (Access Control List)`: These are less common.
 - **S3 Bucket Policies:**
