@@ -46,12 +46,13 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [S3 - Consistency Model](#s3---consistency-model)
     - [S3 - Performance](#s3---performance)
 
-- AWS CLI, IAM Roles, EC2 Instance Metadata, AWS SDK
+- AWS CLI, IAM Roles, EC2 Instance Metadata, AWS SDK, CLI Profiles
     - [IAM Roles](#iam-roles)
     - [AWS CLI Dry Runs](#aws-cli-dry-runs)
     - [AWS CLI STS Decode Errors](#aws-cli-sts-decode-errors)
     - [EC2 Instance Metadata](#ec2-instance-metadata)
     - [AWS SDK](#aws-sdk)
+    - [AWS CLI Profiles](#aws-cli-profiles)
 
 ---
 
@@ -740,3 +741,14 @@ Each availability `z`one is a physical data center in the region, but separated 
     * These apply to `Rate Limited APIs`.
     * It simply means - If our API call fails, it will wait twice as long as previous API call to try again (Exponential Time Complexity).
     * Retry mechanisms are included in SDK API Calls.
+
+### AWS CLI Profiles
+- To create multiple profiles with dfferent AWS credentials, use below command and follow the on screen instructions:
+    ```
+    aws configure --profile <PROFILE-NAME>
+    ```
+- Almost every AWS command has `--profile` flag.
+    * For e.g. To list S3 buckets for a profile, execute following command:
+        ```
+        aws s3 ls --profile <PROFILE-NAME>
+        ```
