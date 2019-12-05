@@ -41,6 +41,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
         - [SSE-C](#sse-c)
         - [Client Side Encryption](#client-side-encryption)
     - [S3 - Security And Bucket Policies](#s3---security-and-bucket-policies)
+    - [S3 - Websites](#s3---websites)
 
 ---
 
@@ -612,3 +613,11 @@ Each availability `z`one is a physical data center in the region, but separated 
     * User Security:
         * `MFA (Multi Factor Authentication)` can be required in versioned buckets to delete objects.
         * `Signed URLs` are URLs that are valid only for a limited time (for e.g. Premium video service for logged in users).
+
+### S3 - Websites
+- S3 can host static websites and have them accessible on the www.
+- The website URL will be:
+    * > \<bucket-name>.**s3-website-**<AWS-region>.amazonaws.com
+    * **OR**
+    * > \<bucket-name>.**s3-website.**<AWS-region>.amazonaws.com
+- If you get a `403 (Forbidden)` error, make sure the bucket policy allows public reads.
