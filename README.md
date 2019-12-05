@@ -46,6 +46,11 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [S3 - Consistency Model](#s3---consistency-model)
     - [S3 - Performance](#s3---performance)
 
+- AWS CLI And IAM Roles
+    - [IAM Roles](#iam-roles)
+    - [AWS CLI Dry Runs](#aws-cli-dry-runs)
+    - [AWS CLI STS Decode Errors](#aws-cli-sts-decode-errors)
+
 ---
 
 ### AWS Regions
@@ -667,5 +672,23 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Maximize network bandwidth.
     * Decrease time to retry in case a part fails.
 - Use `CloudFront` to cache S3 objects around the world (improves reads).
-- `S3 Transfer Acceleration`: If you are geo located far away from where your bucket is geo located, you might experice slow uploads. This is where `S3 Transfer Acceleration` service comes into picture. It used `edge locations`. To use this service, no code changes are required. Only need to change the S3 bucket endpoint where you write to.
+- `S3 Transfer Acceleration`: If you are geo located far away from where your bucket is geo located, you might experice slow uploads. This is where `S3 Transfer Acceleration` service comes into picture. It uses `edge locations`. To use this service, no code changes are required. Only need to change the S3 bucket endpoint where you write to.
 - If using `SSE-KMS` encryption you may see a **performance decrease**. With `SSE-KMS` encryption, you may be limited to your AWS limits for KMS usage (~100 - 1000 downloads/uploads per second.
+
+### IAM Roles
+- IAM Roles can be attached to EC2 instances.
+- IAM Roles can come with a policy authorizing exactly what the EC2 instance should be able to do.
+- An EC2 instance can have one IAM Role at a time.
+- `IAM Policies` can be attached to `IAM Roles`.
+- With the set of strong and specific `IAM Policies` attached to `IAM Roles`, we can achieve a much secured setup.
+
+### AWS CLI Dry Runs
+- Some AWS CLI Commands (**Not All**) contain a `--dry-run` option to simulate API calls.
+
+### AWS CLI STS Decode Errors
+- When you run API calls and they fail, you will get a long error message (big ass characters string).
+- This character string can be decoded using the `STS Command Line`. Following is a command to do so:
+    ```
+    aws sts decode-authorization-message --encoded-message <MESSAGE_STRING>
+    ```
+- `STS Command Line` is used to decode `Encoded authorization failure message`.
