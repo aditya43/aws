@@ -83,35 +83,35 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Copy public IP (In below example, we will use `192.168.0.1`).
 - In terminal, type:
     ```
-        # SSH into EC2 using public ip.
-        ssh -i my-key-file.pem ec2-user@192.168.0.1
+    # SSH into EC2 using public ip.
+    ssh -i my-key-file.pem ec2-user@192.168.0.1
 
-        # Get sudo access for our user.
-        sudo su
+    # Get sudo access for our user.
+    sudo su
 
-        # Update packages.
-        yum update -y
+    # Update packages.
+    yum update -y
 
-        # Install httpd.
-        yum install -y httpd.x86_64
+    # Install httpd.
+    yum install -y httpd.x86_64
 
-        # Start httpd.
-        # NOTE: If we get error "bash:systemctl command not found", make sure to use "Amazon Linux 2" and not just "Amazon Linux".
-        systemctl start httpd.service
+    # Start httpd.
+    # NOTE: If we get error "bash:systemctl command not found", make sure to use "Amazon Linux 2" and not just "Amazon Linux".
+    systemctl start httpd.service
 
-        # Make sure system remains enabled across reboots. Below command will create a symlink.
-        systemctl enable httpd.service
+    # Make sure system remains enabled across reboots. Below command will create a symlink.
+    systemctl enable httpd.service
 
-        # Lets do a quick CURL on localhost:80. It will give us default test HTML page code.
-        curl localhost:80
+    # Lets do a quick CURL on localhost:80. It will give us default test HTML page code.
+    curl localhost:80
     ```
 - At this point if we visit public ip in our browser, we will get timeout. So clearly it's an issue with security groups configurations.
 - Go to `Inbound Rules` security group settings and configure HTTP rule on port 80. Refer to following settings:
     ```
-        Type: HTTP
-        Protocol: TCP
-        Port Range: 80
-        Source: Custom 0.0.0.0/0
+    Type: HTTP
+    Protocol: TCP
+    Port Range: 80
+    Source: Custom 0.0.0.0/0
     ```
 - Now, if we visit public ip in browser, we shall see test page.
 - Default test page is located at:
@@ -133,21 +133,21 @@ Each availability `z`one is a physical data center in the region, but separated 
     3. Scroll down to **Advanced Details** -->  **User Data**
     4. Select **As Text** radio button and paste the entire example script from below:
         ```
-            #!/bin/bash
+        #!/bin/bash
 
-            #####################################################
-            # USE THIS FILE IF YOU HAVE LAUNCHED AMAZON LINUX 2 #
-            #####################################################
+        #####################################################
+        # USE THIS FILE IF YOU HAVE LAUNCHED AMAZON LINUX 2 #
+        #####################################################
 
-            # Get admin priviledges. Although it is not required to do so since the script will be run with ROOT user.
-            sudo su
+        # Get admin priviledges. Although it is not required to do so since the script will be run with ROOT user.
+        sudo su
 
-            # Install httpd (Linux 2 version)
-            yum update -y
-            yum install -y httpd.x86_64
-            systemctl start httpd.service
-            systemctl enable httpd.service
-            echo "Hello world from Aditya at $(hostname -f)" > /var/www/html/index.html
+        # Install httpd (Linux 2 version)
+        yum update -y
+        yum install -y httpd.x86_64
+        systemctl start httpd.service
+        systemctl enable httpd.service
+        echo "Hello world from Aditya at $(hostname -f)" > /var/www/html/index.html
         ```
     5. Make sure EC2 instance is having a security group with `HTTP PORT 80` and `SSH` policy enabled.
     6. Launch the instance and visit EC2's public ip in browser. We shall see the test page.
@@ -391,11 +391,11 @@ Each availability `z`one is a physical data center in the region, but separated 
     * To **Enforce SSL:**
         * PostgreSQL: In AWS RDS console (`Parameters Group`) run following:
             ```
-                rds.force_ssl = 1
+            rds.force_ssl = 1
             ```
         * MySQL: Execute following query within the DB:
             ```
-                GRANT USAGE ON *.* TO 'mysqluser'@'%' REQUIRE SSL;
+            GRANT USAGE ON *.* TO 'mysqluser'@'%' REQUIRE SSL;
             ```
     * To **Connect Using SSL** to DB:
         * Provide the SSL Trust Certificate (Can be downloaded from AWS).
@@ -479,10 +479,11 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Load Balancers.
     * Static Websites.
     * Files.
-    * Public Authentication Laters.
+    * Public Authentication Layers.
 - **Private Subnets** usually cointains:
     * Web Application Servers.
     * Databases.
+    * ElastiCache.
 - **VPC Important Points:**
     * VPC are `Per Account Per Region`.
     * Subnets are `Per VPC Per AZ (Availability Zone)`.
