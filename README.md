@@ -42,6 +42,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
         - [Client Side Encryption](#client-side-encryption)
     - [S3 - Security And Bucket Policies](#s3---security-and-bucket-policies)
     - [S3 - Websites](#s3---websites)
+    - [S3 - CORS](#s3---cors)
 
 ---
 
@@ -621,3 +622,12 @@ Each availability `z`one is a physical data center in the region, but separated 
     * **OR**
     * > \<bucket-name>.**s3-website.**<AWS-region>.amazonaws.com
 - If you get a `403 (Forbidden)` error, make sure the bucket policy allows public reads.
+
+### S3 - CORS
+- `CORS` stands for `Cross Origin Resource Sharing`.
+- If you request data from another S3 bucket, you need to enable `CORS`.
+- `CORS` allows you to limit the number of websites that can request your files in S3 (and limit your costs).
+- `CORS` is handled by following header:
+    ```
+    Access-Control-Allow-Origin: <domain>
+    ```
