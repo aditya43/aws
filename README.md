@@ -34,6 +34,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - Amazon S3
     - [S3 - Buckets And Objects](#s3---buckets-and-objects)
+    - [S3 - Versioning](#s3---versioning)
 
 ---
 
@@ -526,3 +527,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Objects can have `Metadata`. Metadata is nothing but a list of `Text Key/Value Pairs` (System or User metadata).
     * Objects can have `Tags`. Tags are nothing but `Unicode Key/Value Pairs (Up to 10)`. They are useful for `Security and Lifecycle`.
     * Objects can have `Version ID` (If versioning is `enabled`).
+
+### S3 - Versioning
+- We can version our files in AWS S3.
+- `Versioning` is enabled at the **Bucket Level**.
+- With every overwrite of file, it will increment the version.
+- It is best practice to version your buckets. Following are the main benefits:
+    * Protect against unintended deletes (Ability to restore a version).
+    * Easy roll back to previous version.
+- **Only downside** of having `Versioning` is that you use just a little more space on your Amazon S3.
+- Any `Object` (File) that is not versioned prior to enabling versioning will have version **`null`**.
