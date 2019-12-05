@@ -35,6 +35,11 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - Amazon S3
     - [S3 - Buckets And Objects](#s3---buckets-and-objects)
     - [S3 - Versioning](#s3---versioning)
+    - [S3 - Encryption For Objects](#s3---encryption-for-objects)
+        - [SSE-S3](#sse-s3)
+        - [SSE-KMS](#sse-kms)
+        - [SSE-C](#sse-c)
+        - [Client Side Encryption](#client-side-encryption)
 
 ---
 
@@ -537,3 +542,44 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Easy roll back to previous version.
 - **Only downside** of having `Versioning` is that you use just a little more space on your Amazon S3.
 - Any `Object` (File) that is not versioned prior to enabling versioning will have version **`null`**.
+
+### S3 - Encryption For Objects
+- There are 4 methods of encrypting objects in S3:
+    * `SSE-S3`: Encrypts S3 objects using keys handled and managed by AWS.
+    * `SSE-KMS`: Leverage `AWS Key Management Service` to manage encryption keys.
+    * `SSE-C`: When you want to manage your own encryption keys.
+    * `Client Side Encryption`.
+- #### SSE-S3:
+    * Encryption using keys handled & managed by `AWS S3`.
+    * Object is encrypted server side.
+    * AES-256 encryption type.
+    * To use `SSE-S3`, set following request header while sending file to S3 bucket:
+        ```
+        "x-amz-server-side-encryption":"AES256"
+        ```
+- #### SSE-KMS:
+    * Encryption using keys handled & managed by `KMS Customer Master Key (CMK)`.
+    * Object is encrypted server side.
+    * KMS Advantages: User Control + Audit Trail.
+    * To use `SSE-KMS`, set following request header while sending file to S3 bucket:
+        ```
+        "x-amz-server-side-encryption":"aws:kms"
+        ```
+- #### SSE-C:
+    * Encryption using data keys fully managed by the customer (you) outside of AWS.
+    * Object is encrypted server side.
+    * Amazon will not store the encryption key you provide.
+    * **HTTPS must be used.**
+    * For every HTTP request made, encryption key must be provided in headers.
+- #### Client Side Encryption:
+    * Client library such as the `Amazon S3 Encryption Client` should be used.
+    * Clients must `encrypt` data themselves before sending to S3.
+    * Clients must `decrypt` data themselves when retrieving from S3.
+    * The entire Encryption-Decryption cycle and data keys are managed by customers (Not AWS).
+- Encryption in transit/fligh (SSL/TLS):
+    * Encryption in flight/transit is also called `SSL/TLS`.
+    * AWS S3 exposes:
+        * `HTTP` endpoint: Non Encrypted.
+        * `HTTPS` endpoint: Encryption In Flight.
+    * You are free to use the endpoint you want (HTTP or HTTPS) , but **HTTPS is recommended**.
+    * **HTTPS is mandatory for SSE-C.**
