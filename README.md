@@ -364,8 +364,8 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `Master` performs replication of data in `ASYNC` manner.
 - **Disaster Recovery** setup - Multi AZ (`Availability Zone`):
     * **NOT USED FOR SCALING!**
-    * `Master` performs replication in `SYNC` manner into `Standby Replica`.
-    * `One DNS Name` - Automatic App Failover To `Standby Replica`. i.e. If a `Master Replica` fails, `Standby Replica` will be converted to `Master Replica`.
+    * `Master` performs replication in `SYNC` manner into `Standby Replica (Slave)`.
+    * `One DNS Name` - Automatic App Failover To `Standby Replica (Slave)`. i.e. If a `Master Replica` fails, `Standby Replica (Slave)` will be converted to `Master Replica`.
     * **Not used for READ SCALIBILITY!**
     * **Multi AZ setup is used to increase AVAILABILITY**.
     * Complete failover in case of:
@@ -468,3 +468,32 @@ Each availability `z`one is a physical data center in the region, but separated 
 - For caching needs, always try to go for `Redis`.
 
 ### VPC - Virtual Private Cloud And 3 Tier Architecture
+- `VPC (Virtual Private Cloud)` is created within a `Region`.
+- Each `VPC` contains `subnets` (networks).
+- Each subnet must be mapped to an **AZ**.
+- It's common to have public subnet (Public IP) in VPC.
+- It's common to have private subnet (Private IP) in VPC.
+- It's common to have many subnets per `AZ`.
+- **Public and Private subnets can communicate if they're in the same `VPC (Virtual Private Cloud)`.**
+- **Public Subnets** usually cointains:
+    * Load Balancers.
+    * Static Websites.
+    * Files.
+    * Public Authentication Laters.
+- **Private Subnets** usually cointains:
+    * Web Application Servers.
+    * Databases.
+- **VPC Important Points:**
+    * VPC are `Per Account Per Region`.
+    * Subnets are `Per VPC Per AZ (Availability Zone)`.
+    * All new AWS accounts come with a default VPC.
+    * It's possible to use a VPN to connect to a VPC and access all the private IPs straight from our laptop.
+    * `VPC Flow Logs` allows us to monitor the traffic within, in and out of our VPC. This is useful for security, performance and audit etc.
+    * Some AWS resources can be deployed in VPC while others can't.
+    * We can peer VPC (Within or across different AWS accounts) to make it look like they're part of the same network.
+- **Example Of 3 Tier Architecture Application:**
+    1. User visits a URL in his browser.
+    2. `Amazon Route 53` routes this request to `ELB (Elastic Load Balancer)`. ELB is in `Public Subnet`.
+    3. Then suppose in `Private Subnet` we have `ASG (Auto Scaling Group)` setup in 2 different `AZ (Availability Zone)` and there are EC2 instances running in our ASG. The ELB will point this request furhter to EC2 instance.
+    4. EC2 instance will communicate with `ElastiCache` (Setup in `Private Subnet`) and try to read data from there.
+    5. If the data is not found on `ElastiCache`, EC2 instance will try to query data from `RDS` (Setup in `Private Subnet`). Once the data is retrieved from RDS, EC2 instance will store it in `ElastiCache` and use it further.
