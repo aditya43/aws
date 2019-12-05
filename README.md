@@ -26,9 +26,11 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [ASG - Auto Scaling Group](#asg---auto-scaling-group)
     - [EBS - Elastic Block Store](#ebs---elastic-block-store)
 
-- AWS Fundamentals: Route 53 + RDS + Elasticache + VPC
+- AWS Fundamentals: Route 53 + RDS + ElastiCache + VPC
     - [Route 53](#route-53)
     - [RDS - Relational Database Service](#rds---relational-database-service)
+    - [ElastiCache](#elasticache)
+    - [VPC - Virtual Private Cloud And 3 Tier Architecture](#vpc---virtual-private-cloud-and-3-tier-architecture)
 
 ---
 
@@ -417,3 +419,52 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Failover in Aurora is instantanious. Its **HA Native** (`Highly Available`).
     * Aurora costs more than RDS (Almost 20% more).
     * Overall, Aurora is more efficient.
+
+### ElastiCache
+- `ElastiCache` is like RDS for caches.
+- `ElastiCache` is an AWS managed service for:
+    * Redis
+    * Memcached
+- They help make your application `Stateless`.
+- `Caches` are in-memory databases with really high performance and super low latency.
+- They help reduce load off of databases for read intensive workloads.
+- They provide `Write Scaling` using `Sharding`.
+- They provide `Read Scaling` using `Read Replicas`.
+- They are `Multi AZ (Availability Zone)` with `Failover Capability`.
+- AWS takes care of:
+    * OS Maintenance.
+    * Patching.
+    * Optimizations.
+    * Setup.
+    * Configuration.
+    * Monitoring.
+    * Failure Recovery.
+    * Backups.
+- Sample workflow:
+    * Application queries `ElastiCache` for data.
+    * If the data is available in `ElastiCache`, read from there.
+    * If the data is not available in `ElastiCache` then query RDS, store in `ElastiCache` and read further.
+- `ElastiCache` helps relieve load in RDS.
+- `ElastiCache` must have an `Invalidation Strategy` to make sure only the most current data is stored in there.
+- **Redis:**
+    * `Redis` is an `in-memory key-value store`.
+    * Super low latency (sub ms).
+    * Redis cache survives reboots `by default` (it's called `persistence`).
+    * Great to host:
+        * User Sessions.
+        * Leaderboard Data (For Gaming).
+        * Distributed States.
+        * Relieve pressure on databases (such as RDS).
+        * `Pub/Sub` capability for messaging.
+    * `Multi AZ (Availability Zone)` with `Automatic Failover` for disaster recovery.
+    * Have support for `Read Replicas`.
+- **Memcached:**
+    * `Memcached` is an `in-memory object store`.
+    * Cache doesn't survive reboots.
+    * Use cases:
+        * Quick retrieval of objects from memory.
+        * Cache often accessed objects.
+- Overall, `Redis` is largely popular than `Memcached` and provides way better features.
+- For caching needs, always try to go for `Redis`.
+
+### VPC - Virtual Private Cloud And 3 Tier Architecture
