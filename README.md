@@ -54,6 +54,9 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS SDK](#aws-sdk)
     - [AWS CLI Profiles](#aws-cli-profiles)
 
+- Elastic Beanstalk
+    - [Elastic Beanstalk](#elastic-beanstalk)
+
 ---
 
 ### AWS Regions
@@ -752,3 +755,26 @@ Each availability `z`one is a physical data center in the region, but separated 
         ```
         aws s3 ls --profile <PROFILE-NAME>
         ```
+
+### Elastic Beanstalk
+- `Elastic Beanstalk` is developer centric view of deploying an application on AWS.
+- It uses all the components like EC2, ASG, ELB, RDS etc..
+- Beanstalk is **Free** but you **pay for only the underlying resources**.
+- Features:
+    * It's a managed service by AWS.
+    * Instance Configuration, OS is handled by the Beanstalk.
+    * Deployment strategy is fully configurable but managed by Beanstalk.
+    * Just the application code is the responsibility of the developer.
+- It has:
+    * Three Architecture Models:
+        * `Single Instance Deployment` - Good for `DEV` environment.
+        * `LB + ASG` - Good for `Prod` and `Pre-Prod` environments (for e.g. Web Apps).
+        * `ASG Only` - Good for Non-Web Apps in `Production` environment (for e.g. Worker etc).
+    * Three Components:
+        * Application.
+        * Application Version: Each deployment gets assigned a version.
+        * Environment Name: Free naming (for e.g. Dev, Test, Prod etc..)
+- You deploy application versions to environments and can promote application versions to next environments.
+- Provides `Rollback` feature to previous application version.
+- It gives full control over the lifecycle of environments.
+- If your platform is not supported by Elastic Beanstalk, you can write your custom platform (Advanced).
