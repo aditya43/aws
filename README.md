@@ -43,6 +43,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [S3 - Security And Bucket Policies](#s3---security-and-bucket-policies)
     - [S3 - Websites](#s3---websites)
     - [S3 - CORS](#s3---cors)
+    - [S3 - Consistency Model](#s3---consistency-model)
 
 ---
 
@@ -512,6 +513,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     5. If the data is not found on `ElastiCache`, EC2 instance will try to query data from `RDS` (Setup in `Private Subnet`). Once the data is retrieved from RDS, EC2 instance will store it in `ElastiCache` and use it further.
 
 ### S3 - Buckets And Objects
+- Amazon S3 is a **Global Service**.
 - Amazon S3 allows people to store `Objects` (files) in `Buckets` (directories).
 - **There is no concept of directories in S3 buckets.** It's just buckets separated by slash (/) in any object key.
 - **Buckets:**
@@ -631,3 +633,16 @@ Each availability `z`one is a physical data center in the region, but separated 
     ```
     Access-Control-Allow-Origin: <domain>
     ```
+
+### S3 - Consistency Model
+- `Read After Write Consistency` for `PUTS` of new objects:
+    * As soon as an object is written, we can retrieve it. (For e.g. `PUT 200 --> GET 200`).
+    * This is true, **except** if we did a `GET` before to see if the object existed. (For e.g. `GET 404 --> PUT 200 --> GET 404`) - `Eventually Consistent`.
+- `Eventual Consistency` for `DELETES` and `PUTS` of existing objects:
+    * If we read an object after updating, we might get the older version. (For e.g. `PUT 200 --> PUT 200 --> GET 200`) - Might be older version.
+    * If we delete an object, we might still be able to retrieve it for a short time. (For e.g. `DELETE 200 --> GET 200`) - We might still retrieve an object.
+- **In short:**
+    * `Read After Write Consistency` for **PUTS**: Write (no prior read operation) and then read operation will always give us new object copy.
+    * `Eventual Consistency` for **DELETES** and **PUTS**:
+        * `PUTS`: Even though object has been overwritten, we might still retrieve an old copy of object.
+        * `DELETES`: Even though object has been deleted, we might retrieve a copy of object for short time.
