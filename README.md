@@ -15,7 +15,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 ## Table of Contents
 - AWS Basics (IAM & EC2)
     - [AWS Regions](#aws-regions)
-    - [IAM - Identity And Access Management](##iam---identity-and-access-management)
+    - [IAM - Identity And Access Management](#iam---identity-and-access-management)
     - [Security Groups](#security-groups)
     - [Elastic IPs](#elastic-ips)
     - [SSH Into EC2 Instance And Install Apache](#ssh-into-ec2-instance-and-install-apache)
