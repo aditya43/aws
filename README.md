@@ -56,6 +56,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - Elastic Beanstalk
     - [Elastic Beanstalk](#elastic-beanstalk)
+    - [Elastic Beanstalk Deployment](#elastic-beanstalk-deployment)
 
 ---
 
@@ -778,3 +779,42 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Provides `Rollback` feature to previous application version.
 - It gives full control over the lifecycle of environments.
 - If your platform is not supported by Elastic Beanstalk, you can write your custom platform (Advanced).
+
+### Elastic Beanstalk Deployment
+- Deployment Modes:
+    - `Single Instance`: Great for `Dev` environment.
+    - `High Availability With Load Balancer`: Great for `Prod`, `Pre-Prod` environments.
+- Update Options:
+    - **All At Once (Deploy All In One Go):** Fastest, but instances aren't available to serve traffic for a bit (downtime) while codebase is being updated on those EC2 instances.
+        * Fastest deployment.
+        * Application has downtime.
+        * Great for quick iterations in development environment.
+        * No additional cost.
+    - **Rolling:** Update a few instances at a time (bucket), and then move onto the next bucket once the first bucket is healthy and updated.
+        * Long deployment time.
+        * Application is running below capacity.
+        * Can set the bucket size.
+        * Application is running both versions simultaneously.
+        * No additional cost.
+    - **Rolling With Additional Batches:** Like `Rolling`, but spins up new instances to move the batch (so that the old application is still available to serve traffic).
+        * Long deployment time.
+        * Application is running at capacity.
+        * Can set the bucket size.
+        * Application is running both versions simultaneously.
+        * Additional batch is removed at the end of deployment.
+        * **Good for Prod**.
+        * Small additional cost.
+    - **Immutable:** Spins up new instances in a new `ASG (Auto Scaling Group)`, deploys version to these instances, and then swaps all the instances (swap out whole `ASG` with a new one) when everything is healthy and updated.
+        * Long deployment time.
+        * **Zero Downtime.**
+        * A new (temporary) `ASG (Auto Scaling Group)` is created this kind of deployment.
+        * New codebase is deployed on EC2 instances running on temporary ASG.
+        * **High Cost, Double Capacity.**
+        * Quick rollback is available in case of failures (Just terminate the entire new (temporary) `ASG`).
+        * **Great for Prod**.
+    - **Blue/Green:** `Not a direct feature` of Elastic Beanstalk. Very manual to do.
+        * Zero downtime and release facility.
+        * Create a new `Stage` environment and deploy new codebase there.
+        * The new environment (green) can be validated independently and roll back if issues.
+        * Route 53 can be setup using weighted policies to redirect a little bit of traffic to the stage environment.
+        * Using Beanstalk, `Swap URLs` when done with the environment test.
