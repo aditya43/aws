@@ -869,7 +869,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `AWS CodeBuild`: For building and testing our code.
     * `AWS CodeDeploy`: For deploying source code to EC2 fleets (**Not Beanstalk**).
 - **Continuous Integration:**
-    * It simply means developers can push their to a code repository very often (Code Repository e.g. GitHub, CodeCommit, Bitbucket etc.)
+    * It simply means developers can push their to a code repository very often (Code Repository e.g. `GitHub`, `CodeCommit`, `Bitbucket` etc.)
     * As soon as the code is pushed into repository, a `Testing` or `Build` server gets the code from repository and `Test/Build` it. For this, `CodeBuild`, `Jenkins CI` etc. can be used from open source world.
     * After this, developer gets feedback about the tests and checks that have passed/failed.
     * **Continuous Integration Goals:**
@@ -885,3 +885,21 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Ensures that the software can be released reliably whenever needed.
     * Ensures that deployments happen often and are quick.
     * If your company had `1 Release Every 3 Months` policy before, then with `Continuous Delivery` you can achieve `5 Releases a day` easily.
+- **Technology Stack For CICD (`Continuous Integration And Continuous Deployment`)**
+    - Code Repository:
+        * AWS `CodeCommit`.
+        * `GitHub`.
+        * Or any 3rd party code repository.
+    - Code Build And Test:
+        * AWS `CodeBuild`.
+        * `Jenkins CI`.
+        * Or any 3rd party CI servers.
+    - Code Deploy And Provision:
+        * AWS `Elastic Beanstalk`.
+        * AWS `CodeDeploy` to deploy on user managed EC2 instances `Fleet` (CloudFormation).
+- AWS **CodePipeline** is used to orchestrate/perform all above. i.e.:
+    * Code.
+    * Build.
+    * Test.
+    * Deploy.
+    * Provision.
