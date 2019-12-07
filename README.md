@@ -65,6 +65,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CodeCommit](#codecommit)
     - [CodePipeline](#codepipeline)
     - [CodeBuild](#codebuild)
+    - [CodeDeploy](#codedeploy)
 
 ---
 
@@ -1011,7 +1012,7 @@ Each availability `z`one is a physical data center in the region, but separated 
 - You have an ability to trigger `SNS Notifications`.
 - Ability to reproduce `CodeBuild` locally to troubleshoot in case of errors.
 - **Pipelines can be defined within CodePipeline or CodeBuild itself.**
-- **CodeBuild `BuildSpec`**
+- **CodeBuild `BuildSpec`**:
     * `buildspec.yml` file must be at the root of your code.
     * We can define environment variables inside `buildspec.yml`
         - Plaintext variables.
@@ -1023,3 +1024,26 @@ Each availability `z`one is a physical data center in the region, but separated 
         - **Post Build**: Commands to run after build (for e.g. zip output).
     * `Artifacts`: What to upload to S3 (Encrypted with `KMS`).
     * `Cache`: Files to cache (usually dependencies) on S3 for future build speedups.
+- **CodeBuild Local Build**:
+    * In case of need of deep troubleshooting beyond logs.
+    * You can run `CodeBuild` locally on your desktop (after installing `Docker`).
+    * For this, we will have to use **CodeBuild Agent**.
+
+### CodeDeploy
+- `CodeDeploy` is used to deploy application (automatically) to many EC2 instances.
+- `CodeDeploy` is an Amazon AWS managed service.
+- `CodeDeploy` **is used to deploy codebase on EC2 instances managed by us (EC2 Instances Not Managed By Elastic Beanstalk).**
+- Beside `CodeDeploy` there are many Open Source technologies to manage deployment on non Elastic Beanstalk managed EC2 instances:
+    * Ansible.
+    * Terraform.
+    * Chef.
+    * Puppet.
+    * etc.
+- It runs directly from the `AWS Console or Environments`.
+- **How `CodeDeploy` works:**
+    * Each EC2 machine (or `On Promise` machine) must be running the `CodeDeploy Agent`.
+    * The `CodeDeploy Agent` is continuously `polling` **AWS CodeDeploy** for work to do.
+    * `AWS CodeDeploy` sends **appspec.yml** file (or at least point to it).
+    * Then application source code will be pulled from `GitHub` or `S3`.
+    * EC2 will run the deployment instructions.
+    * `CodeDeploy Agent` will report of success/failure of deployment on the EC2 instance.
