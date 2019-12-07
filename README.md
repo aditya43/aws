@@ -64,6 +64,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CICD - Continuous Integration And Continuous Deployment Intro](#cicd---continuous-integration-and-continuous-deployment-intro)
     - [CodeCommit](#codecommit)
     - [CodePipeline](#codepipeline)
+    - [CodeBuild](#codebuild)
 
 ---
 
@@ -989,3 +990,36 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `AWS CloudTrail` can be used to audir `AWS API` calls.
     * If pipeline can't perform an action, make sure the `IAM Service Role` attached does have enough permissions (`IAM Policy`).
         - For e.g. Pipeline is not able to deploy to `AWS Elastic Beanstalk`. In this case, make sure that your policy is not incorrect or incomplete.
+
+### CodeBuild
+- `CodeBuild` is a fully AWS managed `build service`. Alternative to `CodeBuild` is `Jenkins` but it is not as powerfull as `CodeBuild`.
+- `CodeBuild` is a **Continuous Scaling** system. That means you don't have to manage or provision any servers. There is no build queue.
+- `CodeBuild` can build code from `GitHub` / `CodeCommit` / `CodePipeline` / `Bitbucket` / `S3` etc.
+- You only **Pay For Usage**: i.e. The time it takes to complete the builds.
+- Under the hood it uses **Docker** for reproducible builds.
+- Using our own `base Docker images`, we can easily extend the capabilities of `CodeBuild`.
+- **Security:**
+    * Integration with `KMS` for encryption of build artifacts.
+    * `IAM` for `Build Permissions`.
+    * `VPC` for network security.
+    * `CloudTrail` for API calls logging.
+- Custom build instructions can be defined in `buildspec.yml` file.
+- Output logs to `Amazon S3` and `AWS CloudWatch Logs`.
+- AWS provides metrics to monitor `CodeBuild` statistics (Helpful to make sure build doesn't timeout or fail).
+- You can use `CloudWatch Alarms` to detect failed builds and trigger notifications.
+- You can also use `CloudWatch Events` or `AWS Lambda` as a Glue for everything.
+- You have an ability to trigger `SNS Notifications`.
+- Ability to reproduce `CodeBuild` locally to troubleshoot in case of errors.
+- **Pipelines can be defined within CodePipeline or CodeBuild itself.**
+- **CodeBuild `BuildSpec`**
+    * `buildspec.yml` file must be at the root of your code.
+    * We can define environment variables inside `buildspec.yml`
+        - Plaintext variables.
+        - Secure Secrets: Use `SSM Parameter Store`.
+    * We can specify commands to run for different phases of `CodeBuild`:
+        - **Install**: Install dependencies you may need for your build.
+        - **Pre Build**: Commands to execute before build.
+        - **Build**: Actual build commands.
+        - **Post Build**: Commands to run after build (for e.g. zip output).
+    * `Artifacts`: What to upload to S3 (Encrypted with `KMS`).
+    * `Cache`: Files to cache (usually dependencies) on S3 for future build speedups.
