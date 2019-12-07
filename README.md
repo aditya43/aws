@@ -57,6 +57,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - Elastic Beanstalk
     - [Elastic Beanstalk](#elastic-beanstalk)
     - [Elastic Beanstalk Deployment](#elastic-beanstalk-deployment)
+    - [Elastic Beanstalk Advanced Concepts](#elastic-beanstalk-advanced-concepts)
 
 ---
 
@@ -789,7 +790,7 @@ Each availability `z`one is a physical data center in the region, but separated 
         * Fastest deployment.
         * Application has downtime.
         * Great for quick iterations in development environment.
-        * No additional cost.
+        * No additional cost.`
     - **Rolling:** Update a few instances at a time (bucket), and then move onto the next bucket once the first bucket is healthy and updated.
         * Long deployment time.
         * Application is running below capacity.
@@ -818,3 +819,27 @@ Each availability `z`one is a physical data center in the region, but separated 
         * The new environment (green) can be validated independently and roll back if issues.
         * Route 53 can be setup using weighted policies to redirect a little bit of traffic to the stage environment.
         * Using Beanstalk, `Swap URLs` when done with the environment test.
+
+### Elastic Beanstalk Advanced Concepts
+- Whenever deploying code on Elastic Beanstalk, a codebase must be zipped and this zip will get deployed to Elastic Beanstalk.
+- All the parameters configured in AWS UI can be configured with code using files.
+- Requirements (Elastic Beanstalk Extension Files):
+    * `EB` extension configuration files reside under `.ebextensions/` directory created at the root of source code.
+    * Files under `.ebextensions/` directory are in `YAML` or `JSON` format.
+    * Files under `.ebextensions/` directory ends with `.config` extension. For e.g. `logging.config`.
+    * Default settings can be modified using `option_settings` options.
+    * Ability to configure and add resources such as RDS, ElastiCache, DynamoDB etc..
+    * Resources managed by `.ebextensions` **get deleted** if the environment goes away.
+- We can install an additional CLI called the **EB CLI** which makes working with Beanstalk from the CLI easier.
+    * Why would you use `EB CLI`:
+        - It's helpful for your automated deployment pipelines.
+    * Following are some of the basic commands available in `EB CLI`:
+        - `eb create`: Used to create ElastiCache Beanstalk environment.
+        - `eb status`: To check ElastiCache Beanstalk status.
+        - `eb health`: To check ElastiCache Beanstalk health.
+        - `eb events`: To see events.
+        - `eb logs`: To view logs.
+        - `eb open`: Opens the public URL of your website in the default browser.
+        - `eb deploy`: Deploys the application source bundle from the initialized project directory to the running application.
+        - `eb config`: To change ElastiCache Beanstalk environment configuration settings.
+        - `eb terminate`: To terminal ElastiCache Beanstalk environment.
