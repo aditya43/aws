@@ -62,6 +62,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS CICD (CodeCommit, CodePipeline, CodeBuild, CodeDeploy)
     - [CICD - Continuous Integration And Continuous Deployment Intro](#cicd---continuous-integration-and-continuous-deployment-intro)
+    - [CodeCommit](#codecommit)
 
 ---
 
@@ -417,7 +418,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Snapshots are retained as long as you want.
 - **RDS Encryption:**
     * Encryption is at rest (everywhere).
-    * Uses `AWS KMS - AES-256` encryption.
+    * Uses `AWS KMS (Key Management Service) - AES-256` encryption.
     * SSL certificates can be used to encrypt data on the fly.
     * To **Enforce SSL:**
         * PostgreSQL: In AWS RDS console (`Parameters Group`) run following:
@@ -569,7 +570,7 @@ Each availability `z`one is a physical data center in the region, but separated 
 ### S3 - Encryption For Objects
 - There are 4 methods of encrypting objects in S3:
     * `SSE-S3`: Encrypts S3 objects using keys handled and managed by AWS.
-    * `SSE-KMS`: Leverage `AWS Key Management Service` to manage encryption keys.
+    * `SSE-KMS`: Leverage `AWS KMS (Key Management Service)` to manage encryption keys.
     * `SSE-C`: When you want to manage your own encryption keys.
     * `Client Side Encryption`.
 - #### SSE-S3:
@@ -581,7 +582,7 @@ Each availability `z`one is a physical data center in the region, but separated 
         "x-amz-server-side-encryption":"AES256"
         ```
 - #### SSE-KMS:
-    * Encryption using keys handled & managed by `KMS Customer Master Key (CMK)`.
+    * Encryption using keys handled & managed by `KMS (Key Management Service) Customer Master Key (CMK)`.
     * Object is encrypted server side.
     * KMS Advantages: User Control + Audit Trail.
     * To use `SSE-KMS`, set following request header while sending file to S3 bucket:
@@ -685,7 +686,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Decrease time to retry in case a part fails.
 - Use `CloudFront` to cache S3 objects around the world (improves reads).
 - `S3 Transfer Acceleration`: If you are geo located far away from where your bucket is geo located, you might experice slow uploads. This is where `S3 Transfer Acceleration` service comes into picture. It uses `edge locations`. To use this service, no code changes are required. Only need to change the S3 bucket endpoint where you write to.
-- If using `SSE-KMS` encryption you may see a **performance decrease**. With `SSE-KMS` encryption, you may be limited to your AWS limits for KMS usage (~100 - 1000 downloads/uploads per second.
+- If using `SSE-KMS` encryption you may see a **performance decrease**. With `SSE-KMS` encryption, you may be limited to your AWS limits for KMS (Key Management Service) usage (~100 - 1000 downloads/uploads per second.
 
 ### IAM Roles
 - IAM Roles can be attached to EC2 instances.
@@ -903,3 +904,69 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Test.
     * Deploy.
     * Provision.
+
+### CodeCommit
+- **Version Control** is the ability to understand the various changes that happened to the code over time (and possibly roll back).
+- All these are enabled by using a version control system such as `Git`.
+- A `Git` repository can live on one's machine, but it usually lives on a central online repository.
+- Benefits of using a version control system are:
+    * Collaborate with multiple developers.
+    * Make sure the code is backed-up somewhere.
+    * Make sure it's fully viewable and auditable.
+- **Why Choose CodeCommit:**
+    * `Git` repositories can be expensive. Free public repositories, but private repositories is a paid feature.
+    * AWS `CodeCommit`:
+        - Private `Git` repositories (At low costs).
+        - No size limit on repositories (scale seamlessly).
+        - Fully managed, highly available.
+        - Source code resides only in `AWS Cloud Account`. Because of this, it provides security and compliance.
+        - Secure (has encryption, access control etc.)
+        - Integrated with `Jenkins`/`CodeBuild`/Other CI tools.
+- **CodeCommit Security:**
+    * Since they are `Git` repositories, interactions are done using `Git` (standard).
+    * When you `Authenticate` in `Git`,
+        - You have `SSH Keys`: AWS Users can configure SSH keys in their `IAM Console`.
+        - Or you can use `HTTPS`: Done through the `AWS CLI Authentication Helper` or by `Generating HTTPS Credentials`.
+        - If you want **really extra** security, you can enable `MFA (Multi Factor Authentication)`.
+    * **Authorization in Git:**
+        - `IAM Policies` manage user/roles rights to repositories.
+    * **Encryption:**
+        - Repositories are automatically encrypted at rest using `KMS (Key Management Service)`.
+        - Encrypted in trasit (Since we can only use `HTTPS` or `SSH Keys` - both are secured).
+    * **Cross Account Access:**
+        - Do not ever share your AWS credentials.
+        - Do not ever share your SSH keys.
+        - Use `IAM Role` in your AWS Account and use `AWS STS (with AssumeRole API)`. `AssumeRole` is a cross-account access role api.
+- **CodeCommit vs GitHub:**
+    - **Similarities:**
+        * Both are `Git` repositories.
+        * Both support code review `Pull Requests`.
+        * Both can be integrated with AWS `CodeBuild`.
+        * Both support `HTTPS` and `SSH` authentication methods.
+    - **Differences:**
+        * Security:
+            - `GitHub` is administered through `GitHub Users` system.
+            - `CodeCommit` uses `AWS IAM Users & Roles`.
+        * Hosting:
+            - `GitHub`: Codebase is hosted by `GitHub`.
+            - `GitHub Enterprise`: Self hosted on your servers.
+            - `CodeCommit`: Managed and hosted by AWS.
+        * UI:
+            - `GitHub`: GitHub is a clear winner. UI is fully featured.
+            - `CodeCommit`: UI is minimal.
+- **CodeCommit Notifications:**
+    * `CodeCommit` can integrate and trigger notifications using `AWS SNS (Simple Notification Service)` or `AWS Lambda` or `AWS CloudWatch Event Rules`.
+    * Use cases for `SNS` / `AWS Lambda Notifications`: Examples when notifications can be triggered
+        - Deletion of branches.
+        - Trigger notifications pushes on to master branch.
+        - Trigger notifications to `External Build System`.
+        - Trigger AWS `Lambda function` to perform codebase analysis.
+            * For e.g. Analyze codebase to see if developer have used AWS credentials in codes and are those committed in the codes. Trigger notification if done so etc.
+    * Use cases for `CloudWatch Event Rules`:
+        - Trigger notifications for `Pull Request Updates`:
+            * Created.
+            * Updated.
+            * Deleted.
+            * Commented.
+        - Trigger notifications when someone comments on `Commit`.
+        - `CloudWatch Event Rules` goes into an `SNS (Simple Notification System) Topic`. i.e. `CloudWatch Event Rules` triggers notification into `SNS Topic`.
