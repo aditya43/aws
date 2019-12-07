@@ -60,6 +60,9 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [Elastic Beanstalk Advanced Concepts](#elastic-beanstalk-advanced-concepts)
     - [Elastic Beanstalk Important Points](#elastic-beanstalk-important-points)
 
+- AWS CICD (CodeCommit, CodePipeline, CodeBuild, CodeDeploy)
+    - [CICD - Continuous Integration And Continuous Deployment Intro](#cicd---continuous-integration-and-continuous-deployment-intro)
+
 ---
 
 ### AWS Regions
@@ -857,3 +860,28 @@ Each availability `z`one is a physical data center in the region, but separated 
     - Each EC2 machine will resolve/install dependencies of source code. For e.g. For `Node` project, dependencies will be installed from `package.json`.
         * **This process is pretty slow depending on the number and size of dependencies.**
         * **For Optimization:** We can package/zip required dependencies with project source code itself.
+
+### CICD - Continuous Integration And Continuous Deployment Intro
+- CICD is all about automating the deployment while adding increased safety.
+- Key aspects of CICD:
+    * `AWS CodeCommit`: For storing our code.
+    * `AWS CodePipeline`: For automating our pipeline from code to Elastic Beanstalk.
+    * `AWS CodeBuild`: For building and testing our code.
+    * `AWS CodeDeploy`: For deploying source code to EC2 fleets (**Not Beanstalk**).
+- **Continuous Integration:**
+    * It simply means developers can push their to a code repository very often (Code Repository e.g. GitHub, CodeCommit, Bitbucket etc.)
+    * As soon as the code is pushed into repository, a `Testing` or `Build` server gets the code from repository and `Test/Build` it. For this, `CodeBuild`, `Jenkins CI` etc. can be used from open source world.
+    * After this, developer gets feedback about the tests and checks that have passed/failed.
+    * **Continuous Integration Goals:**
+        - Find bugs early and fix 'em.
+        - Offers faster delivery as the code is tested.
+        - Offers developers to deploy codes very often.
+        - Makes developers happy as they're unblocked.
+- **Continuous Delivery:**
+    * It usually means `Automated Deployment`. Deployments can be automated using tools such as:
+        - `CodeDeploy`.
+        - `Jenkins CD`.
+        - `Spinnaker`.
+    * Ensures that the software can be released reliably whenever needed.
+    * Ensures that deployments happen often and are quick.
+    * If your company had `1 Release Every 3 Months` policy before, then with `Continuous Delivery` you can achieve `5 Releases a day` easily.
