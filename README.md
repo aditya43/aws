@@ -58,6 +58,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [Elastic Beanstalk](#elastic-beanstalk)
     - [Elastic Beanstalk Deployment](#elastic-beanstalk-deployment)
     - [Elastic Beanstalk Advanced Concepts](#elastic-beanstalk-advanced-concepts)
+    - [Elastic Beanstalk Important Points](#elastic-beanstalk-important-points)
 
 ---
 
@@ -843,3 +844,16 @@ Each availability `z`one is a physical data center in the region, but separated 
         - `eb deploy`: Deploys the application source bundle from the initialized project directory to the running application.
         - `eb config`: To change ElastiCache Beanstalk environment configuration settings.
         - `eb terminate`: To terminal ElastiCache Beanstalk environment.
+
+### Elastic Beanstalk Important Points
+- Under the hood, Elastic Beanstalk relies on **CloudFormation**.
+- How Elastic Beanstalk deployment works:
+    - Project dependencies are specified in project specific dependency files. For e.g.
+        * For `PHP` project using `composer`, we specify dependencies under `composer.json`.
+        * For `Node` project, dependencies are specified under `package.json`.
+        * For `Python` project, dependencies are specified under `requirements.txt`.
+    - Project source code is zipped.
+    - This zip will will get deployed and expanded to each EC2 instance.
+    - Each EC2 machine will resolve/install dependencies of source code. For e.g. For `Node` project, dependencies will be installed from `package.json`.
+        * **This process is pretty slow depending on the number and size of dependencies.**
+        * **For Optimization:** We can package/zip required dependencies with project source code itself.
