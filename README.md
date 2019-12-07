@@ -63,6 +63,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS CICD (CodeCommit, CodePipeline, CodeBuild, CodeDeploy)
     - [CICD - Continuous Integration And Continuous Deployment Intro](#cicd---continuous-integration-and-continuous-deployment-intro)
     - [CodeCommit](#codecommit)
+    - [CodePipeline](#codepipeline)
 
 ---
 
@@ -970,3 +971,21 @@ Each availability `z`one is a physical data center in the region, but separated 
             * Commented.
         - Trigger notifications when someone comments on `Commit`.
         - `CloudWatch Event Rules` goes into an `SNS (Simple Notification System) Topic`. i.e. `CloudWatch Event Rules` triggers notification into `SNS Topic`.
+
+### CodePipeline
+- `CodePipeline` is nothing but a visual tool to perform `Continuous Delivery`.
+- `CodePipeline` is made of stages:
+    * Each stage can have sequential actions and /or parallel actions.
+     - Stages example: Build / Test/ Deploy / Load Test / etc..
+    * Manual approval can be defined at any stage.
+- Pipeline works with `Artifacts`.
+    * `Artifacts` are nothing but bunch of files that are passed and stored through in `Amazon S3` and passed on to the next stage.
+    * Each pipeline stage can create `Artifacts`.
+- **CodePipeline Troubleshooting:**
+    * Whenever there is a state change in a pipeline (For e.g. New code committed/pushed), it will generate an `AWS CloudWatch Event`, which can in return create `SNS` notfication.
+        - For e.g. You can create events for failed pipelines.
+        - For e.g. You can create events for cancelled stages.
+    * If `CodePipeline fails` a stage then your pipeline will stop and you will get information in the console.
+    * `AWS CloudTrail` can be used to audir `AWS API` calls.
+    * If pipeline can't perform an action, make sure the `IAM Service Role` attached does have enough permissions (`IAM Policy`).
+        - For e.g. Pipeline is not able to deploy to `AWS Elastic Beanstalk`. In this case, make sure that your policy is not incorrect or incomplete.
