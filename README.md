@@ -67,6 +67,9 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CodeBuild](#codebuild)
     - [CodeDeploy](#codedeploy)
 
+- AWS CloudFormation (Infrastructure As Code)
+    - [CloudFormation - Infrastructure As Code](#cloudformation---infrastructure-as-code)
+
 ---
 
 ### AWS Regions
@@ -1097,3 +1100,47 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Or you can directly deploy to an `ASG (Auto Scaling Group)`.
         - Or you can create `Deployment Segments` which is a mix of `ASG` and `Tags (EC2 Instances)`.
         - For advanced users: You can customize in scripts with `DEPLOYMENT_GROUP_NAME` environment variables.
+
+### CloudFormation - Infrastructure As Code
+- `CloudFormation` is a declarative way of outlining your `AWS Infrastructure` for any resources (most of them are supported).
+- For e.g. Within a `CloudFormation Template`, you say:
+    * I want a security group.
+    * I want 2 EC2 machines using this security group.
+    * I want 2 `Elastic IPs` for these EC2 machines.
+    * I want an `S3 Bucket`.
+    * I want a load balancer (`ELB`) in front of these EC2 machines.
+- Then CloudFormation creates those for you, in the `right/correct order` with the **Exact Configurations** that you specify.
+- **Benefits of CloudFormation:**
+    * `Infrastructure As Code`:
+        - No resources are manually created, which is excellent for control.
+        - The code can be version controlled for example using `Git`.
+        - All the changes to the infrastructure are reviewed through code.
+    * **Cost:**
+        - CloudFormation is free, you only pay for the underlying resources.
+        - Each resources within stack is `stagged` with an identifier so you can easlity see how much a stack costs you.
+        - You can estimate the costs of your resources using the CloudFormation template.
+        - Saving Strategy: For e.g. In Dev environment, you could automate the deletion of `Templates` at 5PM and recreate them at 8AM safely.
+    * **Productivity:**
+        - Ability to destroy and re-create an infrastructure on the cloud on the fly.
+        - Automated generation of Diagram for your templates (Quite nice for presentations).
+        - Declarative programming (no need to figure out ordering and orchestration).
+    * **True Separation Of Concern:** Create many stacks for many apps, and many layers. For e.g.
+        - VPC Stacks.
+        - Network Stacks.
+        - App Stacks.
+    * **Don't Re-Invent The Wheel:**
+        - Leverage existing `CloudFormation Templates` on the web!
+        - Leverage the documentations.
+- **How CloudFormation Works:**
+    * Templates have to be uploaded in S3 and then referenced in CloudFormation.
+    * To update a template, we can't edit previous ones. We have to re-upload a new version of the template to AWS.
+    * Stacks are identified by a name.
+    * Deleting a stack deletes every single artifact that was created by CloudFormation.
+- **How To Create And Deploy CloudFormation Templates:**
+    * `Manual Way`:
+        - Editing templates in the `CloudFormation Designer`.
+        - Using the console to input parameters, etc.
+    * `Automated Way`:
+        - Editing templates in a YAML file.
+        - Using the AWS CLI (Command Line Interface) to create and deploy templates.
+        - **This is the recommended way if you want to fully automate the flow.**
