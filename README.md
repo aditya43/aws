@@ -71,6 +71,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudFormation - Infrastructure As Code](#cloudformation---infrastructure-as-code)
     - [CloudFormation - Template - Resources](#cloudformation---template---resources)
     - [CloudFormation - Template - Parameters](#cloudformation---template---parameters)
+    - [CloudFormation - Template - Mappings](#cloudformation---template---mappings)
 
 ---
 
@@ -1189,3 +1190,30 @@ Each availability `z`one is a physical data center in the region, but separated 
         - `AWS::AccountId`: Gives the AWS account id. Quite handful if you are trying to construct some `AWS ARN` in your template.
         - `AWS::Region`: Gives the AWS region.
         - `AWS::StackName`: Gives the `AWS CloudFormation Stack Name`.
+
+### CloudFormation - Template - Mappings
+- `Mappings` are fixed variables within your `CloudFormation Template`.
+- They are very useful to differentiate between different environments (dev, prod etc), AWS Regions, AMI Types etc..
+- All `Mapping Values` are hardcoded within your `CloudFormation Template`.
+- For e.g.: `YAML``
+    ```
+    Mappings:
+        Mapping01:
+            Key01:
+                Name: Value01
+            Key 02:
+                Name: Value 02
+            Key 03:
+                Name: Value 03
+    ```
+- **When to use `Mappings`:**
+    * When you know all the values that can be taken and that they can deduced from variables such as:
+        - `Region`.
+        - `Availability Zone`.
+        - `AWS Account`.
+        - `Environment (e.g. Dev, Prod etc)`.
+    * They allow safer control over the `CloudFormation Template`.
+    * Use `Parameters` when values are user specific. i.e. when you don't know the value and you want user to input value.
+- **How to use/access Mapping Value:**
+    * `Fn::FindInMap` function is used to access/use `Mapping Value`.
+    * `Fn::FindInMap` is used to return a named value from a specific key.
