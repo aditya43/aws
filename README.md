@@ -1079,14 +1079,14 @@ Each availability `z`one is a physical data center in the region, but separated 
         - `AfterInstall`: Set of commands to run after the new application is installed. For e.g. May be you wanna do cleanup or launch a server etc.
         - `ApplicationStart`: Specifies how to start new application.
         - **`ValidateService`:** Very Important! Like a `Health Check`. It specifies how to validate newly deployed application version is running properly or not. For e.g. May be visit `status.html` and see if the response code is `200 OK`.
-        - `BeforeAllowTraffic`: Things to do before traffic is allowed to EC2 instance.
-        - `AllowTraffic`: Specifies how to allow traffic to EC2 instance. For e.g. May be pull off `Laravel setup from Maintainance Mode to Active`.
-        - `AfterAllowTraffic`: Things to do once the traffic is allowed to EC2 instance.
+        - `BeforeAllowTraffic (Only in Blue/Green Deployment Type)`: Things to do before traffic is allowed to EC2 instance.
+        - `AllowTraffic (Only in Blue/Green Deployment Type)`: Specifies how to allow traffic to EC2 instance. For e.g. May be pull off `Laravel setup from Maintainance Mode to Active`.
+        - `AfterAllowTraffic (Only in Blue/Green Deployment Type)`: Things to do once the traffic is allowed to EC2 instance.
 - **Deployment Config:**
     * Configs:
         - `One at a time`: One instance at time. If one instance fails --> Entire deployment stops.
-        - `Half at a time`: 50%.
-        - `All at once`: Quick but no healthy host, no downtime. **Good for dev**.
+        - `Half at a time`: 50%. If 2 or more instances fail --> Entire deployment stops.
+        - `All at once`: Quick but no healthy host, no downtime. **Good for dev**. If all instances fail --> Entire deployment stops.
         - `Custom`: For e.g. You can specify minimum healthy host = 75%.
     * Failure: In case of failures:
         - Instances stay in `failed state`.
