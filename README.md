@@ -70,6 +70,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS CloudFormation (Infrastructure As Code)
     - [CloudFormation - Infrastructure As Code](#cloudformation---infrastructure-as-code)
     - [CloudFormation - Template - Resources](#cloudformation---template---resources)
+    - [CloudFormation - Template - Parameters](#cloudformation---template---parameters)
 
 ---
 
@@ -1164,3 +1165,27 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Is every AWS Service supported?
         - **Almost!** Only a select few niches are not there yet.
         - You can work around that using `AWS Lambda Custom Resources`.
+
+### CloudFormation - Template - Parameters
+- `Parameters` are way to provide inputs to your `CloudFormation Templates`.
+- They are super important to know about if you want to:
+    * You want to **re-use** your templates across the company/AWS accounts/Regions.
+    * Some inputs cannot be determined ahead of time.
+        - For e.g. The key-pair you gonna link to your EC2 instances.
+- `Parameters` are extremely powerful, controlled and can prevent errors from happening in your templates. Thanks to `Types`.
+- **When to use `Parameters`:**
+    * Ask yourself this:
+        - Is this `CloudFormation Resource Configuration` likely to change in the future? If so, make it a `Parameter`.
+        - By making some configuration a `Parameter`, you won't have to re-upload a `CloudFormation Template` to change it's content.
+- **How to use/reference a `Parameter`:**
+    * The `Fn::Ref` function can be used to reference a `Parameter`.
+    * `Parameters` can be used anywhere in `CloudFormation Template`.
+    * The shorthand for this `YAML` is `!Ref`. Instead of shorthand, you can also use `Fn::Ref`.
+    * The `Fn::Ref` function can also reference other elements within the `CloudFormation Template`.
+- **Pseudo Parameters:**
+    * These are offered by AWS and they are available in any `CloudFormation Template`.
+    * These can be used any time and are available by default.
+    * For e.g.
+        - `AWS::AccountId`: Gives the AWS account id. Quite handful if you are trying to construct some `AWS ARN` in your template.
+        - `AWS::Region`: Gives the AWS region.
+        - `AWS::StackName`: Gives the `AWS CloudFormation Stack Name`.
