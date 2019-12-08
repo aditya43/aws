@@ -854,6 +854,7 @@ Each availability `z`one is a physical data center in the region, but separated 
 
 ### Elastic Beanstalk Important Points
 - Under the hood, Elastic Beanstalk relies on **CloudFormation**.
+- Uses **CodeDeploy** under the hood.
 - How Elastic Beanstalk deployment works:
     - Project dependencies are specified in project specific dependency files. For e.g.
         * For `PHP` project using `composer`, we specify dependencies under `composer.json`.
@@ -1031,6 +1032,8 @@ Each availability `z`one is a physical data center in the region, but separated 
 
 ### CodeDeploy
 - `CodeDeploy` is used to deploy application (automatically) to many EC2 instances.
+- It is more powerful than `Elastic Beanstalk`.
+- **`CodeDeploy` only deploys application. It does NOT provision resources. It assumes that your EC2 instances are already existing.**
 - `CodeDeploy` is an Amazon AWS managed service.
 - `CodeDeploy` **is used to deploy codebase on EC2 instances managed by us (EC2 Instances Not Managed By Elastic Beanstalk).**
 - Beside `CodeDeploy` there are many Open Source technologies to manage deployment on non Elastic Beanstalk managed EC2 instances:
@@ -1047,3 +1050,50 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Then application source code will be pulled from `GitHub` or `S3`.
     * EC2 will run the deployment instructions.
     * `CodeDeploy Agent` will report of success/failure of deployment on the EC2 instance.
+- EC2 instances are grouped by deployment group (dev/test/prod).
+- `CodeDeploy` provides lots of flexibility to define any of deployments.
+- `CodeDeploy` can be chained into `CodePipeline` and use `Artifacts` from there.
+- `CodeDeploy` can re-use existing setup tools (like anything you have on your EC2 machine).
+- It works with any kind of application.
+- `CodeDeploy` provides seamless auto scaling integration.
+- We can do **Blue/Green** deployments but it works only on `EC2 instances` and not `On Promise Instances`.
+- It does support `AWS Lambda Deployments`.
+- **Primary Components:**
+    * `Application`: Unique Name.
+    * `Compute Platform`: EC2/On-Promise or Lambda.
+    * `Deployment Configuration`: Deployment rules for success/failure.
+        - `EC2/On-Promise`: You can specify the minimum number of healthy instances for the deployment.
+        - `AWS Lambda`: You can specify how traffic is routed to your updated `Lambda Function` versions.
+    * `Deployment Group`: Group of `Tagged Instances` (Allows to deploy gradually).
+    * `Deployment Type`: In-place deployment or Blue/green deployment.
+    * `IAM Instance Profile`: Need to give EC2 the permissions to pull codebase from `S3/GitHub`.
+    * `Application Revision`: Application Code + `appspec.yml` file.
+    * `Service Role`: Role for `CodeDeploy` to perform what it needs (What it needs to perform the deployment).
+    * `Target Revision`: Target deployment application version.
+- **AppSpec (`appspec.yml`) File:**
+    * `File Section`: How to source and copy from S3/GitHub to filesystem.
+    * `Hooks`: Set of instructions or commands are to be executed to deploy the new version (**Hooks can have timeouts**). Order is very important:
+        - `ApplicationStop`: Specifies when to stop the current application that is being run on EC2 instance.
+        - `DownloadBundle`: Specifies how to download new application (From S3/GitHub etc.)
+        - `BeforeInstall`: Set of commands to run before new aplication is installed.
+        - `AfterInstall`: Set of commands to run after the new application is installed. For e.g. May be you wanna do cleanup or launch a server etc.
+        - `ApplicationStart`: Specifies how to start new application.
+        - **`ValidateService`:** Very Important! Like a `Health Check`. It specifies how to validate newly deployed application version is running properly or not. For e.g. May be visit `status.html` and see if the response code is `200 OK`.
+        - `BeforeAllowTraffic`: Things to do before traffic is allowed to EC2 instance.
+        - `AllowTraffic`: Specifies how to allow traffic to EC2 instance. For e.g. May be pull off `Laravel setup from Maintainance Mode to Active`.
+        - `AfterAllowTraffic`: Things to do once the traffic is allowed to EC2 instance.
+- **Deployment Config:**
+    * Configs:
+        - `One at a time`: One instance at time. If one instance fails --> Entire deployment stops.
+        - `Half at a time`: 50%.
+        - `All at once`: Quick but no healthy host, no downtime. **Good for dev**.
+        - `Custom`: For e.g. You can specify minimum healthy host = 75%.
+    * Failure: In case of failures:
+        - Instances stay in `failed state`.
+        - New deployments will first be deployed to `failed state` instances which guarentees you don't bring down your whole application because of a failure.
+        - To Rollback: You can re-deploy old deployment or enable automated rollback on failures.
+    * Deployment Targets:
+        - These can be EC2 instances with tags.
+        - Or you can directly deploy to an `ASG (Auto Scaling Group)`.
+        - Or you can create `Deployment Segments` which is a mix of `ASG` and `Tags (EC2 Instances)`.
+        - For advanced users: You can customize in scripts with `DEPLOYMENT_GROUP_NAME` environment variables.
