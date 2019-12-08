@@ -72,6 +72,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudFormation - Template - Resources](#cloudformation---template---resources)
     - [CloudFormation - Template - Parameters](#cloudformation---template---parameters)
     - [CloudFormation - Template - Mappings](#cloudformation---template---mappings)
+    - [CloudFormation - Template - Outputs](#cloudformation---template---outputs)
 
 ---
 
@@ -1217,3 +1218,21 @@ Each availability `z`one is a physical data center in the region, but separated 
 - **How to use/access Mapping Value:**
     * `Fn::FindInMap` function is used to access/use `Mapping Value`.
     * `Fn::FindInMap` is used to return a named value from a specific key.
+    * Following is a shorthand for `Fn::FindInMap` function:
+        ```
+        !FindInMap [ MapName, TopLevelKey, SecondLevelKey ]
+        ```
+
+### CloudFormation - Template - Outputs
+- The `Outputs` section in `CloudFormation Template` defines `Optional Output` values that we can import into our `Stacks` (If you `Export` them first!)
+- You can also view the `Outputs` in `AWS Console` or in using `AWS CLI`.
+- They are very useful, for e.g. If you define a `Network CloudFormation` template and output the variables such as `VPC Ids` and your `Subnet Ids`. These Ids can be re-used in your other `CloudFormation Templates`.
+- It's a best way to perform `Cross Stack Collaboration`, as you let expert handle their own part of the `CloudFormation Stack`.
+- **You can't delete a `CloudFormation Stack` if it's `Output Values` are referenced by another `CloudFormation Stack`.**
+- Only values that are specified under **Export**, can be used used as `Output Values`.
+- **`Fn::ImportValue`** function is used to reference a cross stack output value.
+- You can't delete the underlying stack unless all the references stacks are deleted.
+- Shorthand syntax is:
+    ```
+    !ImportValue
+    ```
