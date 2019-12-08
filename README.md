@@ -69,6 +69,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS CloudFormation (Infrastructure As Code)
     - [CloudFormation - Infrastructure As Code](#cloudformation---infrastructure-as-code)
+    - [CloudFormation - Template - Resources](#cloudformation---template---resources)
 
 ---
 
@@ -1103,6 +1104,7 @@ Each availability `z`one is a physical data center in the region, but separated 
 
 ### CloudFormation - Infrastructure As Code
 - `CloudFormation` is a declarative way of outlining your `AWS Infrastructure` for any resources (most of them are supported).
+- `CloudFormation` supports `YAML` and `JSON` scripting languages. `JSON` is quite considered horrible for writing `CloudFormation` templates.
 - For e.g. Within a `CloudFormation Template`, you say:
     * I want a security group.
     * I want 2 EC2 machines using this security group.
@@ -1144,3 +1146,21 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Editing templates in a YAML file.
         - Using the AWS CLI (Command Line Interface) to create and deploy templates.
         - **This is the recommended way if you want to fully automate the flow.**
+
+### CloudFormation - Template - Resources
+- They are **MANDATORY**.
+- `Resources` are the core of your `CloudFormation` template.
+- They represent the different AWS Components that will be created and configured.
+- `Resources` are declared and can reference each other.
+- AWS figures out creation, updation and deletion of resources in right order for us.
+- There are over 224 types of AWS resources.
+- `Resource Identifiers` has the following form:
+    ```
+    AWS::aws-product-name::data-type-name
+    ```
+- **FAQ:**
+    * Can I create a dynamic amount of resources?
+        - **No, You can't!** Everything in the `CloudFormation Template` has to be declared. You can't perform dynamic code generation there.
+    * Is every AWS Service supported?
+        - **Almost!** Only a select few niches are not there yet.
+        - You can work around that using `AWS Lambda Custom Resources`.
