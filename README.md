@@ -73,6 +73,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudFormation - Template - Parameters](#cloudformation---template---parameters)
     - [CloudFormation - Template - Mappings](#cloudformation---template---mappings)
     - [CloudFormation - Template - Outputs](#cloudformation---template---outputs)
+    - [CloudFormation - Template - Conditions](#cloudformation---template---conditions)
 
 ---
 
@@ -1236,3 +1237,34 @@ Each availability `z`one is a physical data center in the region, but separated 
     ```
     !ImportValue
     ```
+
+### CloudFormation - Template - Conditions
+- `Conditions` are used to control the creation of resources or to control outputs based on conditionals.
+- `Conditions` can be whatever you want them to be, but the common ones are:
+    * `Environment`: For e.g. dev/test/prod.
+    * `AWS Region`.
+    * Any `Parameter Value`.
+- Each `Condition` can reference another `Condition`, `Parameter Value` or `Mapping Value`.
+- **How to define a condition?**
+    * Following codeblock describes: Create producion resources (`CreateProdResources`) only if parameter value of `EnvType` is equals to `prod`.
+        ```
+        Conditions:
+            CreateProdResources: !Equals [ !Ref EnvType, prod ]
+        ```
+    * The logical Id (`CreateProdResources`) is for you to choose. It's how you name condition.
+    * The logical functions can be any of the following:
+        - `Fn::And`
+        - `Fn::Equals`
+        - `Fn::If`
+        - `Fn::Not`
+        - `Fn::Or`
+- **How to use a condition?**
+    * Conditions can be applied to resources/outputs/etc..
+    * For e.g. Following codeblock will create `AWS::EC2::VolumeAttachment` only if condition `CreateProdResources` is `true`:
+        ```
+        Resources:
+            MountPoint:
+                Type: "AWS::EC2::VolumeAttachment"
+                Condition: CreateProdResources
+        ```
+        **Note:** They are at the same level as `Type`.
