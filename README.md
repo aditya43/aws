@@ -75,6 +75,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudFormation - Template - Outputs](#cloudformation---template---outputs)
     - [CloudFormation - Template - Conditions](#cloudformation---template---conditions)
     - [CloudFormation - Template - Intrinsic Functions](#cloudformation---template---intrinsic-functions)
+    - [CloudFormation - Rollbacks](#cloudformation---rollbacks)
 
 ---
 
@@ -1329,3 +1330,11 @@ Each availability `z`one is a physical data center in the region, but separated 
         - `Fn::If`
         - `Fn::Not`
         - `Fn::Or`
+
+### CloudFormation - Rollbacks
+- When **Stack Creation Fails** in CloudFormation:
+    * By `Default`: Everything rolls back (gets deleted). We can look at the logs.
+    * When you create a `Stack`, you have option to `Disable Rollback And Troubleshoot` what happened.
+- When **Stack Update Fails** in CloudFormation:
+    * The stack automatically rolls back to the previous known working state.
+    * You also have an ability to see in the logs what happened and error messages.
