@@ -77,6 +77,8 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudFormation - Template - Intrinsic Functions](#cloudformation---template---intrinsic-functions)
     - [CloudFormation - Rollbacks](#cloudformation---rollbacks)
 
+- AWS Monitoring & Audit: CloudWatch, X-Ray And CloudTrail
+    - [AWS Monitoring Intro](#aws-monitoring-intro)
 ---
 
 ### AWS Regions
@@ -1338,3 +1340,16 @@ Each availability `z`one is a physical data center in the region, but separated 
 - When **Stack Update Fails** in CloudFormation:
     * The stack automatically rolls back to the previous known working state.
     * You also have an ability to see in the logs what happened and error messages.
+
+### AWS Monitoring Intro
+- **AWS CloudWatch:**
+    * **Metrics:** Collect and track key metrics.
+    * **Logs:** Collect, monitor, analyze and store log files.
+    * **Events:** Send notifications when certain events happen in your AWS.
+    * **Alarms:** React in real-time to metrics/events.
+- **AWS X-Ray:**
+    * Troubleshooting application performance and errors.
+    * Distributed tracing of microservices.
+- **AWS CloudTrail:**
+    * Internal monitoring of API calls being made.
+    * Audit changes to AWS Resources by your users.
