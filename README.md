@@ -74,6 +74,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudFormation - Template - Mappings](#cloudformation---template---mappings)
     - [CloudFormation - Template - Outputs](#cloudformation---template---outputs)
     - [CloudFormation - Template - Conditions](#cloudformation---template---conditions)
+    - [CloudFormation - Template - Intrinsic Functions](#cloudformation---template---intrinsic-functions)
 
 ---
 
@@ -1268,3 +1269,63 @@ Each availability `z`one is a physical data center in the region, but separated 
                 Condition: CreateProdResources
         ```
         **Note:** They are at the same level as `Type`.
+
+### CloudFormation - Template - Intrinsic Functions
+- Following are some of the important `Intrinsic Functions`:
+    * `Ref`
+        - It is used to reference the value.
+            * If referencing the `Parameter`, then it will return `value` of that `Parameter`.
+            * If referencing the `Resource`, then it will return `Physical Id` of the underlying resource. For e.g. `Id of EC2 Instance`.
+        - Shorthand in `YAML` is `!Ref`.
+        - E.g. `!Ref MyVPC` will return the physical Id of `MyVPC`.
+            ```
+            DbSubnet1:
+                Type: AWS::EC2::Subnet
+                Properties:
+                    VpcId: !Ref MyVPC
+            ```
+    * `Fn::GetAtt`
+        - It is used to get the `Attribute` value of resources.
+        - `Attributes` are attached to any resources you create.
+        - To know the attributes of your resources, the best place to look at is the AWS documentation.
+        - E.g. To get the `Availability Zone` of EC2 instance:
+            ```
+            NewVolume:
+                Type: "AWS::EC2::Volume"
+                Condition: CreateProdResources
+                Properties:
+                    Size: 100
+                    AvailabilityZone:
+                        !GetAtt EC2Instance.AvailabilityZone
+            ```
+    * `Fn::FindInMap`
+        - It is used to get the `Mapping Values`.
+        - We use `Fn::FindInMap` to return a named value from a specific key.
+        - Shorthand in `YAML` is as follows:
+            ```
+            !FindInMap [ MapName, TopLevelKey, SecondLevelKey ]
+            ```
+    * `Fn::ImportValue`
+        - It is used to import values that are exported in other `CloudFormation Templates`.
+    * `Fn::Join`
+        - It is used to join values with a delimiter.
+        - Syntax:
+            ```
+            !Join [delimiter, [comma-delimited list of values]]
+            ```
+        - For e.g. To create following string: `a:b:c`:
+            ```
+            !Join [":", [a, b, c]]
+            ```
+    * `Fn::Sub`
+        - It is used to substitute variables from a text.
+        - It allows you to fully customize your `CloudFormation Templates`.
+        - Shorthand in `YAML` is `!Sub`.
+        - For e.g. You can combine `Fn::Sub` with `References` or `AWS Pseudo Variables`.
+        - `String` must contain `${VariableName}` and will substitute them.
+    * Condition Functions:
+        - `Fn::And`
+        - `Fn::Equals`
+        - `Fn::If`
+        - `Fn::Not`
+        - `Fn::Or`
