@@ -79,6 +79,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS Monitoring & Audit: CloudWatch, X-Ray And CloudTrail
     - [AWS Monitoring Intro](#aws-monitoring-intro)
+    - [CloudWatch Metrics](#cloudwatch-metrics)
 ---
 
 ### AWS Regions
@@ -1353,3 +1354,29 @@ Each availability `z`one is a physical data center in the region, but separated 
 - **AWS CloudTrail:**
     * Internal monitoring of API calls being made.
     * Audit changes to AWS Resources by your users.
+
+### CloudWatch Metrics
+- `CloudWatch` provides metrics for **all** services in AWS.
+- `Metric` is a variable to monitor (For e.g. In EC2 Instance - `CPUUtilization`, `NetworkIn` etc..)
+- Metrics belong to `namespaces`.
+- `Dimension` is an attribute of a metric (For e.g. instance id, environment, etc..).
+- We can have up to `10 Dimensions` per `Metric`.
+- Metrics have `timestamps`.
+- Out of metrics we want, we can create `CloudWatch Dashboards`.
+- **CloudWatch EC2 Detailed Monitoring:**
+    * EC2 instance metrics have metrics `Every 5 Minutes`.
+    * With `Detailed Monitoring` (For extra cost), you can get metrics for `Every 1 Minute`.
+    * Use `Detailed Monitoring` if you want to more promptly scale your `ASG`.
+    * `AWS Free Tier` allows us to have `10 Detailed Monitoring Metrics`.
+    * **Note:** EC2 `Memory Usage` is not pushed as a `Metric` by default. It must be pushed from inside the EC2 instance as a `Custom Metric`.
+- **CloudWatch Custom Metrics:**
+    * It is possible to define and send your own custom metrics to CloudWatch. And they can be whatever you want.
+    * Ability to use `Dimensions (Attributes)` to segment metrics. For e.g.
+        - `Instance.id`
+        - `Environment.name`
+    * `Metric Resolution` for `Custom Metrics`:
+        - Standard: `1 Minute`.
+        - Higher Resolution: If you want, you can get Metric data up to every `1 Second` using `StorageResolution API Parameter`. It is offered at **Higher Cost**.
+            * `StorageResolution API Parameter` enables `High Resolution Custom Metric`.
+    * To send a Metric Data to CloudWatch `PutMetricData` API call is used.
+    * You can use `Exponential Back Off` in case of `Throttle Errors`.
