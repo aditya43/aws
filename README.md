@@ -83,6 +83,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudWatch Alarms](#cloudwatch-alarms)
     - [CloudWatch Logs](#cloudwatch-logs)
     - [CloudWatch Events](#cloudwatch-events)
+    - [AWS X-Ray](#aws-x---ray)
 ---
 
 ### AWS Regions
@@ -1425,3 +1426,5 @@ Each availability `z`one is a physical data center in the region, but separated 
     * For e.g: `CodePipeline` state changes!
 - Triggers to `Lambda Functions`, `SQS`, `SNS`, `Kinesis Messages` etc..
 - `CloudWatch Event` creates a small `JSON` document to give information about the change.
+
+### AWS X-Ray
