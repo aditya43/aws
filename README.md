@@ -82,6 +82,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudWatch Metrics](#cloudwatch-metrics)
     - [CloudWatch Alarms](#cloudwatch-alarms)
     - [CloudWatch Logs](#cloudwatch-logs)
+    - [CloudWatch Events](#cloudwatch-events)
 ---
 
 ### AWS Regions
@@ -1417,3 +1418,10 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Using `AWS CLI` we can tail the `CloudWatch Logs`.
 - To send logs to `CloudWatch`, make sure your `IAM Permissions` are correct.
 - **Security:** Encryption of logs using **KMS At Rest** at the `Group Level`.
+
+### CloudWatch Events
+- Events can be scheduled using `Cron Jobs`.
+- You can also define `Event Pattern` is `CloudWatch Events`: `Event Rules` to react to a service doing something.
+    * For e.g: `CodePipeline` state changes!
+- Triggers to `Lambda Functions`, `SQS`, `SNS`, `Kinesis Messages` etc..
+- `CloudWatch Event` creates a small `JSON` document to give information about the change.
