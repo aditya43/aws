@@ -83,7 +83,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudWatch Alarms](#cloudwatch-alarms)
     - [CloudWatch Logs](#cloudwatch-logs)
     - [CloudWatch Events](#cloudwatch-events)
-    - [AWS X-Ray](#aws-x---ray)
+    - [AWS X-Ray](#aws-x-ray)
 ---
 
 ### AWS Regions
@@ -1428,3 +1428,43 @@ Each availability `z`one is a physical data center in the region, but separated 
 - `CloudWatch Event` creates a small `JSON` document to give information about the change.
 
 ### AWS X-Ray
+- AWS X-Ray gives **Visual Analysis** of your application.
+- **Advantages:**
+    * Troubleshooting performance (bottlenecks).
+    * Understand dependencies in a microservice architecture.
+    * Pinpoint service issues.
+    * Review request behavior.
+    * Find errors and exceptions.
+    * With `AWS X-Ray`, you can answer questions such as "Are we meeting time SLA in terms of latency or time to process a request etc"?
+    * You can find out which service is slowing you down/"Where I am throttled"?
+    * You can identify users that are impacted.
+- **Compatibility:**
+    * AWS Lambda.
+    * Elastic Beanstalk.
+    * ECS.
+    * ELB.
+    * API Gateway.
+    * EC2 Instances or any application server (even on premise).
+- AWS X-Ray **Leverages Tracing**. Tracing is something:
+    * Tracing is an end to end way to following a `request`.
+    * Each component dealing with the request adds its own `trace`.
+    * Tracing is made of segments (+ sub segments).
+    * Annotations can be added to traces to provide extra information.
+    * **Ability To Trace:**
+        - Every request.
+        - Sample request (as a % for e.g. or a rate per minute).
+    * **X-Ray Security:**
+        - `IAM` for authorization.
+        - `KMS` for encryption at rest.
+- **How to enable AWS X-Ray?**
+    * Your code (Java, Python, Go, Node.js, .NET) must import `AWS X-Ray SDK`.
+        - Very little code modifications needed.
+        - The application SDK will then capture:
+            * Calls to AWS services.
+            * HTTP/HTTPS requests.
+            * Database Calls (MySQL, PostgreSQl, DynamoDB).
+            * Queue Calls (SQS).
+    * After modifying code, we will have to install the `X-Ray Daemon` or enable `X-Ray AWS Integration`:
+        - `X-Ray Daemon` works as a low level UDP packet interceptor (Linux/Windows/Mac etc..)
+        - AWS Lambda/Other AWS services already run the `X-Ray Daemon` for you.
+        - Each application must have the `IAM` rights to write data to `X-Ray`.
