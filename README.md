@@ -81,6 +81,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS Monitoring Intro](#aws-monitoring-intro)
     - [CloudWatch Metrics](#cloudwatch-metrics)
     - [CloudWatch Alarms](#cloudwatch-alarms)
+    - [CloudWatch Logs](#cloudwatch-logs)
 ---
 
 ### AWS Regions
@@ -1393,3 +1394,26 @@ Each availability `z`one is a physical data center in the region, but separated 
 - **Alarm Period:**
     * Length of time in seconds to evaluate the metric.
     * High Resolution Custom Metrics: Can only choose 10 sec or 30 sec.
+
+### CloudWatch Logs
+- Applications can send logs to `CloudWatch` using the SDK.
+- `CloudWatch` can collect logs from:
+    * Elastic Beanstalk: Collection of logs from application.
+    * ECS: Collection from containers.
+    * AWS Lambda: Collection from function logs.
+    * VPC Flow Logs: VPC specific logs.
+    * API Gateway.
+    * `CloudTrail` based on filter.
+    * `CloudWatch Log Agents`: For e.g. On EC2 machines.
+    * `Route53`: Log DNS queries.
+- **CloudWatch Logs Can Go To:**
+    * Batch exporter to S3 for archival.
+    * Stream to `ElasticSearch Cluster` for further analytics.
+- `CloudWatch Logs` can use filter expressions.
+- **CloudWatch Logs Storage Architecture:**
+    * Log Groups: Arbitrary name, usually representing an application.
+    * Log Streams: Instances within application/log files/containers.
+- Can define log expiration policies (Never Expire, 30 Days, etc..)
+- Using `AWS CLI` we can tail the `CloudWatch Logs`.
+- To send logs to `CloudWatch`, make sure your `IAM Permissions` are correct.
+- **Security:** Encryption of logs using **KMS At Rest** at the `Group Level`.
