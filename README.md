@@ -80,6 +80,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS Monitoring & Audit: CloudWatch, X-Ray And CloudTrail
     - [AWS Monitoring Intro](#aws-monitoring-intro)
     - [CloudWatch Metrics](#cloudwatch-metrics)
+    - [CloudWatch Alarms](#cloudwatch-alarms)
 ---
 
 ### AWS Regions
@@ -1380,3 +1381,15 @@ Each availability `z`one is a physical data center in the region, but separated 
             * `StorageResolution API Parameter` enables `High Resolution Custom Metric`.
     * To send a Metric Data to CloudWatch `PutMetricData` API call is used.
     * You can use `Exponential Back Off` in case of `Throttle Errors`.
+
+### CloudWatch Alarms
+- `Alarms` are used to trigger notifications for any metric.
+- Alarms can be attached to `Auto Scaling Groups`, `EC2 Actions`, `SNS Notifications` etc..
+- Various options (sampling, %, max, min, etc..)
+- **Alarm States:**
+    * `OK`
+    * `INSUFFICIENT_DATA`
+    * `ALARM`: When Alarm threshold is passed.
+- **Alarm Period:**
+    * Length of time in seconds to evaluate the metric.
+    * High Resolution Custom Metrics: Can only choose 10 sec or 30 sec.
