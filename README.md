@@ -84,6 +84,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudWatch Logs](#cloudwatch-logs)
     - [CloudWatch Events](#cloudwatch-events)
     - [AWS X-Ray](#aws-x-ray)
+    - [AWS CloudTrail](#aws-cloudtrail)
 ---
 
 ### AWS Regions
@@ -1468,3 +1469,14 @@ Each availability `z`one is a physical data center in the region, but separated 
         - `X-Ray Daemon` works as a low level UDP packet interceptor (Linux/Windows/Mac etc..)
         - AWS Lambda/Other AWS services already run the `X-Ray Daemon` for you.
         - Each application must have the `IAM` rights to write data to `X-Ray`.
+
+### AWS CloudTrail
+- Provides governance, compliance and audit for your AWS account.
+- CloudTrail is **Enabled By Default.**
+- Get an history of events/API calls made within your AWS account by:
+    * Console
+    * SDK
+    * CLI
+    * AWS Services
+- Can put logs from CloudTrail into CloudWatch Logs.
+- If a resource is deleted in AWS, **look into CloudTrail first!**
