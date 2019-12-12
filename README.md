@@ -85,6 +85,10 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [CloudWatch Events](#cloudwatch-events)
     - [AWS X-Ray](#aws-x-ray)
     - [AWS CloudTrail](#aws-cloudtrail)
+
+- AWS Integration And Messaging: SQS, SNS And Kinesis
+    - [Introduction To Messaging](#introduction-to-messaging)
+
 ---
 
 ### AWS Regions
@@ -1480,3 +1484,16 @@ Each availability `z`one is a physical data center in the region, but separated 
     * AWS Services
 - Can put logs from CloudTrail into CloudWatch Logs.
 - If a resource is deleted in AWS, **look into CloudTrail first!**
+
+### Introduction To Messaging
+- When we start deploying multiple applications, they will inevitably need to communicate with one another.
+- There are 2 patterns of application communication:
+    * Synchronous Communication: **Application To Application**.
+    * Asynchronous / Event Based: **Application To Queue To Application**.
+- Synchronous communication between applications can be problematic if there are sudden spikes of traffic.
+- It's better to **decouple** your applications and scale **decoupled applications** individually.
+- Asynchronous communication between applications can be achieved by:
+    * `SQS`: Queue model.
+    * `SNS`: Pub/Sub model.
+    * `Kinesis`: Real-time streaming model.
+    * **These services can scale independently from our application.**
