@@ -1546,3 +1546,9 @@ Each availability `z`one is a physical data center in the region, but separated 
         - If a consumer receives a message and starts processing it, and while processing, consumer figures out it will need more time to process the message, then consumer can change message's `Visibility Timeout` value using `ChangeMessageVisibility API` while processing the message.
     * **DeleteMessage API:**
         - Consumer can use `DeleteMessage API` to tell SQS that the message was successfully processed and you can delete it.
+- **SQS - Long Polling:**
+    * When a consumer requests message from the queue, it can optionally `wait` for messages to arrive if there are none in the queue. This is called **Long Polling**.
+    * `Long Polling` decreases the number of API calls made to SQS while increasing the efficiency and latency of your application.
+    * Wait time can be between 1 Second to 20 Seconds (20 Seconds Preferable).
+    * **Long Polling is preferable over Short Polling.**
+    * `Long Polling` can be enabled at queue level or at the API level using `WaitTimeSeconds API`.
