@@ -98,6 +98,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [Kinesis Security](#kinesis-security)
     - [Kinesis Data Analytics](#kinesis-data-analytics)
     - [Kinesis Firehose](#kinesis-firehose)
+    - [SQS vs SNS vs Kinesis](#sqs-vs-sns-vs-kinesis)
 
 ---
 
@@ -1711,3 +1712,28 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Automatic scaling.
 - Support many data format (Pay for conversion).
 - Pay for the amount of data going through Firehose.
+
+### SQS vs SNS vs Kinesis
+- `SQS`:
+    * Consumers `pull data`.
+    * Data is deleted after being consumed.
+    * Can have as many workers (consumers) as we want.
+    * No need to provision throughput.
+    * No ordering guarantee (Except FIFO queues).
+    * Individual message delay capability.
+- `SNS`: Pub/Sub
+    * Push data to many subscribers.
+    * Up to 10,000,000 subscribers.
+    * Data is not persisted (lost if not delivered).
+    * Pub/Sub.
+    * Up to 100,000 topics.
+    * No need to provision throughput.
+    * Integrates with SQS for `Fan Out` architecture pattern.
+- `Kinesis`:
+    * Consumers `pull data`.
+    * As many consumers as we want.
+    * Possibility to replay data.
+    * Meant for real-time big data, analytics and ETL.
+    * Ordering at the shard level.
+    * Data expires after X days.
+    Must provision throughput.
