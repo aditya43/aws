@@ -1,4 +1,4 @@
-## AWS Certified Developer Associate
+## AWS Certified Developer
 My personal notes.
 
 ## Author
@@ -95,6 +95,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS SNS](#aws-sns)
     - [SNS + SQS - Fan Out](#sns-+-sqs---fan-out)
     - [AWS Kinesis](#aws-kinesis)
+    - [Kinesis Security](#kinesis-security)
 
 ---
 
@@ -1684,3 +1685,10 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Can use `Kinesis Client Library` (in Java, Node, Python, Ruby, .Net).
         - `KCL (Kinesis Client Library` uses `DynamoDB` to checkpoint offsets.
         - `KCL (Kinesis Client Library` uses `DynamoDB` to track other workers and share the work amongst shards.
+
+### Kinesis Security
+- Control access/authorization using `IAM Policies`.
+- Encryption in flight using HTTPS endpoints.
+- Encryption at rest using `KMS (SSE - Server Side Encryption)`.
+- Ability to encrypt/decrypt data at client side (harder).
+- `VPC Endpoints` available for Kinesis to access within VPC.
