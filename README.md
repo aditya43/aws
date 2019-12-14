@@ -91,6 +91,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS SQS](#aws-sqs)
     - [AWS FIFO Queue](#aws-fifo-queue)
     - [SQS Extended Client](#sqs-extended-client)
+    - [SQS Security](#sqs-security)
 
 ---
 
@@ -1575,3 +1576,17 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Message size limit is 256kb, how to send large messages? This is where `Extended Client` comes into picture.
 - It is available only under `Java Library` at the moment.
 - It leverages `S3` over `SQS Queue`.
+
+### SQS Security
+- Encryption in flight using the HTTPS endpoint.
+- Can enable `SSE (Server Side Encryption)` using `KMS`.
+    * Can set the `CMK (Customer Master Key)` we want to use.
+    * Can set the data key reuse period (between 1 minute and 24 hours).
+        - Lower and KMS API will be used often.
+        - Higher and KMS API will be called less often.
+    * SSE only encrypts the message body, not the metadata (Message Id, Timestamp, Attributes).
+- IAM policy must allow usage of SQS.
+- SQS queue access policy:
+    * Finer grained control over IP.
+    * Control over the time the requests come in.
+- **No VPC Endpoint to access SQS. SQS can only be accessed over internet.**
