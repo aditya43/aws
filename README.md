@@ -94,6 +94,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SQS Security](#sqs-security)
     - [AWS SNS](#aws-sns)
     - [SNS + SQS - Fan Out](#sns-+-sqs---fan-out)
+    - [AWS Kinesis](#aws-kinesis)
 
 ---
 
@@ -1615,7 +1616,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     * CloudFormation (Upon state changes --> Failed to build etc..)
 - **How to publish:**
     * `Topic Publish` (Within your AWS Server - Using the SDK).
-        - Create a Topic.
+        - Create to a Topic.
         - Create a subscription (or many).
         - Publish the topic.
     * `Direct Publish` (For mobile apps SDK).
@@ -1632,3 +1633,14 @@ Each availability `z`one is a physical data center in the region, but separated 
 - SQS allows for delayed processing.
 - SQS allows for retries of work.
 - May have many workers on one queue and one worker on the other queue.
+
+### AWS Kinesis
+- **Kinesis** is a managed alternative to `Apache Kafka`.
+- Great for application logs, metrics, IoT, clickstreams etc..
+- Basically it is great for anything with **Real-time Big Data**.
+- Great for streaming processing frameworks (Spark, NiFi etc..)
+- Data is automatically replicated to `3 Availability Zones`.
+- There are 3 Kinesis sub products:
+    * `Kinesis Streams`: Low latency streaming ingest at scale.
+    * `Kinesis Analytics`: Perform real-time analytics on streams using SQL.
+    * `Kinesis Firehose`: Load streams into S3, Redshift, ElasticSearch.
