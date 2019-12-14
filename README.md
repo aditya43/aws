@@ -1517,3 +1517,10 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Default is 0 seconds (messages are available right away).
         - Can set `Default Delay` at `Queue` level.
         - Can override the `Default Delay` using `DelaySeconds` parameter.
+- **Producing Messages:** Message form:
+    * Define message body upto 256kb.
+    * Add message attributes (metadata - optional). For e.g. `Name`, `Type`, `Value` etc..
+    * Provide Delay Delivery (optional). For e.g. with `DelaySeconds` parameters.
+    * After processing message, we get back folling data as a response:
+        - Message Identifier.
+        - MD5 Hash of the message body.
