@@ -1679,3 +1679,8 @@ Each availability `z`one is a physical data center in the region, but separated 
             * Retries with backoff.
             * Increase shards (scaling).
             * Ensure your partition key is a good one.
+- **Kinesis API - Consumers:**
+    * Can yse a normal consumer (CLI, SDK etc..)
+    * Can use `Kinesis Client Library` (in Java, Node, Python, Ruby, .Net).
+        - `KCL (Kinesis Client Library` uses `DynamoDB` to checkpoint offsets.
+        - `KCL (Kinesis Client Library` uses `DynamoDB` to track other workers and share the work amongst shards.
