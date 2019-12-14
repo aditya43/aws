@@ -89,6 +89,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS Integration And Messaging: SQS, SNS And Kinesis
     - [Introduction To Messaging](#introduction-to-messaging)
     - [AWS SQS](#aws-sqs)
+    - [AWS FIFO Queue](#aws-fifo-queue)
 
 ---
 
@@ -1554,3 +1555,17 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Wait time can be between 1 Second to 20 Seconds (20 Seconds Preferable).
     * **Long Polling is preferable over Short Polling.**
     * `Long Polling` can be enabled at queue level or at the API level using `WaitTimeSeconds API`.
+
+### AWS FIFO Queue
+- Newer offering (First In - First Out) - **Not available in all regions.**
+- Name of queue must end in `.fifo`.
+- Lower throughput (up to 3000 per second with batching | 300 per second without batching).
+- Messages are processed in order by consumer.
+- Messages are sent exactly once.
+- No per message delay (**Only Per Queue Delay**).
+- Ability to do content based de-duplication.
+- 5-Minute interval de-duplicattion using `Duplication Id`.
+- Message Groups:
+    * Possibility to group messages for FIFO ordering using `Message GroupId`.
+    * Only one worker can be assigned per message group so that messages are processed in order.
+    * Message group is just an extra tag on the Message!
