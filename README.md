@@ -1659,3 +1659,23 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Batching available or per message calls.
     * The number of shards can evolve over time (reshard/merge).
     * **Records are ordered per shard.**
+- **Kinesis API - Put Records:**
+    * On producer side, there is `Put Records API`.
+    * `Put Records API` is a way to send data to Kinesis.
+    * `PutRecords` API + `Partition Key` that gets hashed. `Partition Key` is hashed to determine shard id.
+    * Rule is - Same key always goes to same partition. Helps with ordering for a specific key.
+    * Messages that are sent to the shards, get a `sequence number`.
+    * Choose a partition key that is highly distributed. Helps prevent `Hot Partition`.
+        - For e.g. If your application has millions of users then use `user_id` as a `Partition Key`.
+        - For e.g. If your apploication has milllions of users, do not use their `country_id` as a `Partition Key`. Befcause many users can belong to 1 country.
+    * Use `Batching` with `PutRecords API` to reduce costs and increase throughput.
+    * If we go over the limits, we will get an error `ProvisionedThroughputExceeded`.
+    * Can use CLI, AWS SDK, or producer libraries from various frameworks.
+    * **Common Exceptions:**
+        - `ProvisionedThroughputExceeded` Exception:
+            * Happens when sending more data (exceeding MBs per second or TPS for shard).
+            * Make sure you dont have a hot shard (such as your partition key is bad and too much data goes to that partition).
+        - **Solutions:**
+            * Retries with backoff.
+            * Increase shards (scaling).
+            * Ensure your partition key is a good one.
