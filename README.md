@@ -1612,3 +1612,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Auto Scaling Group Notifications.
     * Amazon S3 (On Bucket events).
     * CloudFormation (Upon state changes --> Failed to build etc..)
+- **How to publish:**
+    * `Topic Publish` (Within your AWS Server - Using the SDK).
+        - Create a Topic.
+        - Create a subscription (or many).
+        - Publish the topic.
+    * `Direct Publish` (For mobile apps SDK).
+        - Create a platform application.
+        - Create a platform endpoint.
+        - Publish to the platform endpoint.
+        - Works with Google GCM, Apple APNS, Amazon ADM etc..
