@@ -99,6 +99,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [Kinesis Data Analytics](#kinesis-data-analytics)
     - [Kinesis Firehose](#kinesis-firehose)
     - [SQS vs SNS vs Kinesis](#sqs-vs-sns-vs-kinesis)
+    - [Amazon MQ](#amazon-mq)
 
 ---
 
@@ -1737,3 +1738,17 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Ordering at the shard level.
     * Data expires after X days.
     Must provision throughput.
+
+### Amazon MQ
+- SQS, SNS are `cloud native` services, and they're using proprietary protocols from AWS.
+- Traditional applications running from on-promise may use open protocols such as: `MQTT, AMQP, STOMP, Openwire, WSS etc..`.
+- When migrating to the cloud, instead of re-engineering the application to use SQS and SNS, **we can use Amazon MQ**.
+- **Amazon MQ = Managed Apache ActiveMQ.**
+- Amazon MQ doesn't `Scale` as much as SQS/SNS.
+- Amazon MQ runs on a dedicated machine, can run in `HA (High Availability)` with failover.
+- Amazon MQ has both queue feature (~SQS) and topic features (~SNS).
+- Amazon MQ is a managed message broker service for Apache ActiveMQ that makes it easy to set up and operate message brokers in the cloud.
+- Message brokers allow different software systems–often using different programming languages, and on different platforms–to communicate and exchange information.
+- Amazon MQ reduces your operational load by managing the provisioning, setup, and maintenance of ActiveMQ, a popular open-source message broker.
+- Connecting your current applications to Amazon MQ is easy because it uses industry-standard APIs and protocols for messaging, including JMS, NMS, AMQP, STOMP, MQTT, and WebSocket.
+- Using standards means that in most cases, there’s no need to rewrite any messaging code when you migrate to AWS.
