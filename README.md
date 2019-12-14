@@ -1651,3 +1651,11 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Multiple applications can consume the same stream (Sort of like SNS).
     * Real time processing with scale of throughput.
     * Once data is inserted in Kinsis, it can't be deleted (immutability).
+- **Kinesis Stream Shards:**
+    * One stream is made of many different shards.
+    * 1mb per second or 1000 messages per second at write `PER SHARD`. i.e. A producer can write 1000 messages per second.
+    * 2mb per second at read `PER SHARD`.
+    * Billing is per shard provisioned. You can have as many shards as you want.
+    * Batching available or per message calls.
+    * The number of shards can evolve over time (reshard/merge).
+    * **Records are ordered per shard.**
