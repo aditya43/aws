@@ -93,6 +93,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SQS Extended Client](#sqs-extended-client)
     - [SQS Security](#sqs-security)
     - [AWS SNS](#aws-sns)
+    - [SNS + SQS - Fan Out](#sns-+-sqs---fan-out)
 
 ---
 
@@ -1622,3 +1623,12 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Create a platform endpoint.
         - Publish to the platform endpoint.
         - Works with Google GCM, Apple APNS, Amazon ADM etc..
+
+### SNS + SQS - Fan Out
+- SNS + SQS (Fan Out) is used when you want to publish the data to many SQS queues. i.e. **Push once in SNS, receive in many SQS.**
+- Fully decoupled.
+- No data loss.
+- Ability to add receivers of data later.
+- SQS allows for delayed processing.
+- SQS allows for retries of work.
+- May have many workers on one queue and one worker on the other queue.
