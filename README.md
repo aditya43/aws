@@ -97,6 +97,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS Kinesis](#aws-kinesis)
     - [Kinesis Security](#kinesis-security)
     - [Kinesis Data Analytics](#kinesis-data-analytics)
+    - [Kinesis Firehose](#kinesis-firehose)
 
 ---
 
@@ -1702,3 +1703,11 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Continuos: Real Time.
 - Pay for actual consumption rate.
 - Can create strewams out of the real-time queires.
+
+### Kinesis Firehose
+- Fully managed service, no administration.
+- Near Real Time (60 seconds latency).
+- Load data into Redshift/Amazon S3/ElasticSearch/Splunk.
+- Automatic scaling.
+- Support many data format (Pay for conversion).
+- Pay for the amount of data going through Firehose.
