@@ -1524,3 +1524,8 @@ Each availability `z`one is a physical data center in the region, but separated 
     * After processing message, we get back folling data as a response:
         - Message Identifier.
         - MD5 Hash of the message body.
+- **Consuming Messages:**
+    * Consumers..
+    * Consumers `Poll` SQS for messages (receive up to 10 messages at a time).
+    * Consumers have duty to process messages before the `Visibility Timeout`.
+    * Once the message is processed, Consumer will tell the SQS to delete the message or when the `Visibility Timeout` is reached, SQS will delete the message using `Message Id` and `Receipt Handle`.
