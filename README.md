@@ -88,6 +88,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS Integration And Messaging: SQS, SNS And Kinesis
     - [Introduction To Messaging](#introduction-to-messaging)
+    - [AWS SQS](#aws-sqs)
 
 ---
 
@@ -1497,3 +1498,17 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `SNS`: Pub/Sub model.
     * `Kinesis`: Real-time streaming model.
     * **These services can scale independently from our application.**
+
+### AWS SQS
+- **Types Of Queues:**
+    * `Standard Queue`:
+        - It is the oldest offering by AWS (Over 10 years old).
+        - Fully managed by AWS.
+        - Scales from 1 messages per secord to 10000s per second.
+        - Default retention of messages: 4 days, maximum of 14 days.
+        - No limit to how many messages can be in the queue.
+        - Low latency (< 10ms on publish and receive>).
+        - Horizontal scaling in terms of number of consumers.
+        - Can have duplicate messages (at least one delivery, occasionally).
+        - Can have out of order messsages (best effort ordering).
+        - Limitation of `256kb` per message sent.
