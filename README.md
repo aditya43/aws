@@ -1529,3 +1529,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Consumers `Poll` SQS for messages (receive up to 10 messages at a time).
     * Consumers have duty to process messages before the `Visibility Timeout`.
     * Once the message is processed, Consumer will tell the SQS to delete the message or when the `Visibility Timeout` is reached, SQS will delete the message using `Message Id` and `Receipt Handle`.
+- **SQS - Visibility Timeout:**
+    * When a consumer polls a message from a queue, the message is `invisible` to other consumers for a defined period. This is what is called a `Visibility Timeout`.
+    * Default `Visibility Timeout` is 30 Seconds.
+    * You can set any value between 0 Seconds To 12 Hours.
+    * If the `Visibility Timeout` is set too high (e.g. 15 minutes) and a consumer fails to process the message, you must wait a long time before processing the message again.
+    * If the `Visibility Timeout` is set too low (e.g. 30 seconds) and a consumer needs time to process the message (e.g. 2 minutes), another consumer will receive the message and the message will be processed more than once.
+    * **ChangeMessageVisibility API:**
+        - If a consumer receives a message and starts processing it, and while processing, consumer figures out it will need more time to process the message, then consumer can change message's `Visibility Timeout` value using `ChangeMessageVisibility API` while processing the message.
+    * **DeleteMessage API:**
+        - Consumer can use `DeleteMessage API` to tell SQS that the message was successfully processed and you can delete it.
