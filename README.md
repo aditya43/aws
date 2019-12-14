@@ -92,6 +92,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS FIFO Queue](#aws-fifo-queue)
     - [SQS Extended Client](#sqs-extended-client)
     - [SQS Security](#sqs-security)
+    - [AWS SNS](#aws-sns)
 
 ---
 
@@ -1590,3 +1591,24 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Finer grained control over IP.
     * Control over the time the requests come in.
 - **No VPC Endpoint to access SQS. SQS can only be accessed over internet.**
+
+### AWS SNS
+- `AWS SNS (Simple Notification System)` comes into the picture when we want to send one message to many receivers.
+- The `Event Producer` only sends message to `SNS Topic`.
+- As may `Event Receivers (Subscriptions)` as we want to listen to the `SNS Topic Notifications`.
+- Each subscriber to the topic will get all the messages (**Note: Theres a new feature to filter messages**).
+- Up to 10,000,000 subscribers per topic.
+- 100,000 topics limit.
+- Subscribers can be:
+    * SQS Queues.
+    * HTTP/HTTPS Endpoints (With delivery retries - how many times).
+    * Lambda.
+    * Emails.
+    * SMS Messages.
+    * Mobile Notifications.
+- **SNS integrates with a lot of Amazon Products:**
+    * Some services can send data directly to SNS for notifications.
+    * CloudWatch (For Alarms).
+    * Auto Scaling Group Notifications.
+    * Amazon S3 (On Bucket events).
+    * CloudFormation (Upon state changes --> Failed to build etc..)
