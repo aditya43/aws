@@ -1500,6 +1500,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     * **These services can scale independently from our application.**
 
 ### AWS SQS
+- SQS stands for `Simple Queue Service`.
 - **Types Of Queues:**
     * `Standard Queue`:
         - It is the oldest offering by AWS (Over 10 years old).
