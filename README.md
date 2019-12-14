@@ -96,6 +96,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SNS + SQS - Fan Out](#sns-+-sqs---fan-out)
     - [AWS Kinesis](#aws-kinesis)
     - [Kinesis Security](#kinesis-security)
+    - [Kinesis Data Analytics](#kinesis-data-analytics)
 
 ---
 
@@ -1692,3 +1693,12 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Encryption at rest using `KMS (SSE - Server Side Encryption)`.
 - Ability to encrypt/decrypt data at client side (harder).
 - `VPC Endpoints` available for Kinesis to access within VPC.
+
+### Kinesis Data Analytics
+- Perform real-time analytics on `Kinesis Streams` using SQL.
+- Kinesis Data Analytics:
+    * Auto Scaling.
+    * Managed: No servers to provision.
+    * Continuos: Real Time.
+- Pay for actual consumption rate.
+- Can create strewams out of the real-time queires.
