@@ -1512,3 +1512,8 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Can have duplicate messages (at least one delivery, occasionally).
         - Can have out of order messsages (best effort ordering).
         - Limitation of `256kb` per message sent.
+    * `Delay Queue`:
+        - Delay a message (Consumers don't see it immediately) up to 15 minutes.
+        - Default is 0 seconds (messages are available right away).
+        - Can set `Default Delay` at `Queue` level.
+        - Can override the `Default Delay` using `DelaySeconds` parameter.
