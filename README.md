@@ -1644,3 +1644,10 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `Kinesis Streams`: Low latency streaming ingest at scale.
     * `Kinesis Analytics`: Perform real-time analytics on streams using SQL.
     * `Kinesis Firehose`: Load streams into S3, Redshift, ElasticSearch.
+- **Kinesis Streams:**
+    * Streams are divided in ordered `Shards/Partitions`.
+    * On Shards, data retention is 1 day by default (can go up to 7 days).
+    * Ability to reprocess/replay data (In SQS, when data is processed, it's gone. This is not the case with Kinesis).
+    * Multiple applications can consume the same stream (Sort of like SNS).
+    * Real time processing with scale of throughput.
+    * Once data is inserted in Kinsis, it can't be deleted (immutability).
