@@ -90,6 +90,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [Introduction To Messaging](#introduction-to-messaging)
     - [AWS SQS](#aws-sqs)
     - [AWS FIFO Queue](#aws-fifo-queue)
+    - [SQS Extended Client](#sqs-extended-client)
 
 ---
 
@@ -1569,3 +1570,8 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Possibility to group messages for FIFO ordering using `Message GroupId`.
     * Only one worker can be assigned per message group so that messages are processed in order.
     * Message group is just an extra tag on the Message!
+
+### SQS Extended Client
+- Message size limit is 256kb, how to send large messages? This is where `Extended Client` comes into picture.
+- It is available only under `Java Library` at the moment.
+- It leverages `S3` over `SQS Queue`.
