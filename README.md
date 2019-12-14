@@ -1517,6 +1517,13 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Default is 0 seconds (messages are available right away).
         - Can set `Default Delay` at `Queue` level.
         - Can override the `Default Delay` using `DelaySeconds` parameter.
+    * `Dead Letter Queue (DLQ)`:
+        - In `Standard Queue` and `Delay Queue`:
+            * If a consumer fails to process a message within the `Visibility Timeout`, the message goes back to the queue.
+            * We can set a threshold of how many times a message can go back to the queue - It's called a **Redrive Policy**.
+        - After the threshold (**Redrive Policy**) is exceeded, the message goes into a `Dead Letter Queue (DLQ)`.
+        - We have to create a `Dead Letter Queue (DLQ)` first and then designate it a Dead Letter Queue.
+        - Make sure to process the messages in `Dead Letter Queue (DLQ)` before they expire.
 - **Producing Messages:** Message form:
     * Define message body upto 256kb.
     * Add message attributes (metadata - optional). For e.g. `Name`, `Type`, `Value` etc..
