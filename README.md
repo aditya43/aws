@@ -108,6 +108,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS Lambda Limits](#aws-lambda-limits)
     - [AWS Lambda Concurrency And Throttling](#aws-lambda-concurrency-and-throttling)
     - [AWS Lambda Retries And DLQ](#aws-lambda-retries-and-dlq)
+    - [AWS Lambda Logging Monitoring And Tracing](#aws-lambda-logging-monitoring-and-tracing)
     - [DynamoDB](#dynamodb)
 
 ---
@@ -1838,6 +1839,17 @@ Each availability `z`one is a physical data center in the region, but separated 
     * This is an easy way to debug what's wrong with your functions in production without changing the code.
 - In Lambda, a DLQ can be a `SNS Topic` or `SQS Queue`.
 - **Make sure the IAM execution role is correct for your Lambda function.**
+
+### AWS Lambda Logging Monitoring And Tracing
+- `CloudWatch`:
+    * AWS Lambda execution logs are stored in AWS `CloudWatch Logs`.
+    * AWS Lambda metrics are displayed in AWS `CloudWatch Metrics`.
+    * **Make sure your Lambda function has an execution role with an IAM policy that authorizes writes to CloudWatch.**
+- `X-Ray`:
+    * It's possible to trace Lambda with X-Ray.
+    * Enable in Lambda configuration (runs the X-Ray daemon for you).
+    * Use AWS SDK in Code.
+    * **Ensure Lambda Function has correct IAM Execution Role.**
 
 ### DynamoDB
 - Fully managed, Highly available with replication across `3 Availability Zones` by default.
