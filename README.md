@@ -118,6 +118,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB - Partitions Internal](#dynamodb---partitions-internal)
     - [DynamoDB - Throttling](#dynamodb---throttling)
     - [DynamoDB - Basic APIs](#dynamodb---basic-apis)
+    - [DynamoDB - Indexes](#dynamodb---indexes)
 
 ---
 
@@ -2041,3 +2042,20 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Increases the throughput and RCU consumed.
         - Limit the impact of parallel scans just like you would do for `Scans`.
     * Can use `ProjectionExpression + FilterExpression` (No change to RCU).
+
+### DynamoDB - Indexes
+- `Local Secondary Index (LSI)`:
+    * Alternate range key for your table. **Local to the hash key**.
+    * Up to 5 local secondary indexes per table.
+    * The sort key consist of exactly one scaler attribute.
+    * The attribute you choose must be a scaler type: `String`, `Number` or `Binary`.
+    * **`LSI` must be defined at table creation time.**
+- `Global Secondary Index (GSI)`:
+    * `GSI` is used to speed up queries on non-key attributes.
+    * `GSI` = `PartitionKey` + `Optional SortKey`.
+    * The index is a new `table` and we can project attributes on it.
+        - The `PartitionKey` and `SortKey` of the original table are always projected (`KEYS_ONLY`).
+        - You can specify extra attributes to project (`INCLUDE`).
+        - You can use all attributes from main table (`ALL`)
+    * `RCU and WCU` must be defined for `GSI`.
+    * **`GSI` can be added/modified later. `LSI` cannot be added or modified later.**
