@@ -101,6 +101,9 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SQS vs SNS vs Kinesis](#sqs-vs-sns-vs-kinesis)
     - [Amazon MQ](#amazon-mq)
 
+- AWS Serverless: Lambda
+    - [AWS Serverless](#aws-serverless)
+
 ---
 
 ### AWS Regions
@@ -1752,3 +1755,20 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Amazon MQ reduces your operational load by managing the provisioning, setup, and maintenance of ActiveMQ, a popular open-source message broker.
 - Connecting your current applications to Amazon MQ is easy because it uses industry-standard APIs and protocols for messaging, including JMS, NMS, AMQP, STOMP, MQTT, and WebSocket.
 - Using standards means that in most cases, there’s no need to rewrite any messaging code when you migrate to AWS.
+
+### AWS Serverless
+- `Serverless` is a new paradigm in which the developers don't have to manage servers anymore.
+- Initially, Serverless was `FaaS (Function as a Service)`.
+- `Serverless` was pioneered by `AWS Lambda` but now also includes anything that's managed: For e.g. databases, messaging, storage, etc..
+- Usually when people say `Serverless in AWS`, they mean `AWS Lambda`.
+- **Serverless does not mean there are no servers. It meams you just don't manage/provision/see them.**
+- `Serverless` in AWS has many different forms:
+    * `AWS Lambda`.
+    * `Step Functions (FaaS - Function as a Service)`.
+    * `DynamoDB`.
+    * `AWS Cognito`.
+    * `AWS API Gateway`.
+    * `Amazon S3`.
+    * `AWS SNS & SQS`.
+    * `AWS Kinesis`.
+    * `Aurora Serverless`.
