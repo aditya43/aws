@@ -105,6 +105,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS Serverless](#aws-serverless)
     - [AWS Lambda](#aws-lambda)
     - [AWS Lambda Configurations](#aws-lambda-configurations)
+    - [AWS Lambda Limits](#aws-lambda-limits)
 
 ---
 
@@ -1803,3 +1804,15 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Allocated memory (128mb to 3gb).
 - Ability to deploy within a VPC + Assign security groups.
 - IAM execution role must be attached to the Lambda Function.
+
+### AWS Lambda Limits
+- Execution:
+    * Memory Allocation: 128mb to 3008mb (64mb increments).
+    * Maximum execution time: 300 seconds (5 Minutes). **Now AWS supports 15 minutes but exam still assumes 5 minutes max.**
+    * Disk capacity in the `Function Container` i.e. in `/tmp` is 512mb.
+    * Concurrency limit: Maximum 1000 lambda functions can cocurrently execute. This can be incremented by support ticket request.
+- Deployment:
+    * Lambda function deployment size (compressed .zip): 50mb.
+    * Size of uncompressed deployment (code + dependencies): 250mb.
+    * Can use `/tmp` directory to load other files at startup.
+    * Size of environment variables: 4kb.
