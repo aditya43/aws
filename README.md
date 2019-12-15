@@ -116,6 +116,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB Intro](#dynamodb)
     - [DynamoDB - Provisioned Throughput](#dynamodb---provisioned-throughput)
     - [DynamoDB - Partitions Internal](#dynamodb---partitions-internal)
+    - [DynamoDB - Throttling](#dynamodb---throttling)
 
 ---
 
@@ -1974,3 +1975,14 @@ Each availability `z`one is a physical data center in the region, but separated 
     * By size: `Total Size / 10 GB`.
     * Total Partitions: `CEILING(MAX(Capacity, Size))`.
 - **WCU and RCU are spread evenly between partitions**
+
+### DynamoDB - Throttling
+- If we exceed our RCU or WCU, we get `ProvisionedThroughputExceededException`.
+- Reasons:
+    * Hot Keys: One partition key is being read too many times (for e.g. popular item).
+    * Hot partition.
+    * Very large items: Remember RCU and WCU depends on size of items.
+- Solutions:
+    * Exponential back-off when exception is encountered (already in SDK).
+    * Distribute partition keys as much as possible.
+    * If RCU issue, we can use `DynamoDB Accelerator (DAX)`.
