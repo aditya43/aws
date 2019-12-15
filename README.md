@@ -117,6 +117,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB - Provisioned Throughput](#dynamodb---provisioned-throughput)
     - [DynamoDB - Partitions Internal](#dynamodb---partitions-internal)
     - [DynamoDB - Throttling](#dynamodb---throttling)
+    - [DynamoDB - Basic APIs](#dynamodb---basic-apis)
 
 ---
 
@@ -1986,3 +1987,57 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Exponential back-off when exception is encountered (already in SDK).
     * Distribute partition keys as much as possible.
     * If RCU issue, we can use `DynamoDB Accelerator (DAX)`.
+
+### DynamoDB - Basic APIs
+- Writing Data:
+    * `PutItem`: Write data to DynamoDB (Create data or full replace).
+        - Consumes `WCU`.
+    * `UpdateItem`: Update data in DynamoDB (Partial update of attributes).
+        - Possibility to use `Atomic Counters` and increase them.
+    * `Conditional Writes`:
+        - Accept a write/update only if conditions are respected, otherwise reject.
+        - Helps with concurrent access to items.
+        - No performance impact.
+- Deleting Data:
+    * `DeleteItem`: Delete an individual row.
+        - Ability to perform conditional delete.
+    * `DeleteTable`: Delete a whole table and all its items.
+        - Much quicker deletion than calling `DeleteItem` on all items.
+- Batching Writes:
+    * `BatchWriteItem`:
+        - Up to 25 `PutItem` and/or `DeleteItem` in one call.
+        - Up to 16 mb of data written.
+        - Up to 400 kb of data per item.
+    * Batching allows you to save in latency by reducing the number of API calls done against DynamoDB.
+    * Operations are done in parallel for better efficiency.
+    * It's possible for part of a batch to fail, in which case we have can retry for the failed items (using exponential back-off algorithm).
+- Reading Data:
+    * `GetItem`: Read based on `Primary Key`.
+        - `Primary Key` = `Hash (Partition Key)` or `Hash-Range (Partition Key + Sort Key)`.
+        - Eventually consistent read by default.
+        - Option to use `Strongly Consistent Reads` (More RCU - might take longer).
+        - `ProjectionExpression` can be specified to include only certain attributes.
+    * `BatchGetItem`:
+        - Up to 100 items.
+        - Up to 16 mb of data.
+        - Items are retrieved in parallel to minimize latency.
+- DynamoDB Query:
+    * `Query` returns items based on:
+        - `PartitionKey` value (**Must be = operator**).
+        - `SortKey` value (=, <, >, <=, >=, Between, Begin) - Optional.
+        - `FilterExpression` to further filter (client side filtering).
+    * Returns:
+        - Up to 1mb of data.
+        - Or number of items specified in `Limit`.
+    * Able to do pagination on the results.
+    * You can query a `table`, `a local secondary index` or a `global secondary index`.
+- DynamoDB Scan:
+    * `Scan` the entire table and then filter out data. **Extremely Inefficient!**
+    * Returns up to 1 mb of data - use pagination to keep on reading.
+    * Consumes a lot of `RCU`.
+    * Limit impact using `Limit` or reduce the size of the result and pause.
+    * For faster performance, use `Parallel Scans`.
+        - Multiple instances scan multiple partitions at the same time.
+        - Increases the throughput and RCU consumed.
+        - Limit the impact of parallel scans just like you would do for `Scans`.
+    * Can use `ProjectionExpression + FilterExpression` (No change to RCU).
