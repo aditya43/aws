@@ -103,6 +103,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS Serverless: Lambda
     - [AWS Serverless](#aws-serverless)
+    - [AWS Lambda](#aws-lambda)
 
 ---
 
@@ -1772,3 +1773,25 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `AWS SNS & SQS`.
     * `AWS Kinesis`.
     * `Aurora Serverless`.
+
+### AWS Lambda
+- Difference between EC2 and Lambda:
+    * In `EC2 Architecture`:
+        - EC2 are `Virtual Servers` in the Cloud.
+        - EC2 machines are limited by RAM and CPU.
+        - EC2 instances are continuosly running.
+        - Scaling means intervention to add/remove servers.
+    * In `AWS Lambda`:
+        - Lambda are **Virtual Functions**. No servers to manage!
+        - Limited by time - **Short executions**.
+        - Run **on-demand**.
+        - **Scaling is automated!**
+- Benifits:
+    * Easy Pricing:
+        - Pay per request and compute time. i.e. Pay for only when `AWS Lambda` functions are executed and the time they required to execute.
+        - Free tier of 1,000,000 AWS Lambda requests and 400,000 GBs of compute time.
+    * Integrated with the whole AWS stack.
+    * Integrated with many programming languages.
+    * Easy monitoring through AWS CloudWatch.
+    * Easy to get more resources per function (up to 3GB of RAM).
+    * Increasing RAM will also improve CPU and network!
