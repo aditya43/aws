@@ -122,6 +122,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB - Concurrency](#dynamodb---concurrency)
     - [DynamoDB - Accelerator - DAX](#dynamodb---accelerator---dax)
     - [DynamoDB - Streams](#dynamodb---streams)
+    - [DynamoDB - Security And Other Features](#dynamodb---security-and-other-features)
 
 ---
 
@@ -2088,3 +2089,17 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Insert into `Elastic Search`.
 - You can implement cross region replication using `Streams`.
 - `Stream` has 24 hours of data retention.
+
+### DynamoDB - Security And Other Features
+- Security:
+    * VPC endpoints are available to access DynamoDB without internet.
+    * Full access to DynamoDB is controlled by `IAM`.
+    * Encryption at rest using `KMS`.
+    * Encryption in transit using `SSl/TLS`.
+- Backup and Restore features available:
+    * `Point In Time` restore like RDS.
+    * No performance impact.
+- Ability to have `Global Table`:
+    * Multi region, fully replicated, high performance.
+- **`Amazon DMS` can be used to migrate to DynamoDB (From MongoDB, MySQL, Oracle, S3, etc..)**
+- You can launch a local DynamoDB for development purposes.
