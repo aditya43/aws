@@ -110,6 +110,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS Lambda Retries And DLQ](#aws-lambda-retries-and-dlq)
     - [AWS Lambda Logging Monitoring And Tracing](#aws-lambda-logging-monitoring-and-tracing)
     - [AWS Lambda Versions And Aliases](#aws-lambda-versions-and-aliases)
+    - [AWS Lambda Best Practices](#aws-lambda-best-practices)
 
 - AWS Serverless: DynamoDB
     - [DynamoDB Intro](#dynamodb)
@@ -1870,6 +1871,23 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Aliases enable `Blue/Green` deployments by assigning weights to lambda functions.
     * Aliases enable stable configuration of our event triggers/destinations.
     * **Aliases have their own ARNs.**
+
+### AWS Lambda Best Practices
+- Perform heavy duty work outside of your function handler:
+    * Connect to databases outside of your function handler.
+    * Initialize the AWS SDK outside of your function handler.
+    * Pull in dependencies or datasets outside of your function handler.
+- User `Environment Variables` for:
+    * Database Connection Strings, S3 Bucket, etc.. do not put these values directly in your code.
+    * Passwords, sensitive values, etc.. can be encrypted using `KMS`.
+    * Environment Variables can be 4kb max in size.
+- Minimize your deployment package size to its runtime necessities:
+    * Break down the function if need be.
+    * Remember the AWS Lambda limits.
+        - Lambda function deployment size (compressed .zip): 50mb.
+        - Size of uncompressed deployment (code + dependencies): 250mb.
+- **Avoid using recursive code, never have a Lambda function call itself.**
+- Don't put your Lambda function in a VPC unless you have to. In VPC, Lambda Function will take bit of a time to initialize.
 
 ### DynamoDB Intro
 - Fully managed, Highly available with replication across `3 Availability Zones` by default.
