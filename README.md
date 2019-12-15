@@ -1890,6 +1890,14 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Don't put your Lambda function in a VPC unless you have to. In VPC, Lambda Function will take bit of a time to initialize.
 
 ### DynamoDB Intro
+- NoSQL Databases:
+    * Are non-relational databases and are **Distributed**.
+    * For e.g. MongoDB, DynamoDB etc..
+    * Do not support joins.
+    * All the data that is needed for a query is present in one row.
+    * Don't perform/provide aggregations such as `SUM`.
+    * **NoSQL Databases scale horizontally!**
+    * There's no `right or wrong` for NoSQL vs SQL, they just require to model the data differently and think about user queries differently.
 - Fully managed, Highly available with replication across `3 Availability Zones` by default.
 - NoSQL Database - Not a relational database.
 - Scales to massive workloads, distributed database.
@@ -1898,7 +1906,7 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Integrated with IAM for security, authorization and administration.
 - Enables event driven programming with `DynamoDB Streams`.
 - Low cost and auto scaling capabilities.
-- Basics:
+- **Basics:**
     * DynamoDB is made of **Tables**.
     * Each table has a **Primary Key** (must be decided at creation time).
     * Each table can have an infinite number of items (i.e. Rows).
@@ -1908,6 +1916,18 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Scaler Types: String, Number, Binary, Boolean, Null.
         - Document Types: List, Map.
         - Set Types: String Set, Number Set, Binary Set.
+- **Primary Keys:**
+    * Option 1: Partition key only (`HASH`)
+        - Partition key must be unique for each item.
+        - Partition key must be `diverse` so that the data is distributed.
+        - For e.g. `user_id` for `users` table.
+    * Option 2: `Partition Key + Sort Key`
+        - The combination must be unique.
+        - Data is grouped by partition key.
+        - `Sort Key` is also a `Range Key`.
+        - For e.g. In `users-games` table:
+            * `user_id` for the `Partition Key`
+            * `game_id` for the `Sort Key`.
 - **DynamoDB - Provisioned Throughput:**
     * Table must have provisioned read and write capacity units.
     * `Read Capacity Units (RCU)`: Throughput for reads ($0.00013 per RCU).
