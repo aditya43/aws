@@ -101,7 +101,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SQS vs SNS vs Kinesis](#sqs-vs-sns-vs-kinesis)
     - [Amazon MQ](#amazon-mq)
 
-- AWS Serverless: Lambda, DynamoDB, API Gateway, Cognito
+- AWS Serverless: Lambda
     - [AWS Serverless](#aws-serverless)
     - [AWS Lambda](#aws-lambda)
     - [AWS Lambda Configurations](#aws-lambda-configurations)
@@ -109,7 +109,10 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS Lambda Concurrency And Throttling](#aws-lambda-concurrency-and-throttling)
     - [AWS Lambda Retries And DLQ](#aws-lambda-retries-and-dlq)
     - [AWS Lambda Logging Monitoring And Tracing](#aws-lambda-logging-monitoring-and-tracing)
-    - [DynamoDB](#dynamodb)
+    - [AWS Lambda Versions And Aliases](#aws-lambda-versions-and-aliases)
+
+- AWS Serverless: DynamoDB
+    - [DynamoDB Intro](#dynamodb)
 
 ---
 
@@ -1851,7 +1854,24 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Use AWS SDK in Code.
     * **Ensure Lambda Function has correct IAM Execution Role.**
 
-### DynamoDB
+### AWS Lambda Versions And Aliases
+- When you work on a Lambda function, you work on a version called `$LATEST`.
+- `$LATEST` version is **mutable** (i.e. we can change it however we want).
+- When we're ready to publish a Lambda function, we can create a version. This version is **immutable**.
+- Versions are **immutable**.
+- Versions have increasing version numbers.
+- Versions get their own `ARN (Amazon Resource Name)`.
+- Version represents `Code + Configuration`. **Nothing can be changed! Immutable.**
+- Each version of the Lambda function can be accessed using the correct `ARN`.
+- `AWS Lambda Aliases`:
+    * **Aliases are mutable.**
+    * Aliases are `pointers` to `Lambda Function Versions`.
+    * We can define `dev`, `test`, `prod` aliases and have them point at different lambda versions.
+    * Aliases enable `Blue/Green` deployments by assigning weights to lambda functions.
+    * Aliases enable stable configuration of our event triggers/destinations.
+    * **Aliases have their own ARNs.**
+
+### DynamoDB Intro
 - Fully managed, Highly available with replication across `3 Availability Zones` by default.
 - NoSQL Database - Not a relational database.
 - Scales to massive workloads, distributed database.
