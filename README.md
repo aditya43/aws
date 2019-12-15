@@ -119,6 +119,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB - Throttling](#dynamodb---throttling)
     - [DynamoDB - Basic APIs](#dynamodb---basic-apis)
     - [DynamoDB - Indexes](#dynamodb---indexes)
+    - [DynamoDB - Concurrency](#dynamodb---concurrency)
 
 ---
 
@@ -2059,3 +2060,8 @@ Each availability `z`one is a physical data center in the region, but separated 
         - You can use all attributes from main table (`ALL`)
     * `RCU and WCU` must be defined for `GSI`.
     * **`GSI` can be added/modified later. `LSI` cannot be added or modified later.**
+
+### DynamoDB - Concurrency
+- DynamoDB has a feature called `Conditional Update/Delete`.
+- It means that you can ensure an item hasn't been changed before altering it.
+- That makes DynamoDB an `Optimistic Locking` or `Concurrency` Database.
