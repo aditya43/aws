@@ -107,6 +107,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS Lambda Configurations](#aws-lambda-configurations)
     - [AWS Lambda Limits](#aws-lambda-limits)
     - [AWS Lambda Concurrency And Throttling](#aws-lambda-concurrency-and-throttling)
+    - [AWS Lambda Retries And DLQ](#aws-lambda-retries-and-dlq)
     - [DynamoDB](#dynamodb)
 
 ---
@@ -1827,6 +1828,16 @@ Each availability `z`one is a physical data center in the region, but separated 
 - `Throttle Behavior`:
     - If `Synchronous Invocation` then it will return `ThrottleError - 429`.
     - If `Asynchronous Invocation` then it will retry automatically and then go to `DLQ`.
+
+### AWS Lambda Retries And DLQ
+- `Lambda` functions can be invoked `Synchronously` or `Asynchronously`.
+- If it is invoked `Synchronously` and it fails then you are responsible as a `Caller` to retry. You could use `Exponential Back-off` to retry your function.
+- If it is invoked `Asynchronously` and it fails then it will be retried **twice**.
+    * After all retries (`Asynchronously` called function), unprocessed events go to the `Dead Letter Queue`.
+    * Original event payload is sent to the DLQ.
+    * This is an easy way to debug what's wrong with your functions in production without changing the code.
+- In Lambda, a DLQ can be a `SNS Topic` or `SQS Queue`.
+- **Make sure the IAM execution role is correct for your Lambda function.**
 
 ### DynamoDB
 - Fully managed, Highly available with replication across `3 Availability Zones` by default.
