@@ -120,6 +120,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB - Basic APIs](#dynamodb---basic-apis)
     - [DynamoDB - Indexes](#dynamodb---indexes)
     - [DynamoDB - Concurrency](#dynamodb---concurrency)
+    - [DynamoDB - Accelerator - DAX](#dynamodb---accelerator---dax)
 
 ---
 
@@ -2065,3 +2066,14 @@ Each availability `z`one is a physical data center in the region, but separated 
 - DynamoDB has a feature called `Conditional Update/Delete`.
 - It means that you can ensure an item hasn't been changed before altering it.
 - That makes DynamoDB an `Optimistic Locking` or `Concurrency` Database.
+
+### DynamoDB - Accelerator - DAX
+- `DAX = DynamoDB Accelerator`.
+- Seamless cache for DynamoDB, no application re-write required.
+- Writes go through DAX to DynamoDB.
+- Micro Seconds latency for cached reads and queries.
+- Solves the `Hot Key` problem (too many reads).
+- By default, items live in cache for 5 minutes `TTL (Time To Live)`.
+- Up to 10 nodes in cache cluster.
+- `Multiple Availability Zones` (In production, minimum 3 nodes are recommended).
+- Secure (Encryption at rest with KMS, VPC, IAM, CloudTrail..)
