@@ -101,11 +101,13 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SQS vs SNS vs Kinesis](#sqs-vs-sns-vs-kinesis)
     - [Amazon MQ](#amazon-mq)
 
-- AWS Serverless: Lambda
+- AWS Serverless: Lambda, DynamoDB, API Gateway, Cognito
     - [AWS Serverless](#aws-serverless)
     - [AWS Lambda](#aws-lambda)
     - [AWS Lambda Configurations](#aws-lambda-configurations)
     - [AWS Lambda Limits](#aws-lambda-limits)
+    - [AWS Lambda Concurrency And Throttling](#aws-lambda-concurrency-and-throttling)
+    - [DynamoDB](#dynamodb)
 
 ---
 
@@ -1777,6 +1779,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `Aurora Serverless`.
 
 ### AWS Lambda
+- `Lambda` functions can be invoked `Synchronously` or `Asynchronously`.
 - Difference between EC2 and Lambda:
     * In `EC2 Architecture`:
         - EC2 are `Virtual Servers` in the Cloud.
@@ -1816,3 +1819,43 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Size of uncompressed deployment (code + dependencies): 250mb.
     * Can use `/tmp` directory to load other files at startup.
     * Size of environment variables: 4kb.
+
+### AWS Lambda Concurrency And Throttling
+- Concurrency: Up to 1000 executions (can be increased through ticket).
+- Can set a `Reserved Concurrency` at the function level.
+- Each invocation over the concurrency limit will trigger a `Throttle`.
+- `Throttle Behavior`:
+    - If `Synchronous Invocation` then it will return `ThrottleError - 429`.
+    - If `Asynchronous Invocation` then it will retry automatically and then go to `DLQ`.
+
+### DynamoDB
+- Fully managed, Highly available with replication across `3 Availability Zones` by default.
+- NoSQL Database - Not a relational database.
+- Scales to massive workloads, distributed database.
+- Millions of requests per second, trillions of rows, 100s of TB of storage.
+- Fast and consistent in performance (low latency on retrieval).
+- Integrated with IAM for security, authorization and administration.
+- Enables event driven programming with `DynamoDB Streams`.
+- Low cost and auto scaling capabilities.
+- Basics:
+    * DynamoDB is made of **Tables**.
+    * Each table has a **Primary Key** (must be decided at creation time).
+    * Each table can have an infinite number of items (i.e. Rows).
+    * Each item has **attributes** (can be added over time - can be null).
+    * Maximum size of a item is 400kb.
+    * Data types supported are:
+        - Scaler Types: String, Number, Binary, Boolean, Null.
+        - Document Types: List, Map.
+        - Set Types: String Set, Number Set, Binary Set.
+- **DynamoDB - Provisioned Throughput:**
+    * Table must have provisioned read and write capacity units.
+    * `Read Capacity Units (RCU)`: Throughput for reads ($0.00013 per RCU).
+        - `1 RCU` = 1 Strongly consistent read of 4kb per second.
+        - **OR**
+        - `1 RCU` = 2 Eventually consistent read of 4kb per second.
+    * `Write Capacity Units (WCU)`: Throughput for writes ($0.00065 per WCU).
+        - `1 WCU` = 1 Write of 1kb second.
+    * Option to setup auto-scaling of throughput to meet demand.
+    * Throughput can exceeded temporarily using `Burst Credit`.
+    * If ther burst credit are empty, you'll get a `ProvisionedThroughputException`.
+    * It's then advised to do an exponential back-off retry.
