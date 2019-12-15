@@ -121,6 +121,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB - Indexes](#dynamodb---indexes)
     - [DynamoDB - Concurrency](#dynamodb---concurrency)
     - [DynamoDB - Accelerator - DAX](#dynamodb---accelerator---dax)
+    - [DynamoDB - Streams](#dynamodb---streams)
 
 ---
 
@@ -2077,3 +2078,13 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Up to 10 nodes in cache cluster.
 - `Multiple Availability Zones` (In production, minimum 3 nodes are recommended).
 - Secure (Encryption at rest with KMS, VPC, IAM, CloudTrail..)
+
+### DynamoDB - Streams
+- Changes in DynamoDB (Create, Update, Delete) can end up in `DynamoDB Stream`.
+- This stream can be read by AWS Lambda and we can then do:
+    * React to changes in real time (Welcome email to new users).
+    * Analytics.
+    * Create derivative tables/views.
+    * Insert into `Elastic Search`.
+- You can implement cross region replication using `Streams`.
+- `Stream` has 24 hours of data retention.
