@@ -104,6 +104,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS Serverless: Lambda
     - [AWS Serverless](#aws-serverless)
     - [AWS Lambda](#aws-lambda)
+    - [AWS Lambda Configurations](#aws-lambda-configurations)
 
 ---
 
@@ -1795,3 +1796,10 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Easy monitoring through AWS CloudWatch.
     * Easy to get more resources per function (up to 3GB of RAM).
     * Increasing RAM will also improve CPU and network!
+
+### AWS Lambda Configurations
+- Timeout: Default 3 seconds, max of 300 seconds.
+- Environment Variables.
+- Allocated memory (128mb to 3gb).
+- Ability to deploy within a VPC + Assign security groups.
+- IAM execution role must be attached to the Lambda Function.
