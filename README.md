@@ -115,6 +115,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS Serverless: DynamoDB
     - [DynamoDB Intro](#dynamodb)
     - [DynamoDB - Provisioned Throughput](#dynamodb---provisioned-throughput)
+    - [DynamoDB - Partitions Internal](#dynamodb---partitions-internal)
 
 ---
 
@@ -1964,3 +1965,12 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Throughput can exceeded temporarily using `Burst Credit`.
 - If ther burst credit are empty, you'll get a `ProvisionedThroughputException`.
 - It's then advised to do an exponential back-off retry.
+
+### DynamoDB - Partitions Internal
+- Data is divided in partitions.
+- Partition keys go through a hashing algorithm to know to which partition they go to.
+- To compute the number of partitions:
+    * By capacity: `(TOTAL RCU / 3000) + (TOTAL WCU / 1000)`.
+    * By size: `Total Size / 10 GB`.
+    * Total Partitions: `CEILING(MAX(Capacity, Size))`.
+- **WCU and RCU are spread evenly between partitions**
