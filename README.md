@@ -114,6 +114,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS Serverless: DynamoDB
     - [DynamoDB Intro](#dynamodb)
+    - [DynamoDB - Provisioned Throughput](#dynamodb---provisioned-throughput)
 
 ---
 
@@ -1928,15 +1929,38 @@ Each availability `z`one is a physical data center in the region, but separated 
         - For e.g. In `users-games` table:
             * `user_id` for the `Partition Key`
             * `game_id` for the `Sort Key`.
-- **DynamoDB - Provisioned Throughput:**
-    * Table must have provisioned read and write capacity units.
-    * `Read Capacity Units (RCU)`: Throughput for reads ($0.00013 per RCU).
-        - `1 RCU` = 1 Strongly consistent read of 4kb per second.
-        - **OR**
-        - `1 RCU` = 2 Eventually consistent read of 4kb per second.
-    * `Write Capacity Units (WCU)`: Throughput for writes ($0.00065 per WCU).
-        - `1 WCU` = 1 Write of 1kb second.
-    * Option to setup auto-scaling of throughput to meet demand.
-    * Throughput can exceeded temporarily using `Burst Credit`.
-    * If ther burst credit are empty, you'll get a `ProvisionedThroughputException`.
-    * It's then advised to do an exponential back-off retry.
+
+## DynamoDB - Provisioned Throughput
+- Table must have provisioned read and write capacity units.
+- `Read Capacity Units (RCU)`: Throughput for reads ($0.00013 per RCU).
+    * In DynamoDB, you get an option to choose `Strongly Consistent Read` or `Eventualy Consistent Read`.
+        - **Eventually Consistent Read:** If we read just after a write, it is possible that we might get an unexpected response because of replication.
+        - **Strongly Consistent Read:** If we read just after a write, we will definitely get the correct data.
+        - **By Default:** DynamoDB uses `Eventually Consistent Read` but `GetItem, Query & Scan` has a `ConsistentRead` parameter you can set to `True`.
+    * One `Read Capacity Unit (RCU)` represents `1 Strongly Consistent Read` per second, or `2 Eventually Consistent Reads` per second, for an item up to 4kb in size.
+    * `1 RCU` = 1 Strongly consistent read of 4kb per second.
+    * **OR**
+    * `1 RCU` = 2 Eventually consistent read of 4kb per second.
+    * If the items are larger than 4kb, more RCU are consumed.
+    * Examples: Calculate RCU in following scenarios:
+        - **Example 1:** 10 Strongly consistent reads per seconds of 4kb each:
+            * We need `(10 * 4) / 4 = 10 RCU`.
+        - **Example 2:** 16 Eventually consistent reads per seconds of 12kb each:
+            * We need `(16 / 2) * (12 / 4) = 24 RCU`.
+        - **Example 3:** 10 Strongly consistent reads per seconds of 6kb each:
+            * We need `(10 * 8) / 4 = 20 RCU`. (We have to round up 6kb to 8kb)
+- `Write Capacity Units (WCU)`: Throughput for writes ($0.00065 per WCU).
+    * One `Write Capacity Unit (WCU)` represents one write per second for an item up to 1kb in size.
+    * `1 WCU` = 1 Write of 1kb second.
+    * If the items are larger than 1kb, more WCU are consumed.
+    * Examples: Calculate WCU in following scenarios:
+        - **Example 1:** We write 10 objects per seconds of 2kb each:
+            * We need `2 * 10 = 20 WCU`.
+        - **Example 2:** We write 6 objects per seconds of 4.5kb each:
+            * We need `6 * 5 = 30 WCU` (4.5 gets rounded to the upped kb).
+        - **Example 3:** We write 120 objects per **minute** of 2kb each:
+            * We need `(120 / 60) * 2 = 4 WCU`.
+- Option to setup auto-scaling of throughput to meet demand.
+- Throughput can exceeded temporarily using `Burst Credit`.
+- If ther burst credit are empty, you'll get a `ProvisionedThroughputException`.
+- It's then advised to do an exponential back-off retry.
