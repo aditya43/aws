@@ -131,6 +131,7 @@ AWS Serverless: API Gateway & Congnito
     - [API Gateway - Swagger And Open API Specifications](#api-gateway---swagger-and-open-api-specifications)
     - [API Gateway - Caching](#api-gateway---caching)
     - [API Gateway - Logging Monitoring And Tracing](#api-gateway---logging-monitoring-and-tracing)
+    - [API Gateway - CORS - Usage Plans And API Keys](#api-gateway---cors---usage-plans-and-api-keys)
 ---
 
 ### AWS Regions
@@ -2211,3 +2212,24 @@ Each availability `z`one is a physical data center in the region, but separated 
 - **X-Ray:**
     * Enable tracing to get extra information about requests in API Gateway.
     * `X-Ray API Gateway + AWS Lambda` gives you the full picture.
+
+### API Gateway - CORS - Usage Plans And API Keys
+- **CORS:**
+    * `CORS` must be enabled when you receive API calls from another domain.
+    * The `Options` pre-flight request must contain the following headers:
+        ```
+        Access-Control-Allow-Methods
+        Access-Control-Allow-Headers
+        Access-Control-Allow-Origin
+        ```
+    * `CORS` can be enabled through console.
+- **Usage Plans And API Keys:**
+    * What if you want to limit your customers usage of your API?
+        - **Usage Plans:**
+            * `Throttling`: Set overall capacity and burst capacity.
+            * `Quotas`: Number of requests made per day/week/month.
+            * You can configure `Usage Plans` for different `Stages (For e.g. Dev, Prod)`.
+        - **API Keys:**
+            * Generate one per customer.
+            * Associate with `Usage Plans`.
+            * Ability to track usage for `API Keys`.
