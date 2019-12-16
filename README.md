@@ -124,6 +124,8 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB - Streams](#dynamodb---streams)
     - [DynamoDB - Security And Other Features](#dynamodb---security-and-other-features)
 
+AWS Serverless: API Gateway & Congnito
+    - [API Gateway Intro](#api-gateway-intro)
 ---
 
 ### AWS Regions
@@ -2103,3 +2105,15 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Multi region, fully replicated, high performance.
 - **`Amazon DMS` can be used to migrate to DynamoDB (From MongoDB, MySQL, Oracle, S3, etc..)**
 - You can launch a local DynamoDB for development purposes.
+
+### API Gateway Intro
+- `API Gateway` is a way for us to `Build, Deploy & Manage` serverless APIs.
+- `AWS Lambda + API Gateway`: No infrastructure to manage.
+- Handle API versioning (v1, v2..)
+- Handle different environments (dev, test, prod).
+- Handle security (Authentication and Authorization).
+- Create API keys, handle request throttling.
+- `Swagger/Open API Import` to quickly define APIs.
+- Transform and validate requests and responses.
+- Generate SDK and API specifications.
+- Cache API responses to limit the load that comes to your Lambda functions.
