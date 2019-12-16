@@ -126,6 +126,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 AWS Serverless: API Gateway & Congnito
     - [API Gateway Intro](#api-gateway-intro)
+    - [API Gateway - Deployment Stages](#api-gateway---deployment-stages)
 ---
 
 ### AWS Regions
@@ -2127,3 +2128,12 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `Inside of VPC`:
         - AWS Lambda in your VPC.
         - EC2 endpoints in your VPC.
+
+### API Gateway - Deployment Stages
+- Making changes in the API Gateway does not mean they're effective.
+- You need to make a `deployment` for them to be in effect.
+- It's a common source of confusion.
+- Changes are deployed to `Stages` (As many as you want).
+- Use the naming you like for `Stages` (Dev, Test, Prod).
+- Each stage has it's own configuration parameters.
+- Stages can be rolled back as a history of deployments is kept.
