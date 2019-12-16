@@ -129,6 +129,7 @@ AWS Serverless: API Gateway & Congnito
     - [API Gateway - Deployment Stages](#api-gateway---deployment-stages)
     - [API Gateway - Mapping Templates](#api-gateway---mapping-templates)
     - [API Gateway - Swagger And Open API Specifications](#api-gateway---swagger-and-open-api-specifications)
+    - [API Gateway - Caching](#api-gateway---caching)
 ---
 
 ### AWS Regions
@@ -2181,3 +2182,19 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Can export current API as `Swagger/OpenAPI Spec`.
 - `Swagger` can be written in `YAML` or `JSON`.
 - Using `Swagger`, we can generate `SDK` for our applications.
+
+### API Gateway - Caching
+- Caching reduces the number of calls made to the backend.
+- Default time `TTL (Time To Live)` for cache is 300 seconds. `Minimum: 0 seconds | Maximum: 3600 seconds`.
+- Caches are defined per stage (dev, prod etc..).
+- Cache encryption option.
+- Cache capacity between `0.5 GB` to `237 GB`.
+- Possible to override cache settings for specific API methods.
+- Able to flush the entire cache (`Invalidate`) immediately.
+- **Can client invalidate the cache?**
+    * YES! With following 2 points:
+        - Client must have proper `IAM Authorization`.
+        - Client need to set following header:
+            ```
+            Cache-Control: max-age=0
+            ```
