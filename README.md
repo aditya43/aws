@@ -2148,3 +2148,12 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Configure HTTP endpoints your stages talk to (dev, stage, test, prod).
         - Pass configuration parameters to AWS Lambda through mapping templates.
     * Stage Variables are passed to the `context` object in AWS Lambda.
+- `Stage Variables & Lambda Aliases`:
+    * We create a srtage variable to indicate the corresponding Lambda alias.
+    * Our API gateway will automatically invoke the right Lambda function.
+- `Canary Deployment`:
+    * Possibility to enable `Canary Deployments` for any stage (usually prod).
+    * Choose the % of traffic that goes to `Canary Channels`.
+    * Metrics & Logs are separate (For better monitoring).
+    * Possibility to override stage variables for Canary.
+    * This is `Blue/Green Deployment` with `AWS Lambda & API Gateway`.
