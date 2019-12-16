@@ -2117,3 +2117,13 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Transform and validate requests and responses.
 - Generate SDK and API specifications.
 - Cache API responses to limit the load that comes to your Lambda functions.
+- API Gateway Integrations:
+    * `Outside of VPC`:
+        - AWS Lambda (Most popular/powerful).
+        - Endpoints on EC2.
+        - Load Balancers.
+        - Any AWS Service.
+        - External and publicly accessible HTTP endpoints.
+    * `Inside of VPC`:
+        - AWS Lambda in your VPC.
+        - EC2 endpoints in your VPC.
