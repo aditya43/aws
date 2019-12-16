@@ -2137,3 +2137,14 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Use the naming you like for `Stages` (Dev, Test, Prod).
 - Each stage has it's own configuration parameters.
 - Stages can be rolled back as a history of deployments is kept.
+- `Stage Variables`:
+    * Stage variables are like environment variables for API Gateway.
+    * Use them change configuration values in different environments.
+    * They can be used in:
+        - Lambda function ARN.
+        - HTTP Endpoints.
+        - Parameter mapping templates.
+    * Use cases:
+        - Configure HTTP endpoints your stages talk to (dev, stage, test, prod).
+        - Pass configuration parameters to AWS Lambda through mapping templates.
+    * Stage Variables are passed to the `context` object in AWS Lambda.
