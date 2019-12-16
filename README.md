@@ -130,6 +130,7 @@ AWS Serverless: API Gateway & Congnito
     - [API Gateway - Mapping Templates](#api-gateway---mapping-templates)
     - [API Gateway - Swagger And Open API Specifications](#api-gateway---swagger-and-open-api-specifications)
     - [API Gateway - Caching](#api-gateway---caching)
+    - [API Gateway - Logging Monitoring And Tracing](#api-gateway---logging-monitoring-and-tracing)
 ---
 
 ### AWS Regions
@@ -2198,3 +2199,15 @@ Each availability `z`one is a physical data center in the region, but separated 
             ```
             Cache-Control: max-age=0
             ```
+
+### API Gateway - Logging Monitoring And Tracing
+- **CloudWatch Logs:**
+    * Enable CloudWatch logging at the `Stage Level` (with `Log Level`).
+    * Can override settings on a per API basis (For e.g. `Error`, `Debug`, `Info`).
+    * Log contains information about `request/response` body.
+- **CloudWatch Metrics:**
+    * Metrics are by `Stage`.
+    * Possibility to enable `Detailed Metrics`.
+- **X-Ray:**
+    * Enable tracing to get extra information about requests in API Gateway.
+    * `X-Ray API Gateway + AWS Lambda` gives you the full picture.
