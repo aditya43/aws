@@ -128,6 +128,7 @@ AWS Serverless: API Gateway & Congnito
     - [API Gateway Intro](#api-gateway-intro)
     - [API Gateway - Deployment Stages](#api-gateway---deployment-stages)
     - [API Gateway - Mapping Templates](#api-gateway---mapping-templates)
+    - [API Gateway - Swagger And Open API Specifications](#api-gateway---swagger-and-open-api-specifications)
 ---
 
 ### AWS Regions
@@ -2168,3 +2169,15 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Map JSON to XML for sending to backend or back to client.
     * Filter poutput results (Remove unnecessary data).
 - `Mapping Templates` use `Velocity Template Language (VTL)`. `VTL` supports `for loops, if statements etc..`
+
+### API Gateway - Swagger And Open API Specifications
+- Common way of defining REST APIs, using API definition as code.
+- Import existing `Swagger/OpenAPI 3.0 Spec` to API Gateway.
+    * Method.
+    * Method Request.
+    * Integration Request.
+    * Method Response.
+    * +AWS extensions for API Gateway and setup every single option.
+- Can export current API as `Swagger/OpenAPI Spec`.
+- `Swagger` can be written in `YAML` or `JSON`.
+- Using `Swagger`, we can generate `SDK` for our applications.
