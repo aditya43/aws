@@ -127,6 +127,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 AWS Serverless: API Gateway & Congnito
     - [API Gateway Intro](#api-gateway-intro)
     - [API Gateway - Deployment Stages](#api-gateway---deployment-stages)
+    - [API Gateway - Mapping Templates](#api-gateway---mapping-templates)
 ---
 
 ### AWS Regions
@@ -2157,3 +2158,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Metrics & Logs are separate (For better monitoring).
     * Possibility to override stage variables for Canary.
     * This is `Blue/Green Deployment` with `AWS Lambda & API Gateway`.
+
+### API Gateway - Mapping Templates
+- `Mapping Templates` can be used to modify request/responses.
+- They allow us to:
+    * Rename parameters.
+    * Modify body content.
+    * Add Headers.
+    * Map JSON to XML for sending to backend or back to client.
+    * Filter poutput results (Remove unnecessary data).
+- `Mapping Templates` use `Velocity Template Language (VTL)`. `VTL` supports `for loops, if statements etc..`
