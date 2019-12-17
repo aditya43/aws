@@ -124,7 +124,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [DynamoDB - Streams](#dynamodb---streams)
     - [DynamoDB - Security And Other Features](#dynamodb---security-and-other-features)
 
-AWS Serverless: API Gateway & Congnito
+- AWS Serverless: API Gateway & Congnito
     - [API Gateway Intro](#api-gateway-intro)
     - [API Gateway - Deployment Stages](#api-gateway---deployment-stages)
     - [API Gateway - Mapping Templates](#api-gateway---mapping-templates)
