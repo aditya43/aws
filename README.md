@@ -2298,3 +2298,9 @@ Each availability `z`one is a physical data center in the region, but separated 
 - `Cognito Sync`:
     * Synchronize data from devide to Cognito.
     * May be deprecated and replaced by **AppSync**.
+    * Store preferences, configuration, state of app.
+    * Cross device synchronization (any platform - IOS, Android, etc..)
+    * Offline capability (Synchronization when back online).
+    * **Requires `Federated Identity Pool` in Cognito (not `User Pool`).**
+    * Store data in `datasets`. Each `dataset` can be up to `1 mb`.
+    * Up to 20 `datasets` to synchronise.
