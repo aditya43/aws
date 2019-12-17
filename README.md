@@ -2287,6 +2287,14 @@ Each availability `z`one is a physical data center in the region, but separated 
 - `Cognito Identity Pools (Federated Identity)`:
     * Provide AWS credentials to users so they can access AWS resources directly.
     * Integrate with `Cognito User Pools` as an identity provider.
+    * **Goal:**
+        - To provide direct access to AWS Resources from the `Client Side`.
+    * **How?**
+        - Log into `Federated Identity Provider (Facebook, Google, SAML etc..)` or remain anonymous.
+        - Get temporary AWS credentials back from the `Federated Identity Pool`.
+        - These credentials come with a pre-defined IAM policy stating their permissions.
+    * **Example:**
+        - Provide (temporary) access to write to S3 bucket using Facebook login.
 - `Cognito Sync`:
     * Synchronize data from devide to Cognito.
     * May be deprecated and replaced by **AppSync**.
