@@ -133,6 +133,7 @@ AWS Serverless: API Gateway & Congnito
     - [API Gateway - Logging Monitoring And Tracing](#api-gateway---logging-monitoring-and-tracing)
     - [API Gateway - CORS - Usage Plans And API Keys](#api-gateway---cors---usage-plans-and-api-keys)
     - [API Gateway - Security](#api-gateway---security)
+    - [AWS Cognito](#aws-cognito)
 ---
 
 ### AWS Regions
@@ -2271,3 +2272,21 @@ Each availability `z`one is a physical data center in the region, but separated 
         - You manage your own user pool (can be backed by Facebook, Google login etc..)
         - No need to write any custom code.
         - Must implement authorization in the backend.
+
+### AWS Cognito
+- We want to give our users an identity so that they can interact with our application.
+- `Cognito User Pools`:
+    * Sign in functionality for app users.
+    * Integrate with API Gateway.
+    * Creates a serverless database of users for your mobile apps.
+    * Simple login: Username (or Email)/Password combination.
+    * Possibility to verify emails/phone numbers and add `MFA (Multi Factor Authentication)`.
+    * Can enable `Federated Identities` (Facebook, Google, SAML etc..)
+    * After authentication, we receive `JSON Web Tokens (JWT)`.
+    * **Can be integrated with API Gateway for authentication.**
+- `Cognito Identity Pools (Federated Identity)`:
+    * Provide AWS credentials to users so they can access AWS resources directly.
+    * Integrate with `Cognito User Pools` as an identity provider.
+- `Cognito Sync`:
+    * Synchronize data from devide to Cognito.
+    * May be deprecated and replaced by **AppSync**.
