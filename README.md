@@ -2252,3 +2252,8 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Option to cache result of authentication. For e.g. Say you wanna cache authentication for 1 hour.
     * Helps to use `OAuth/SAML/3rd party type of authentication`.
     * Based on the token passed in header, Lambda must return an `IAM Policy` for the user.
+- **Cognito User Pools:**
+    * Cognito fully manages user lifecycle.
+    * API Gateway verifies identity automatically from AWS Cognito.
+    * No custom implementation required.
+    * **Cognito only helps with authentication, not authorization.**
