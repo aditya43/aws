@@ -2257,3 +2257,17 @@ Each availability `z`one is a physical data center in the region, but separated 
     * API Gateway verifies identity automatically from AWS Cognito.
     * No custom implementation required.
     * **Cognito only helps with authentication, not authorization.**
+- **Summary:**
+    * `IAM`:
+        - Great for users/roles already within your AWS account.
+        - Handle authentication + authorization.
+        - Leverages `Sig v4`.
+    * `Lambda Authorizers (Custom Authorizer)`:
+        - Great for 3rd party tokens.
+        - Very flexible in terms of what IAM policy is returned.
+        - Handle Authentication + Authorization.
+        - Pay per `Lambda Invocation`.
+    * `Cognito User Pools`:
+        - You manage your own user pool (can be backed by Facebook, Google login etc..)
+        - No need to write any custom code.
+        - Must implement authorization in the backend.
