@@ -132,6 +132,7 @@ AWS Serverless: API Gateway & Congnito
     - [API Gateway - Caching](#api-gateway---caching)
     - [API Gateway - Logging Monitoring And Tracing](#api-gateway---logging-monitoring-and-tracing)
     - [API Gateway - CORS - Usage Plans And API Keys](#api-gateway---cors---usage-plans-and-api-keys)
+    - [API Gateway - Security](#api-gateway---security)
 ---
 
 ### AWS Regions
@@ -2233,3 +2234,16 @@ Each availability `z`one is a physical data center in the region, but separated 
             * Generate one per customer.
             * Associate with `Usage Plans`.
             * Ability to track usage for `API Keys`.
+
+### API Gateway - Security
+- There are 3 aspects to API Gateway - Security:
+    * `IAM Permissions`.
+    * `Lambda Authorizers`.
+    * `Cognito User Pools`.
+- **IAM Permissions:**
+    * Create an IAM policy authorization and attach to `User/Role`.
+    * API Gateway verifies `IAM Permissions` passed by the calling application.
+    * Good to provide access within your own infrastructure.
+    * Leverages `Sig v4` (Signature v4) capability where IAM credentials are in headers.
+    * There are no added costs to this solution.
+    * If you give access to users outside of your AWS, then you can't use IAM permissions obviously.
