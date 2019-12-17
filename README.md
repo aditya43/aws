@@ -2247,3 +2247,8 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Leverages `Sig v4` (Signature v4) capability where IAM credentials are in headers.
     * There are no added costs to this solution.
     * If you give access to users outside of your AWS, then you can't use IAM permissions obviously.
+- **Lambda Authorizer (Formerly `Custom Authorizers`):**
+    * Uses `AWS Lambda` to validate the token passed in the header.
+    * Option to cache result of authentication. For e.g. Say you wanna cache authentication for 1 hour.
+    * Helps to use `OAuth/SAML/3rd party type of authentication`.
+    * Based on the token passed in header, Lambda must return an `IAM Policy` for the user.
