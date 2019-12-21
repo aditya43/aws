@@ -2364,3 +2364,16 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `Amazon SSM`: Parameter store.
     * Etc..
 - But you can also use the `CLI/SDK`.
+- **KMS 101:**
+    * Anytime you need to share sensitive information, use `KMS`. Sensitive information such as:
+        - Database Passwords.
+        - Credentials to external service.
+        - `Private Key` of SSL certificates.
+    * The value in `KMS` is that the CMK (`Customer Master Key`) used to encrypt data can never be retrieved by the user, and the CMK can be rotated for extra security.
+    * **Never ever store your secrets in plaintext, especially in your code!**
+    * Encrypted secrets can be stored in the code/environment variables.
+    * **KMS can only help in encrypting up to 4kb of data per call.**
+    * If data is `>4kb`, use `Envelop Encryption`.
+    * To give access to `KMS` to someone:
+        - Make sure the `Key Policy` allows the user.
+        - Make sure the `IAM Policy` allows the `API Calls`.
