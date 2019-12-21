@@ -2340,3 +2340,8 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Data is encrypted before sending and decrypted after receiving it on server.
     * SSL certificates help with encryption.
     * Encryption in flight protects us from `MITM (Man In The Middle Attack)`.
+- **Server Side Encryption At Rest:**
+    * Data is encrypted after being received by the server.
+    * Data is decrypted before being sent.
+    * It is stored in an ecrypted form, thanks to a key (usually a data key).
+    * The encryption/decryption keys must be managed somewhere and the server must have access to it.
