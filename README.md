@@ -134,6 +134,9 @@ AWS Serverless: API Gateway & Congnito
     - [API Gateway - CORS - Usage Plans And API Keys](#api-gateway---cors---usage-plans-and-api-keys)
     - [API Gateway - Security](#api-gateway---security)
     - [AWS Cognito](#aws-cognito)
+
+AWS Serverless: SAM - Serverless Application Model
+    - [SAM Intro](#sam-intro)
 ---
 
 ### AWS Regions
@@ -2304,3 +2307,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * **Requires `Federated Identity Pool` in Cognito (not `User Pool`).**
     * Store data in `datasets`. Each `dataset` can be up to `1 mb`.
     * Up to 20 `datasets` to synchronise.
+
+### SAM Intro
+- `Serverless Application Model (SAM)`.
+- `SAM` is a framework for developing and deploying serverless applications.
+- All the configuration is in `SAM YAML` file.
+- It generates complex CloudFormation from simple `SAM YAML` file.
+- Supports anything from CloudFormation: Outputs, Mappings, Parameters, Resources, etc..
+- Only 2 commands to deploy to AWS.
+- `SAM` can use CodeDeploy to deploy `Lambda Functions`.
+- **`SAM` allows you to run `Lambda, API Gateway, DynamoDB` locally.**
