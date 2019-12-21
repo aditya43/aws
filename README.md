@@ -2377,3 +2377,16 @@ Each availability `z`one is a physical data center in the region, but separated 
     * To give access to `KMS` to someone:
         - Make sure the `Key Policy` allows the user.
         - Make sure the `IAM Policy` allows the `API Calls`.
+- **KMS (Key Management Service):**
+    * Able to fully manage Keys and Policies:
+        - Create Keys.
+        - Rotation Policies (To rotate keys).
+        - Disable Keys.
+        - Enable Keys.
+    * We get to fully manage the Keys but we never ever see them.
+    * Able to Audit key usage using `CloudTrail`.
+    * There are 3 types of `CMK (Customer Master Keys)`:
+        - `AWS Managed Service Default CMK`: **Free.**
+        - `User Created CMK in KMS`: **$1 per month.**
+        - `User Created CMK imported into KMS (Must be 256-bit Symmetric Key)`: **$1 per month.**
+    * Every time you call `KMS` for doing `Encryption/Decryption` or any `KMS API Call`, you will be charged: **$0.03 per 10,000 calls.**
