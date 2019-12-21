@@ -141,6 +141,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS Security & Encryption: KMS, Encryption SDK, SSM Parameter Store, IAM, STS
     - [Encryption 101](#encryption-101)
     - [KMS - Key Management System](#kms---key-management-system)
+    - [Encryption SDK](#encryption-sdk)
 
 ---
 
@@ -2390,3 +2391,14 @@ Each availability `z`one is a physical data center in the region, but separated 
         - `User Created CMK in KMS`: **$1 per month.**
         - `User Created CMK imported into KMS (Must be 256-bit Symmetric Key)`: **$1 per month.**
     * Every time you call `KMS` for doing `Encryption/Decryption` or any `KMS API Call`, you will be charged: **$0.03 per 10,000 calls.**
+
+### Encryption SDK
+- What if you want to encrypt data over `4kb` using `KMS`?
+- For this, we will have to use `Envelop Encryption`.
+- `Envelop Encryption` is a bit cumbersome to implement.
+- The `AWS Encryption SDK` helps us to use `Envelop Encryption`.
+- **NOTE: It is totally different from the `S3 Encryption SDK`.**
+- The `Encryption SDK` also exists as `CLI Tool` that we can install.
+- 1 line conclusion:
+    * **Anything over `4kb` of data that needs to be encrypted using `KMS` must use the `Encryption SDK` i.e. `Envelop Encryption` and it uses `GenerateDataKey API`.**
+    * For `Envelop Encryption`,  Encryption & Decryption both happens at `Client Side`.
