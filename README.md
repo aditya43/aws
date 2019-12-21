@@ -2317,3 +2317,16 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Only 2 commands to deploy to AWS.
 - `SAM` can use CodeDeploy to deploy `Lambda Functions`.
 - **`SAM` allows you to run `Lambda, API Gateway, DynamoDB` locally.**
+- **How `SAM` works? `SAM Recipe`:**
+    * There's this `Transform Header` that indicates it's a `SAM template`. Header:
+        ```
+        Transform: 'AWS::Serverless-2016-10-31'
+        ```
+    * Following are the 3 resources types we can use in our `SAM template` code:
+        ```
+        AWS::Serverless::Function //Lambda
+        AWS::Serverless::Api //Api Gateway
+        AWS::Serverless::SimpleTable //DynamoDB
+        ```
+    * For `Packaging`, we can use `AWS CloudFormation Package` or `SAM Package`.
+    * For `Deployment`, we can use `AWS CloudFormation Deploy` or `SAM Deploy`.
