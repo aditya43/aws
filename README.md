@@ -137,6 +137,10 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS Serverless: SAM - Serverless Application Model
     - [SAM 101](#sam-101)
+
+- AWS Security & Encryption: KMS, Encryption SDK, SSM Parameter Store, IAM, STS
+    - [Encryption 101](#encryption-101)
+
 ---
 
 ### AWS Regions
@@ -2330,3 +2334,9 @@ Each availability `z`one is a physical data center in the region, but separated 
         ```
     * For `Packaging`, we can use `AWS CloudFormation Package` or `SAM Package`.
     * For `Deployment`, we can use `AWS CloudFormation Deploy` or `SAM Deploy`.
+
+### Encryption 101
+- **Encryption in Flight (SSL):**
+    * Data is encrypted before sending and decrypted after receiving it on server.
+    * SSL certificates help with encryption.
+    * Encryption in flight protects us from `MITM (Man In The Middle Attack)`.
