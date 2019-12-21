@@ -135,7 +135,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [API Gateway - Security](#api-gateway---security)
     - [AWS Cognito](#aws-cognito)
 
-AWS Serverless: SAM - Serverless Application Model
+- AWS Serverless: SAM - Serverless Application Model
     - [SAM 101](#sam-101)
 ---
 
@@ -2306,7 +2306,7 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Offline capability (Synchronization when back online).
     * **Requires `Federated Identity Pool` in Cognito (not `User Pool`).**
     * Store data in `datasets`. Each `dataset` can be up to `1 mb`.
-    * Up to 20 `datasets` to synchronise.s
+    * Up to 20 `datasets` to synchronise.
 
 ### SAM 101
 - `Serverless Application Model (SAM)`.
