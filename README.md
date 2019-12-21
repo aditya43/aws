@@ -140,6 +140,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 
 - AWS Security & Encryption: KMS, Encryption SDK, SSM Parameter Store, IAM, STS
     - [Encryption 101](#encryption-101)
+    - [KMS - Key Management System](#kms---key-management-system)
 
 ---
 
@@ -2350,3 +2351,16 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Data will be decrypted by a receiving client.
     * The server should not be able to decrypt the data.
     * For this we could use `Envelop Encryption`.
+
+### KMS - Key Management System
+- Anytime you hear `encryption` for an AWS service, it's most likely `KMS`.
+- Easy way to control access to your data, AWS manages keys for us.
+- Fully integrated with `IAM` for `Authorization`.
+- Seamlessly integrated into:
+    * `Amazon EBS`: Encrypt volumes.
+    * `Amazon S3`: Server side encryption of objects.
+    * `Amazon Redshift`: Encryption of data.
+    * `Amazon RDS`: Encryption of data.
+    * `Amazon SSM`: Parameter store.
+    * Etc..
+- But you can also use the `CLI/SDK`.
