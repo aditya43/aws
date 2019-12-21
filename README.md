@@ -136,7 +136,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [AWS Cognito](#aws-cognito)
 
 AWS Serverless: SAM - Serverless Application Model
-    - [SAM Intro](#sam-intro)
+    - [SAM 101](#sam-101)
 ---
 
 ### AWS Regions
@@ -2306,9 +2306,9 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Offline capability (Synchronization when back online).
     * **Requires `Federated Identity Pool` in Cognito (not `User Pool`).**
     * Store data in `datasets`. Each `dataset` can be up to `1 mb`.
-    * Up to 20 `datasets` to synchronise.
+    * Up to 20 `datasets` to synchronise.s
 
-### SAM Intro
+### SAM 101
 - `Serverless Application Model (SAM)`.
 - `SAM` is a framework for developing and deploying serverless applications.
 - All the configuration is in `SAM YAML` file.
