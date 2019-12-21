@@ -142,6 +142,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [Encryption 101](#encryption-101)
     - [KMS - Key Management System](#kms---key-management-system)
     - [Encryption SDK](#encryption-sdk)
+    - [SSM Parameter Store](#ssm-parameter-store)
 
 ---
 
@@ -2402,3 +2403,12 @@ Each availability `z`one is a physical data center in the region, but separated 
 - 1 line conclusion:
     * **Anything over `4kb` of data that needs to be encrypted using `KMS` must use the `Encryption SDK` i.e. `Envelop Encryption` and it uses `GenerateDataKey API`.**
     * For `Envelop Encryption`,  Encryption & Decryption both happens at `Client Side`.
+
+### SSM Parameter Store
+- It allows us to **Securly** store our `Secrets` and `Configurations`.
+- **Optional** seamless encryption using `KMS`.
+- It's `Serverless`, `Scalable`, `Durable`, **FREE** and there is an easy SDK to use it.
+- You are able to do `Version Tracking` of `Secrets` and `Configurations`.
+- Configuration options using `Path` and `IAM`. For e.g. Using `IAM`, we can control who can view which database passwords.
+- Notification with `CloudWatch Events`.
+- Has an integration with `CloudFormation`.
