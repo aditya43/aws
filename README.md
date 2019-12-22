@@ -2517,6 +2517,11 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Helps you migrate applications to the Cloud.
         - Dockerize legacy applications running on premise.
         - Move Docker containers to run on `ECS`.
+- **`ECS` Concepts:**
+    * `ECS Cluster`: Set of EC2 instances.
+    * `ECS Service`: Applications definitions running on `ECS Cluster`.
+    * `ECS Tasks + Definition`: Containers running to create the application.
+    * `ECS IAM Roles`: Roles assigned to tasks to ineract with AWS.
 
 ### Docker
 - Docker is `Container Technology`.
