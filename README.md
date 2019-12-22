@@ -2442,3 +2442,8 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `CodeBuild` should have its own service role.
     * **Overall, you should always create least-privileged role for any service that requires it.**
     * **Create a role per application/lambda function. Do not reuse roles.**
+- **`Cross Account Access` Best Practices:**
+    * Define an `IAM Role` for another account to access.
+    * Define which accounts can access this `IAM Role`.
+    * Use `AWS STS (Security Token Service)` to retrieve credentials and impersonate the `IAM Role` you have access to (**`AssumeRole API`**).
+    * Temporary credentials can be valid between 15 minutes to 1 hour.
