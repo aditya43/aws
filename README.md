@@ -2412,3 +2412,12 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Configuration options using `Path` and `IAM`. For e.g. Using `IAM`, we can control who can view which database passwords.
 - Notification with `CloudWatch Events`.
 - Has an integration with `CloudFormation`.
+- For e.g. CLI command to retrieve parameters with decryption:
+    ```
+    // Get parameters by path
+    aws ssm get-parameters-by-path --path /my-app/ --recursive --with-decryption
+
+    // Get parameters by name
+    aws ssm -get-parameters --names /my-app/dev/db-url /my-app/dev/db-password --with-decryption
+
+    ```
