@@ -145,6 +145,9 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SSM Parameter Store](#ssm-parameter-store)
     - [IAM Best Practices - General](#iam-best-practices---general)
 
+- AWS Other Services: CloudFront, Step Functions & SWF
+    - [CloudFront](#cloudfront)
+
 ---
 
 ### AWS Regions
@@ -2447,3 +2450,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Define which accounts can access this `IAM Role`.
     * Use `AWS STS (Security Token Service)` to retrieve credentials and impersonate the `IAM Role` you have access to (**`AssumeRole API`**).
     * Temporary credentials can be valid between 15 minutes to 1 hour.
+
+### CloudFront
+- AWS CloudFront is a `Content Delivery Network (CDN)`.
+- Improves read performance, content is cached at the edge (edge = locations around the world).
+- Currently there are 146 `Point of Presence (Edge Locations)` globally.
+- Very popular with `S3` but also works with `EC2` and `Load Balancing`.
+- Can help you protect against network attacks (e.g. DDoS).
+- Can provide SSL encryption (HTTPS) at the edge using `ACM (Amazon Certificate Manager)`.
+- CloudFront can use SSL encryption (HTTPS) to talk to your applications.
+- Supports `RTMP Protocol` for videos and media.
