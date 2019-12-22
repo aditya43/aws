@@ -145,10 +145,11 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SSM Parameter Store](#ssm-parameter-store)
     - [IAM Best Practices - General](#iam-best-practices---general)
 
-- AWS Other Services: CloudFront, Step Functions, SWF
+- AWS Other Services: CloudFront, Step Functions, SWF, ECS
     - [CloudFront](#cloudfront)
     - [Step Functions](#step-functions)
     - [SWF - Simple Workflow Service](#swf---simple-workflow-service)
+    - [ECS - Elastic Container Service](#ecs---elastic-container-service)
 
 ---
 
@@ -2492,3 +2493,14 @@ Each availability `z`one is a physical data center in the region, but separated 
 - **`Step Functions` are recommended to be used for new applications, except:**
     * If you need external signals to intervene in the processes.
     * If you need child processes that return values to parent processes.
+
+### ECS - Elastic Container Service
+- `ECS (Elastic Container Service)` is a container orchestration service.
+- `ECS` helps you run `Docker Containers` on `EC2` machines.
+- `ECS` is made of:
+    * `ECS Core`: Running `ECS` on user-provisioned `EC2 Instances`.
+    * `Fargate`: Running `ECS Tasks` on `AWS Provisioned Compute` **(Serverless)**.
+    * `EKS`: Running `ECS` on `AWS Powered Kubernetes` **(Running on EC2)**.
+    * `ECR`: `Docker Container Registry` hosten by AWS.
+- ECS & Docker are very popular for **microservices**.
+- `IAM Security & Roles` at the `ECS Task Level`.
