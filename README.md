@@ -145,11 +145,13 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SSM Parameter Store](#ssm-parameter-store)
     - [IAM Best Practices - General](#iam-best-practices---general)
 
-- AWS Other Services: CloudFront, Step Functions, SWF, ECS
+- AWS Other Services: CloudFront, Step Functions, SWF, ECS,
+- [Docker](#docker)
     - [CloudFront](#cloudfront)
     - [Step Functions](#step-functions)
     - [SWF - Simple Workflow Service](#swf---simple-workflow-service)
     - [ECS - Elastic Container Service](#ecs---elastic-container-service)
+    - [Docker](#docker)
 
 ---
 
@@ -2504,3 +2506,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `ECR`: `Docker Container Registry` hosten by AWS.
 - ECS & Docker are very popular for **microservices**.
 - `IAM Security & Roles` at the `ECS Task Level`.
+
+### Docker
+- Docker is `Container Technology`.
+- Run a containerized application on any machine with Docker installed.
+- **Containers allows our application to work the same way anywhere (Portability).**
+- Containers are isolated from each other.
+- Control how much memory/CPU is allocated to your container.
+- Ability to restrict network rules.
+- More efficient than Virtual Machines.
+- Scame containers up and down very quickly (seconds).
