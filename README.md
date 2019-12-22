@@ -2522,6 +2522,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `ECS Service`: Applications definitions running on `ECS Cluster`.
     * `ECS Tasks + Definition`: Containers running to create the application.
     * `ECS IAM Roles`: Roles assigned to tasks to ineract with AWS.
+- **`ECS (Elastic Container Service)` Integration Into `ALB (Application Load Balancer)`:**
+    * `Application Load Balancer (ALB)` has a direct integration feature with ECS called `Port Mapping`.
+    * This allows you to run multiple instances of the same application on the same EC2 machine.
+    * Use Cases:
+        - Increased resiliency even if running on 1 EC2 instance.
+        - Maximize utilization of CPI/cores.
+        - Ability to perform rolling upgrades without impacting application uptime.
 
 ### Docker
 - Docker is `Container Technology`.
