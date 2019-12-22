@@ -145,7 +145,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SSM Parameter Store](#ssm-parameter-store)
     - [IAM Best Practices - General](#iam-best-practices---general)
 
-- AWS Other Services: CloudFront, Step Functions, SWF, Docker, ECS, ECR
+- AWS Other Services: CloudFront, Step Functions, SWF, Docker, ECS, ECR, SES, Databases Summery (OLTP, OLAP, NOSQL, CACHE)
     - [CloudFront](#cloudfront)
     - [Step Functions](#step-functions)
     - [SWF - Simple Workflow Service](#swf---simple-workflow-service)
@@ -153,6 +153,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [ECS - Elastic Container Service](#ecs---elastic-container-service)
     - [ECR - Elastic Container Registry](#ecr---elastic-container-registry)
     - [SES - Simple Email Service](#ses---simple-email-service)
+    - [Databases Summery - OLTP OLAP NOSQL CACHE](#databases-summery---oltp-olap-nosql-cache)
 
 ---
 
@@ -2571,3 +2572,20 @@ Each `Availability Zone` is a physical data center in the region, but separated 
     * `SNS`.
     * `Lambda Functions`.
 - Integrated with `IAM` for allowing to send emails.
+
+### Databases Summery - OLTP OLAP NOSQL CACHE
+- `RDS`: Relational Databases. For storing trasactional data. `OLTP`.
+    * `PostgreSQL`, `MySQL`, `Oracle`, etc..
+    * `Aurora` and `Aurora Serverless`.
+    * Provisioned database.
+- `DynamoDB`: NoSQL Database.
+    * Managed, KeyValue, Document.
+    * Serverless.
+- `ElastiCache`: In memory database.
+    * `Redis`, `Memcached`.
+    * Cache capability.
+- `Redshift`: Analytic Processing. `OLAP`.
+    * `Data Warehousing`, `Data Lake`.
+    * Analytics Queries.
+- `Neptune`: Graph Database.
+- `DMS`: Database Migration Service.
