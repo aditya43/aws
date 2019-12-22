@@ -2506,6 +2506,17 @@ Each availability `z`one is a physical data center in the region, but separated 
     * `ECR`: `Docker Container Registry` hosten by AWS.
 - ECS & Docker are very popular for **microservices**.
 - `IAM Security & Roles` at the `ECS Task Level`.
+- **`ECS` Use Cases:**
+    * Run `Microservices`:
+        - Ability to run multiple docker containers on the same machine.
+        - Easy service discovery features to enhance communication.
+        - Direct integration with `Application Load Balancers`.
+        - Auto scaling capability.
+    * Run batch processing/scheduled tasks:
+        - Schedule `ECS` containers to run on `On-Demand`, `Reserved` or `Spot` EC2 instances.
+    * Helps you migrate applications to the Cloud.
+        - Dockerize legacy applications running on premise.
+        - Move Docker containers to run on `ECS`.
 
 ### Docker
 - Docker is `Container Technology`.
