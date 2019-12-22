@@ -2432,3 +2432,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Monitor API calls made by user in `CloudTrail` (especially `Denied` ones).
 - Never ever ever store `IAM` key credentials on any machine but a personal computer or on-premise server.
 - On premise server best practice is to call `STS` to obtain temporary security credentials.
+- **`IAM Roles` Best Practices:**
+    * `EC2` machines should have their own roles.
+    * `Lambda Functions` should have their own roles.
+    * `ECS Tasks` should have their own roles:
+        ```
+        ECS_ENABLE_TASK_IAM_ROLE=true
+        ```
+    * `CodeBuild` should have its own service role.
+    * **Overall, you should always create least-privileged role for any service that requires it.**
+    * **Create a role per application/lambda function. Do not reuse roles.**
