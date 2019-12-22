@@ -2514,8 +2514,8 @@ Each `Availability Zone` is a physical data center in the region, but separated 
 - `ECS` is made of:
     * `ECS Core`: Running `ECS` on user-provisioned `EC2 Instances`.
     * `Fargate`: Running `ECS Tasks` on `AWS Provisioned Compute` **(Serverless)**.
-    * `EKS`: Running `ECS` on `AWS Powered Kubernetes` **(Running on EC2)**.
-    * `ECR`: `Docker Container Registry` hosten by AWS.
+    * `EKS (Elastic Kubernetes Service)`: Running `ECS` on `AWS Powered Kubernetes` **(Running on EC2)**.
+    * `ECR (Elastic Container Registry)`: `Docker Container Registry` hosten by AWS.
 - ECS & Docker are very popular for **microservices**.
 - `IAM Security & Roles` at the `ECS Task Level`.
 - **`ECS` Use Cases:**
