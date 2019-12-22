@@ -143,6 +143,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [KMS - Key Management System](#kms---key-management-system)
     - [Encryption SDK](#encryption-sdk)
     - [SSM Parameter Store](#ssm-parameter-store)
+    - [IAM Best Practices - General](#iam-best-practices---general)
 
 ---
 
@@ -2421,3 +2422,13 @@ Each availability `z`one is a physical data center in the region, but separated 
     aws ssm -get-parameters --names /my-app/dev/db-url /my-app/dev/db-password --with-decryption
 
     ```
+
+### IAM Best Practices - General
+- Never use `Root Credentials`.
+- Enable `MFA (Multi Factor Authentication)` for `Root Account`.
+- Grant least privileges to your `Lambda Functions` and `IAM Roles`.
+    * Each `Group`, `User`, `IAM Role` should only have the minimum level of permission it needs.
+    * Never grant a policy with **`*`** access to a service.
+    * Monitor API calls made by user in `CloudTrail` (especially `Denied` ones).
+- Never ever ever store `IAM` key credentials on any machine but a personal computer or on-premise server.
+- On premise server best practice is to call `STS` to obtain temporary security credentials.
