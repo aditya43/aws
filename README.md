@@ -145,8 +145,9 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SSM Parameter Store](#ssm-parameter-store)
     - [IAM Best Practices - General](#iam-best-practices---general)
 
-- AWS Other Services: CloudFront, Step Functions & SWF
+- AWS Other Services: CloudFront, Step Functions, SWF
     - [CloudFront](#cloudfront)
+    - [Step Functions](#step-functions)
 
 ---
 
@@ -2460,3 +2461,21 @@ Each availability `z`one is a physical data center in the region, but separated 
 - Can provide SSL encryption (HTTPS) at the edge using `ACM (Amazon Certificate Manager)`.
 - CloudFront can use SSL encryption (HTTPS) to talk to your applications.
 - Supports `RTMP Protocol` for videos and media.
+
+### Step Functions
+- Build a serverless visual workflow to orchestrate your `Lambda Functions`.
+- All the flow represent flow as a `JSON State Machine`.
+- Features:
+    * Sequence Of Lambda Functions.
+    * Parallel Lambda Functions.
+    * Conditions.
+    * Timeout.
+    * Error Handling.
+    * Etc..
+- Can also integrate with EC2, ECS, On Premise Servers, API Gateway.
+- Maximum execution time of `1 Year`.
+- Use Cases:
+    * Order fulfillment.
+    * Data processing.
+    * Web applications.
+    * Any workflow.
