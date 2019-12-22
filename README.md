@@ -146,7 +146,6 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [IAM Best Practices - General](#iam-best-practices---general)
 
 - AWS Other Services: CloudFront, Step Functions, SWF, Docker, ECS, ECR
-- [Docker](#docker)
     - [CloudFront](#cloudfront)
     - [Step Functions](#step-functions)
     - [SWF - Simple Workflow Service](#swf---simple-workflow-service)
