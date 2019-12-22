@@ -157,7 +157,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 ---
 
 ### AWS Regions
-Each availability `z`one is a physical data center in the region, but separated from the other ones (so that they're isolated from disasters).
+Each `Availability Zone` is a physical data center in the region, but separated from the other ones (so that they're isolated from disasters).
 
 ### IAM - Identity And Access Management
 - IAM has a global view.
