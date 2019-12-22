@@ -148,6 +148,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
 - AWS Other Services: CloudFront, Step Functions, SWF
     - [CloudFront](#cloudfront)
     - [Step Functions](#step-functions)
+    - [SWF - Simple Workflow Service](#swf---simple-workflow-service)
 
 ---
 
@@ -2479,3 +2480,15 @@ Each availability `z`one is a physical data center in the region, but separated 
     * Data processing.
     * Web applications.
     * Any workflow.
+
+### SWF - Simple Workflow Service
+- Coordinate work amongst applications.
+- Code runs on EC2 (not serverless).
+- `1 Year` maximum runtime.
+- SWF is older (legacy) than Step Functions and it is less supported now.
+- Concept of `Activity Step` and `Decision Step`.
+- Has built-in `Human Intervention Step`.
+- Example: Order fulfillment from web to warehouse to delivery.
+- **`Step Functions` are recommended to be used for new applications, except:**
+    * If you need external signals to intervene in the processes.
+    * If you need child processes that return values to parent processes.
