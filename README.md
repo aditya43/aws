@@ -145,13 +145,14 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SSM Parameter Store](#ssm-parameter-store)
     - [IAM Best Practices - General](#iam-best-practices---general)
 
-- AWS Other Services: CloudFront, Step Functions, SWF, Docker, ECS,
+- AWS Other Services: CloudFront, Step Functions, SWF, Docker, ECS, ECR
 - [Docker](#docker)
     - [CloudFront](#cloudfront)
     - [Step Functions](#step-functions)
     - [SWF - Simple Workflow Service](#swf---simple-workflow-service)
     - [Docker](#docker)
     - [ECS - Elastic Container Service](#ecs---elastic-container-service)
+    - [ECR - Elastic Container Registry](#ecr---elastic-container-registry)
 
 ---
 
@@ -2553,3 +2554,9 @@ Each availability `z`one is a physical data center in the region, but separated 
         ECS_AVAILABLE_LOGGING_DRIVERS={...}     #CloudWatch container logging.
         ECS_ENABLE_TASK_IAM_ROLE=true           #Enable IAM roles for ECS tasks.
         ```
+
+### ECR - Elastic Container Registry
+- Store, manage and deploy your containers on AWS.
+- Fully integrated with `IAM & ECS`.
+- Sent over HTTPS (Encryption in flight) and encrypted at rest.
+- You can push containers to ECR using CLI or `CodeBuild` (for your `CICD` to automate this task).
