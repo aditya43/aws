@@ -145,13 +145,13 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [SSM Parameter Store](#ssm-parameter-store)
     - [IAM Best Practices - General](#iam-best-practices---general)
 
-- AWS Other Services: CloudFront, Step Functions, SWF, ECS,
+- AWS Other Services: CloudFront, Step Functions, SWF, Docker, ECS,
 - [Docker](#docker)
     - [CloudFront](#cloudfront)
     - [Step Functions](#step-functions)
     - [SWF - Simple Workflow Service](#swf---simple-workflow-service)
-    - [ECS - Elastic Container Service](#ecs---elastic-container-service)
     - [Docker](#docker)
+    - [ECS - Elastic Container Service](#ecs---elastic-container-service)
 
 ---
 
@@ -2496,6 +2496,16 @@ Each availability `z`one is a physical data center in the region, but separated 
     * If you need external signals to intervene in the processes.
     * If you need child processes that return values to parent processes.
 
+### Docker
+- Docker is `Container Technology`.
+- Run a containerized application on any machine with Docker installed.
+- **Containers allows our application to work the same way anywhere (Portability).**
+- Containers are isolated from each other.
+- Control how much memory/CPU is allocated to your container.
+- Ability to restrict network rules.
+- More efficient than Virtual Machines.
+- Scame containers up and down very quickly (seconds).
+
 ### ECS - Elastic Container Service
 - `ECS (Elastic Container Service)` is a container orchestration service.
 - `ECS` helps you run `Docker Containers` on `EC2` machines.
@@ -2529,13 +2539,17 @@ Each availability `z`one is a physical data center in the region, but separated 
         - Increased resiliency even if running on 1 EC2 instance.
         - Maximize utilization of CPI/cores.
         - Ability to perform rolling upgrades without impacting application uptime.
-
-### Docker
-- Docker is `Container Technology`.
-- Run a containerized application on any machine with Docker installed.
-- **Containers allows our application to work the same way anywhere (Portability).**
-- Containers are isolated from each other.
-- Control how much memory/CPU is allocated to your container.
-- Ability to restrict network rules.
-- More efficient than Virtual Machines.
-- Scame containers up and down very quickly (seconds).
+- **`ECS` Setup And Config File:**
+    * Run an EC2 instance, install the `ECS Agent` along side ECS Config file.
+    * Or use an `ECS-ready Linux AMI` (**Still need to modify config file**).
+    * `ECS Config File` is located at:
+        ```
+        /etc/ecs/ecs.config
+        ```
+    * Following are the 4 main config settings under `ecs.config` file:
+        ```
+        ECS_CLUSTER=MyCluster                   #Assign EC2 instance to an ECS cluster.
+        ECS_ENGINE_AUTH_DATA={...}              #To pull images from private registries.
+        ECS_AVAILABLE_LOGGING_DRIVERS={...}     #CloudWatch container logging.
+        ECS_ENABLE_TASK_IAM_ROLE=true           #Enable IAM roles for ECS tasks.
+        ```
