@@ -152,6 +152,7 @@ Open-sourced software licensed under the [MIT license](http://opensource.org/lic
     - [Docker](#docker)
     - [ECS - Elastic Container Service](#ecs---elastic-container-service)
     - [ECR - Elastic Container Registry](#ecr---elastic-container-registry)
+    - [SES - Simple Email Service](#ses---simple-email-service)
 
 ---
 
@@ -2559,3 +2560,14 @@ Each `Availability Zone` is a physical data center in the region, but separated 
 - Fully integrated with `IAM & ECS`.
 - Sent over HTTPS (Encryption in flight) and encrypted at rest.
 - You can push containers to ECR using CLI or `CodeBuild` (for your `CICD` to automate this task).
+
+### SES - Simple Email Service
+- Send emails to people using:
+    * `SMTP` interface.
+    * `AWS SDK`.
+- Ability to receive emails.
+- Integrates with:
+    * `S3`.
+    * `SNS`.
+    * `Lambda Functions`.
+- Integrated with `IAM` for allowing to send emails.
